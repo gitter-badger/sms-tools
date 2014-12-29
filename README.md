@@ -6,11 +6,21 @@ Sound analysis/synthesis tools for music applications written in python (with a 
 How to use
 ----------
 
-In order to use these tools you have to install version 2.7.* of python and the following modules: ipython, numpy, matplotlib, scipy, pygame, and cython. 
+In order to use these tools you have to install Python and the following modules: ipython, numpy, matplotlib, scipy, pygame, and cython.
+
+The original code was written for Python 2.7. This branch is converted (via 2to3) to work with the latest Python 3 and be possibly compatible with Python 2.7.
 
 In Ubuntu (which we strongly recommend) in order to install all these modules it is as simple as typing in the Terminal:
 
 <code>$ sudo apt-get install python-dev ipython python-numpy python-matplotlib python-scipy python-pygame cython</code>
+
+On Mac OS X you need Python 3, tkinter, SDL, [XQuartz](http://xquartz.macosforge.org/landing/) (eg. XQuartz-2.7.7.dmg). Pygame It works fine with Python 3.4 on OS X Yosemite. Creating a separate Python virtual environment ([pyvenv](https://docs.python.org/3/library/venv.html)) is recommended.
+
+<code>
+sudo port install libsdl-framework libsdl_ttf-framework libsdl_image-framework libsdl_mixer-framework mercurial py34-tkinter
+pip install ipython readline Cython matplotlib numpy scipy
+pip install hg+http://bitbucket.org/pygame/pygame
+</code>
 
 then for using the tools, after downloading the whole package, you need to compile some C functions. For that you should go to the directory <code>software/models/utilFunctions_C</code> and type:</p>
 
