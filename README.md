@@ -16,11 +16,11 @@ In Ubuntu (which we strongly recommend) in order to install all these modules it
 
 On Mac OS X you need Python 3, tkinter, SDL, [XQuartz](http://xquartz.macosforge.org/landing/) (eg. XQuartz-2.7.7.dmg). Pygame It works fine with Python 3.4 on OS X Yosemite. Creating a separate Python virtual environment ([pyvenv](https://docs.python.org/3/library/venv.html)) is recommended.
 
-<code>
+```
 sudo port install libsdl-framework libsdl_ttf-framework libsdl_image-framework libsdl_mixer-framework mercurial py34-tkinter
 pip install ipython readline Cython matplotlib numpy scipy
 pip install hg+http://bitbucket.org/pygame/pygame
-</code>
+```
 
 then for using the tools, after downloading the whole package, you need to compile some C functions. For that you should go to the directory <code>software/models/utilFunctions_C</code> and type:</p>
 
