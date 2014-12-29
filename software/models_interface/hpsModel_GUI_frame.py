@@ -1,7 +1,11 @@
 # GUI frame for the hprModel_function.py
 
-from tkinter import *
-import tkinter.filedialog, tkinter.messagebox
+try:
+    from tkinter import *
+except ImportError:
+    from Tkinter import *
+    import tkFileDialog as filedialog, tkMessageBox as messagebox
+
 import sys, os
 import pygame
 from scipy.io.wavfile import read
@@ -173,20 +177,20 @@ class HpsModel_frame:
 		if filename[-4:] == '.wav':
 			(fs, x) = read(filename)
 		else:
-			tkinter.messagebox.showerror("Wav file", "The audio file must be a .wav")
+			messagebox.showerror("Wav file", "The audio file must be a .wav")
 			return
 
 		if len(x.shape) > 1 :
-			tkinter.messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
+			messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
 		elif fs != 44100:
-			tkinter.messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
+			messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
 		else:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
  
 	def browse_file(self):
 		
-		self.filename = tkinter.filedialog.askopenfilename(**self.file_opt)
+		self.filename = filedialog.askopenfilename(**self.file_opt)
  
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
@@ -211,7 +215,7 @@ class HpsModel_frame:
 			hpsModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope, stocf)
 
 		except ValueError as errorMessage:
-			tkinter.messagebox.showerror("Input values error", errorMessage)
+			messagebox.showerror("Input values error", errorMessage)
 
 	def play_out_sound(self, extension):
 
@@ -220,4 +224,4 @@ class HpsModel_frame:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
 		else:
-			tkinter.messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")
+			messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")

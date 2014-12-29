@@ -1,7 +1,11 @@
 # GUI frame for the sineTransformations_function.py
 
-from tkinter import *
-import tkinter.filedialog, tkinter.messagebox
+try:
+    from tkinter import *
+except ImportError:
+    from Tkinter import *
+    import tkFileDialog as filedialog, tkMessageBox as messagebox
+
 import sys, os
 import pygame
 from scipy.io.wavfile import read
@@ -162,20 +166,20 @@ class SineTransformations_frame:
 		if filename[-4:] == '.wav':
 			(fs, x) = read(filename)
 		else:
-			tkinter.messagebox.showerror("Wav file", "The audio file must be a .wav")
+			messagebox.showerror("Wav file", "The audio file must be a .wav")
 			return
 
 		if len(x.shape) > 1 :
-			tkinter.messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
+			messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
 		elif fs != 44100:
-			tkinter.messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
+			messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
 		else:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
  
 	def browse_file(self):
 		
-		self.filename = tkinter.filedialog.askopenfilename(**self.file_opt)
+		self.filename = filedialog.askopenfilename(**self.file_opt)
  
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
@@ -197,7 +201,7 @@ class SineTransformations_frame:
 			self.inputFile, self.fs, self.tfreq, self.tmag = sT.analysis(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
 		except ValueError:
-			tkinter.messagebox.showerror("Input values error", "Some parameters are incorrect")
+			messagebox.showerror("Input values error", "Some parameters are incorrect")
 
 	def transformation_synthesis(self):
 
@@ -212,10 +216,10 @@ class SineTransformations_frame:
 			sT.transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling, timeScaling)
 
 		except ValueError as errorMessage:
-			tkinter.messagebox.showerror("Input values error", errorMessage)
+			messagebox.showerror("Input values error", errorMessage)
 
 		except AttributeError:
-			tkinter.messagebox.showerror("Analysis not computed", "First you must analyse the sound!")
+			messagebox.showerror("Analysis not computed", "First you must analyse the sound!")
 
 	def play_out_sound(self, extension):
 
@@ -224,4 +228,4 @@ class SineTransformations_frame:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
 		else:
-			tkinter.messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")
+			messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")

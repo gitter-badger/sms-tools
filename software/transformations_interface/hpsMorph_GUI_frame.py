@@ -1,7 +1,11 @@
 # GUI frame for the hpsMorph_function.py
 
-from tkinter import *
-import tkinter.filedialog, tkinter.messagebox
+try:
+    from tkinter import *
+except ImportError:
+    from Tkinter import *
+    import tkFileDialog as filedialog, tkMessageBox as messagebox
+
 import sys, os
 import pygame
 from scipy.io.wavfile import read
@@ -305,20 +309,20 @@ class HpsMorph_frame:
 		if filename[-4:] == '.wav':
 			(fs, x) = read(filename)
 		else:
-			tkinter.messagebox.showerror("Wav file", "The audio file must be a .wav")
+			messagebox.showerror("Wav file", "The audio file must be a .wav")
 			return
 
 		if len(x.shape) > 1 :
-			tkinter.messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
+			messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
 		elif fs != 44100:
-			tkinter.messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
+			messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
 		else:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
  
 	def browse_file1(self):
 		
-		self.filename1 = tkinter.filedialog.askopenfilename(**self.file_opt)
+		self.filename1 = filedialog.askopenfilename(**self.file_opt)
  
 		#set the text of the self.filelocation
 		self.filelocation1.delete(0, END)
@@ -330,20 +334,20 @@ class HpsMorph_frame:
 		if filename[-4:] == '.wav':
 			(fs, x) = read(filename)
 		else:
-			tkinter.messagebox.showerror("Wav file", "The audio file must be a .wav")
+			messagebox.showerror("Wav file", "The audio file must be a .wav")
 			return
 
 		if len(x.shape) > 1 :
-			tkinter.messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
+			messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
 		elif fs != 44100:
-			tkinter.messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
+			messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
 		else:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
  
 	def browse_file2(self):
 		
-		self.filename2 = tkinter.filedialog.askopenfilename(**self.file_opt)
+		self.filename2 = filedialog.askopenfilename(**self.file_opt)
  
 		#set the text of the self.filelocation
 		self.filelocation2.delete(0, END)
@@ -382,7 +386,7 @@ class HpsMorph_frame:
 				minSineDur1, nH, minf01, maxf01, f0et1, harmDevSlope1, stocf, inputFile2, window2, M2, N2, t2, minSineDur2, minf02, maxf02, f0et2, harmDevSlope2)
 
 		except ValueError as errorMessage:
-			tkinter.messagebox.showerror("Input values error", errorMessage)
+			messagebox.showerror("Input values error", errorMessage)
 
 	def transformation_synthesis(self):
 
@@ -403,10 +407,10 @@ class HpsMorph_frame:
 			hM.transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
 		except ValueError as errorMessage:
-			tkinter.messagebox.showerror("Input values error", errorMessage)
+			messagebox.showerror("Input values error", errorMessage)
 
 		except AttributeError:
-			tkinter.messagebox.showerror("Analysis not computed", "First you must analyse the sound!")
+			messagebox.showerror("Analysis not computed", "First you must analyse the sound!")
 
 	def play_out_sound(self, extension):
 
@@ -415,4 +419,4 @@ class HpsMorph_frame:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
 		else:
-			tkinter.messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")
+			messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")

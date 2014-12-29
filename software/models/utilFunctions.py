@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import numpy as np
 from scipy.signal import resample, blackmanharris, triang
 from scipy.fftpack import fft, ifft, fftshift
@@ -336,8 +338,8 @@ def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
 		xrw = np.real(fftshift(ifft(Xr)))                # inverse FFT
 		xr[pin:pin+N] += xrw*sw                          # overlap-add
 		pin += H                                         # advance sound pointer
-	xr = np.delete(xr, list(range(hN)))                      # delete half of first window which was added in stftAnal
-	xr = np.delete(xr, list(range(xr.size-hN, xr.size)))     # delete half of last window which was added in stftAnal
+	xr = np.delete(xr, range(hN))                      # delete half of first window which was added in stftAnal
+	xr = np.delete(xr, range(xr.size-hN, xr.size))     # delete half of last window which was added in stftAnal
 	return xr
 
 def stochasticResidualAnal(x, N, H, sfreq, smag, sphase, fs, stocf):
