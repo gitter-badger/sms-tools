@@ -11,7 +11,7 @@ def fetchDataDetails(inputDir, descExt = '.json'):
     for fname in fnames:
       if descExt in fname.lower():
         rname, cname, sname = path.split('/')
-        if not dataDetails.has_key(cname):
+        if cname not in dataDetails:
           dataDetails[cname]={}
         fDict = json.load(open(os.path.join(rname, cname, sname, fname),'r'))
         dataDetails[cname][sname]={'file': fname, 'feature':fDict}
@@ -43,11 +43,11 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
   catArray = []
   for ii, category in enumerate(dataDetails.keys()):
     catArray.append(category)
-    for soundId in dataDetails[category].keys():
+    for soundId in list(dataDetails[category].keys()):
       filepath = os.path.join(inputDir, category, soundId, dataDetails[category][soundId]['file'])
       descSound = json.load(open(filepath, 'r'))
-      if not descSound.has_key(descriptors[0]) or not descSound.has_key(descriptors[1]):
-          print "Please provide descriptors which are extracted and saved before"
+      if descriptors[0] not in descSound or descriptors[1] not in descSound:
+          print("Please provide descriptors which are extracted and saved before")
           return -1
       if "mfcc" in descriptors[0]:
         x_cord = descSound[descriptors[0]][0][mfccInd[0]]

@@ -7,14 +7,14 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), './uti
 try:
 	import utilFunctions_C as UF_C
 except ImportError:
-	print "\n"
-	print "-------------------------------------------------------------------------------"
-	print "Warning:"
-	print "Cython modules for some of the core functions were not imported."
-	print "Please refer to the README file for the instructions to compile the cython modules"
-	print "Exiting the code!!"
-	print "-------------------------------------------------------------------------------"
-	print "\n"
+	print("\n")
+	print("-------------------------------------------------------------------------------")
+	print("Warning:")
+	print("Cython modules for some of the core functions were not imported.")
+	print("Please refer to the README file for the instructions to compile the cython modules")
+	print("Exiting the code!!")
+	print("-------------------------------------------------------------------------------")
+	print("\n")
 	sys.exit(0)
 
 def isPower2(num):
@@ -336,8 +336,8 @@ def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
 		xrw = np.real(fftshift(ifft(Xr)))                # inverse FFT
 		xr[pin:pin+N] += xrw*sw                          # overlap-add
 		pin += H                                         # advance sound pointer
-	xr = np.delete(xr, range(hN))                      # delete half of first window which was added in stftAnal
-	xr = np.delete(xr, range(xr.size-hN, xr.size))     # delete half of last window which was added in stftAnal
+	xr = np.delete(xr, list(range(hN)))                      # delete half of first window which was added in stftAnal
+	xr = np.delete(xr, list(range(xr.size-hN, xr.size)))     # delete half of last window which was added in stftAnal
 	return xr
 
 def stochasticResidualAnal(x, N, H, sfreq, smag, sphase, fs, stocf):

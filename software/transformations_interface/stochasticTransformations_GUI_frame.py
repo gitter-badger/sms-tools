@@ -1,7 +1,7 @@
 # GUI frame for the stochasticTransformations_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
+from tkinter import *
+import tkinter.filedialog, tkinter.messagebox
 import sys, os
 import pygame
 from scipy.io.wavfile import read
@@ -78,20 +78,20 @@ class StochasticTransformations_frame:
 		if filename[-4:] == '.wav':
 			(fs, x) = read(filename)
 		else:
-			tkMessageBox.showerror("Wav file", "The audio file must be a .wav")
+			tkinter.messagebox.showerror("Wav file", "The audio file must be a .wav")
 			return
 
 		if len(x.shape) > 1 :
-			tkMessageBox.showerror("Stereo file", "Audio file must be Mono not Stereo")
+			tkinter.messagebox.showerror("Stereo file", "Audio file must be Mono not Stereo")
 		elif fs != 44100:
-			tkMessageBox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
+			tkinter.messagebox.showerror("Sample Frequency", "Sample frequency must be 44100 Hz")
 		else:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
  
 	def browse_file(self):
 		
-		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
+		self.filename = tkinter.filedialog.askopenfilename(**self.file_opt)
  
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
@@ -107,7 +107,7 @@ class StochasticTransformations_frame:
 			sT.main(inputFile, stocf, timeScaling)
 
 		except ValueError as errorMessage:
-			tkMessageBox.showerror("Input values error", errorMessage)
+			tkinter.messagebox.showerror("Input values error", errorMessage)
 
 	def play_out_sound(self, extension):
 
@@ -116,4 +116,4 @@ class StochasticTransformations_frame:
 			sound = pygame.mixer.Sound(filename)
 			sound.play()
 		else:
-			tkMessageBox.showerror("Output audio file not found", "The output audio file has not been computed yet")
+			tkinter.messagebox.showerror("Output audio file not found", "The output audio file has not been computed yet")

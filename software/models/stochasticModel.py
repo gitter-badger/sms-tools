@@ -65,8 +65,8 @@ def stochasticModelSynth(stocEnv, H, N):
 		fftbuffer = np.real(ifft(Y))                           # inverse FFT
 		y[pout:pout+N] += ws*fftbuffer                         # overlap-add
 		pout += H  
-	y = np.delete(y, range(hN))                              # delete half of first window
-	y = np.delete(y, range(y.size-hN, y.size))               # delete half of the last window 
+	y = np.delete(y, list(range(hN)))                              # delete half of first window
+	y = np.delete(y, list(range(y.size-hN, y.size)))               # delete half of the last window 
 	return y
 
 def stochasticModel(x, H, N, stocf):
@@ -110,7 +110,7 @@ def stochasticModel(x, H, N, stocf):
 		fftbuffer = np.real(ifft(Y))                           # inverse FFT
 		y[pin-hN:pin+hN] += w*fftbuffer                        # overlap-add
 		pin += H  
-	y = np.delete(y, range(hN))                              # delete half of first window which was added 
-	y = np.delete(y, range(y.size-hN, y.size))               # delete half of last window which was added                                            # advance sound pointer
+	y = np.delete(y, list(range(hN)))                              # delete half of first window which was added 
+	y = np.delete(y, list(range(y.size-hN, y.size)))               # delete half of last window which was added                                            # advance sound pointer
 	return y
 	

@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 from notebook import *   # window with tabs
 
 from dftModel_GUI_frame import *

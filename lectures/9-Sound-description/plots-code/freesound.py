@@ -6,9 +6,11 @@ try: #python 3
     from urllib.parse import urlparse, urlencode, quote
     from urllib.error import HTTPError
 except ImportError: #python 2.7
-    from urlparse import urlparse
-    from urllib import urlencode, FancyURLopener, quote
-    from urllib2 import HTTPError, urlopen, Request
+    from urllib.parse import urlparse
+    from urllib.parse import urlencode, quote
+    from urllib.request import FancyURLopener
+    from urllib.error import HTTPError
+    from urllib.request import urlopen, Request
     
 class URIS():    
     HOST = 'www.freesound.org'
@@ -89,7 +91,7 @@ class FreesoundObject:
     def __init__(self,json_dict, client):
         self.client=client
         def replace_dashes(d):
-            for k, v in d.items():
+            for k, v in list(d.items()):
                 if "-" in k:
                     d[k.replace("-","_")] = d[k]
                     del d[k]
@@ -97,7 +99,7 @@ class FreesoundObject:
         
         replace_dashes(json_dict)
         self.__dict__.update(json_dict)
-        for k, v in json_dict.items():
+        for k, v in list(json_dict.items()):
             if isinstance(v, dict):
                 self.__dict__[k] = FreesoundObject(v, client)
 
@@ -123,12 +125,12 @@ class FSRequest:
     def request(cls, uri, params={}, client=None, wrapper=FreesoundObject, method='GET',data=False):
         p = params if params else {}
         url = '%s?%s' % (uri, urlencode(p)) if params else uri
-        d = urllib.urlencode(data) if data else None
+        d = urllib.parse.urlencode(data) if data else None
         headers = {'Authorization':client.header}  
         req = Request(url,d,headers)
         try:
             f = urlopen(req)
-        except HTTPError, e:
+        except HTTPError as e:
             resp = e.read()
             if e.code >= 200 and e.code < 300:
                 return resp
@@ -156,7 +158,7 @@ class Pager(FreesoundObject):
         return Sound(self.results[key],self.client)
 
     def next_page(self):
-        return FSRequest.request(self.next, {}, self.client, Pager)
+        return FSRequest.request(self.__next__, {}, self.client, Pager)
 
     def previous_page(self):
         return FSRequest.request(self.previous, {}, self.client, Pager)

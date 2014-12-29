@@ -145,8 +145,8 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 		yh[hNs-1:] = fftbuffer[:hNs+1] 
 		y[pin-hNs:pin+hNs] += sw*yh                           # overlap-add
 		pin += H                                              # advance sound pointer
-	y = np.delete(y, range(hM2))                            # delete half of first window which was added in stftAnal
-	y = np.delete(y, range(y.size-hM1, y.size))             # add zeros at the end to analyze last sample
+	y = np.delete(y, list(range(hM2)))                            # delete half of first window which was added in stftAnal
+	y = np.delete(y, list(range(y.size-hM1, y.size)))             # add zeros at the end to analyze last sample
 	return y
 
 def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):

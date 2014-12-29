@@ -1,4 +1,4 @@
-from Tkinter import * 
+from tkinter import * 
 
 class notebook(object): 
 	def __init__(self, master, side=LEFT): 
