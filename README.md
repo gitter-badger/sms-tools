@@ -22,6 +22,12 @@ pip install ipython readline Cython matplotlib numpy scipy
 pip install hg+http://bitbucket.org/pygame/pygame
 ```
 
+Hack: get the tkinter module to the proper Python path (one level higher) ([more info](http://bohumirzamecnik.cz/blog/2014/install-tkinter-with-python-3-on-mac/)).
+```
+TKMODULE=$(port contents py34-tkinter|grep _tkinter.so)
+sudo ln -s $TKMODULE $(echo $TKMODULE|sed 's/site-packages\///')
+```
+
 then for using the tools, after downloading the whole package, you need to compile some C functions. For that you should go to the directory <code>software/models/utilFunctions_C</code> and type:</p>
 
 <code>$ python compileModule.py build_ext --inplace </code>
