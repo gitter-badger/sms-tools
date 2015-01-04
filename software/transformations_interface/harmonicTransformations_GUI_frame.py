@@ -2,6 +2,7 @@
 
 try:
     from tkinter import *
+    from tkinter import messagebox, filedialog
 except ImportError:
     from Tkinter import *
     import tkFileDialog as filedialog, tkMessageBox as messagebox
