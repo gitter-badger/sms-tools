@@ -177,5 +177,3 @@ if __name__ == "__main__":
 
 	# transformation and synthesis
 	transformation_synthesis (inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2)
-
-	plt.show()

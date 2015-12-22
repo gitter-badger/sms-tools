@@ -154,6 +154,3 @@ if __name__ == "__main__":
 
 	# transformation and synthesis
 	transformation_synthesis (inputFile, fs, tfreq, tmag)
-
-	plt.show()
-
