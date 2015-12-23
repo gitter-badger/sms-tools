@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 
@@ -15,4 +18,4 @@ plt.ylabel('Mel scale')
 
 plt.tight_layout()
 plt.savefig('mel-scale.png')
-plt.show()
+

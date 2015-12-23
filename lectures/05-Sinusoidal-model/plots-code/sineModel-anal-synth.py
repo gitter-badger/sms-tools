@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
@@ -47,4 +50,4 @@ plt.title('y')
 plt.tight_layout()
 UF.wavwrite(y, fs, 'bendir-sine-synthesis.wav')
 plt.savefig('sineModel-anal-synth.png')
-plt.show()
+

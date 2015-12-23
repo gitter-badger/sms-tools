@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackman
 import math
@@ -88,4 +91,4 @@ plt.title('TWM Errors')
 
 plt.tight_layout()
 plt.savefig('f0-TWM-errors-1.png')
-plt.show()
+

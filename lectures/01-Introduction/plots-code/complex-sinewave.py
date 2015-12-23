@@ -1,3 +1,7 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -15,4 +19,3 @@ plt.legend()
 
 plt.tight_layout()
 plt.savefig('complex-sinewave.png')
-plt.show()

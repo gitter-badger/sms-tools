@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
@@ -48,4 +51,4 @@ plt.axis([-N/2,N/2,-80,max(mY2)])
 
 plt.tight_layout()
 plt.savefig('convolution-2.png')
-plt.show()
+

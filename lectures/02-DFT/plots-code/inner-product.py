@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -28,4 +31,4 @@ plt.title('$angle(<x,s_k>)$', fontsize=18)
 
 plt.tight_layout()
 plt.savefig('inner-product.png')
-plt.show()
+

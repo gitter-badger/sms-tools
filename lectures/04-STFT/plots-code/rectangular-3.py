@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft
@@ -15,4 +18,4 @@ plt.axis([-hN,hN,-40,0])
 
 plt.tight_layout()
 plt.savefig('rectangular-3.png')
-plt.show()
+

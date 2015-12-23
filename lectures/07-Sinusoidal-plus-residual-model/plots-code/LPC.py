@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
@@ -39,4 +42,4 @@ plt.title('mX + mY (LPC approximation)')
 
 plt.tight_layout()
 plt.savefig('LPC.png')
-plt.show()
+

@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import os, sys
@@ -50,4 +53,4 @@ plt.scatter(centroids[:,0],centroids[:,1], c=color[:nClusters], alpha=1, s=80)
 
 plt.tight_layout()
 plt.savefig('k-means.png')
-plt.show()
+

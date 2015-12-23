@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
@@ -60,4 +63,4 @@ if __name__ == '__main__':
 
   plt.tight_layout()
   plt.savefig('envelope-approx.png')
-  plt.show()
+  

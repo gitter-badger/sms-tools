@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -33,4 +36,4 @@ plt.title ('pX')
 
 plt.tight_layout()
 plt.savefig('oboe-spectrum.png')
-plt.show()
+

@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
@@ -31,4 +34,4 @@ plt.axis([-N/2,N/2-1,min(y), max(y)])
 
 plt.tight_layout()
 plt.savefig('idft.png')
-plt.show()
+

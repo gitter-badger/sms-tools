@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io.wavfile import read
@@ -39,4 +42,4 @@ plt.plot(x2,'b')
 
 plt.tight_layout()
 plt.savefig('ola.png')
-plt.show()
+

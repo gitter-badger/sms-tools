@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import math
@@ -94,4 +97,4 @@ plt.title('yh + xr')
 
 plt.tight_layout()
 plt.savefig('hprModelFrame.png')
-plt.show()
+

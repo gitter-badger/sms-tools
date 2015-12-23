@@ -1,4 +1,7 @@
 import sys, csv, os
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 from essentia import *
 from essentia.standard import *
 from pylab import *
@@ -50,5 +53,3 @@ plt.title('pitch salience')
 
 tight_layout()
 savefig('pitchSalienceFunction.png')
-
-show()

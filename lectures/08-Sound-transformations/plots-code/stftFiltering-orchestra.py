@@ -1,5 +1,8 @@
 import numpy as np
 import time, os, sys
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
@@ -46,4 +49,4 @@ plt.autoscale(tight=True)
 plt.tight_layout()
 UF.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
 plt.savefig('stftFiltering-orchestra.png')
-plt.show()
+

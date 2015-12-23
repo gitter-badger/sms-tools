@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
@@ -63,4 +66,4 @@ plt.title('pW2')
 
 plt.tight_layout()
 plt.savefig('blackman-even-odd.png')
-plt.show()
+

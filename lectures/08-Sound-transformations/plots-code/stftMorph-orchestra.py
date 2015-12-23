@@ -1,6 +1,9 @@
 import numpy as np
 import time, os, sys
 from scipy.signal import hamming, resample
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
@@ -58,4 +61,4 @@ plt.autoscale(tight=True)
 plt.tight_layout()
 UF.wavwrite(y, fs, 'orchestra-speech-stftMorph.wav')
 plt.savefig('stftMorph-orchestra.png')
-plt.show()
+

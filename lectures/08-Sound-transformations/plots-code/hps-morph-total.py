@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import sys, os
@@ -113,4 +116,4 @@ plt.title('y: harmonics + stochastic spectrogram')
 
 plt.tight_layout()
 plt.savefig('hps-morph-total.png')
-plt.show()
+

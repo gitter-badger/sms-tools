@@ -1,4 +1,7 @@
 import sys, csv, os
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 from essentia import *
 from essentia.standard import *
 from pylab import *
@@ -68,4 +71,3 @@ for i in range(len(contours_bins)):
 plt.title('mX + F0 trajectories (carnatic.wav)')
 tight_layout()
 savefig('predominantmelody.png')
-show()

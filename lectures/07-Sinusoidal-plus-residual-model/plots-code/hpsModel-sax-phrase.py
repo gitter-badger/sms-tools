@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
@@ -57,4 +60,4 @@ plt.savefig('hpsModel-sax-phrase.png')
 UF.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
 UF.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
 UF.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
-plt.show()
+

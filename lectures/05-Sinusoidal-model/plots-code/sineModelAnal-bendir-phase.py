@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import sys, os, time
 
@@ -37,4 +40,4 @@ plt.title('pX + sinusoidal tracks (bendir.wav)')
 
 plt.tight_layout()
 plt.savefig('sineModelAnal-bendir-phase.png')
-plt.show()
+

@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, resample
 from scipy.fftpack import fft, ifft
@@ -50,4 +53,4 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.tight_layout()
 plt.savefig('stochasticModelAnalSynth.png')
 UF.wavwrite(y, fs, 'ocean-synthesis.wav')
-plt.show()
+

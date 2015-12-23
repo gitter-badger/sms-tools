@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackman
 import math
@@ -42,4 +45,4 @@ plt.title('mX + f0 (piano.wav), TWM')
 plt.tight_layout()
 plt.savefig('f0Twm-piano.png')
 UF.wavwrite(yf0, fs, 'f0Twm-piano.wav')
-plt.show()
+

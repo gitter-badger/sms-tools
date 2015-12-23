@@ -1,5 +1,8 @@
 import numpy as np
 from scipy import signal
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 
@@ -38,4 +41,4 @@ plt.title('Blackman, M=201, H=50')
 
 plt.tight_layout()
 plt.savefig('window-overlap.png')
-plt.show()
+

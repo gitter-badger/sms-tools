@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft, fftshift
 import sys
@@ -41,4 +44,4 @@ plt.axis([0,N/2,min(pX1),max(pX1)])
 
 plt.tight_layout()
 plt.savefig('unwrap.png')
-plt.show()
+

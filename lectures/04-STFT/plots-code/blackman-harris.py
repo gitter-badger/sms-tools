@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft
@@ -28,4 +31,4 @@ plt.axis([-hN,hN,-110,0])
 
 plt.tight_layout()
 plt.savefig('blackman-harris.png')
-plt.show()
+

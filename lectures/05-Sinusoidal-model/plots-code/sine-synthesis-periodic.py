@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import ifft
@@ -41,4 +44,4 @@ plt.title('y; N = 64')
 
 plt.tight_layout()
 plt.savefig('sine-synthesis-periodic.png')
-plt.show()
+

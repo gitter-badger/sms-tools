@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -52,4 +55,4 @@ plt.title ('mX (blackman window)')
 
 plt.tight_layout()
 plt.savefig('windows.png')
-plt.show()
+

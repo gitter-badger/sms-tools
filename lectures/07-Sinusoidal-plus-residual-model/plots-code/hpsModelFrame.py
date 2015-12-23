@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris, resample
 import math
@@ -67,4 +70,4 @@ plt.title('mYh + mXr + mYst')
 
 plt.tight_layout()
 plt.savefig('hpsModelFrame.png')
-plt.show()
+

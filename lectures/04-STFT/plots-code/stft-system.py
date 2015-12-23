@@ -5,6 +5,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 
 import stft as STFT
 import utilFunctions as UF
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming
 
@@ -46,4 +49,4 @@ plt.title('y')
 plt.tight_layout()
 plt.savefig('stft-system.png')
 UF.wavwrite(y, fs, 'piano-stft.wav')
-plt.show()
+

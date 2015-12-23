@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
@@ -44,4 +47,4 @@ plt.axis([0,pX2.size,min(pX2),max(pX2)])
 
 plt.tight_layout()
 plt.savefig('shift.png')
-plt.show()
+

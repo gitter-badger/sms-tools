@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 from scipy.fftpack import fft, ifft, fftshift
@@ -46,4 +49,4 @@ plt.title("y")
 
 plt.tight_layout()
 plt.savefig('spectral-sine-synthesis.png')
-plt.show()
+

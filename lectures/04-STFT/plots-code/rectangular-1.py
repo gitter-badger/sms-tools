@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft
@@ -32,4 +35,4 @@ plt.annotate('highest side-lobe', xy=(32,-13), xytext=(100, -10), fontsize=16, a
 
 plt.tight_layout()
 plt.savefig('rectangular-1.png')
-plt.show()
+

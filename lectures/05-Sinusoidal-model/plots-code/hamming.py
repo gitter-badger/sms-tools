@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft
@@ -29,4 +32,4 @@ plt.title('mW')
 
 plt.tight_layout()
 plt.savefig('hamming.png')
-plt.show()
+

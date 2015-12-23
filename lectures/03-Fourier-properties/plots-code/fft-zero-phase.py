@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
@@ -43,4 +46,4 @@ plt.title('pX')
 
 plt.tight_layout()
 plt.savefig('fft-zero-phase.png')
-plt.show()
+

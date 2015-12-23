@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 from scipy.fftpack import fft, ifft
@@ -106,4 +109,4 @@ plt.title ("error function: x-y; SNR = ${%d}$ dB" %(SNR2))
 
 plt.tight_layout()
 plt.savefig('spec-sine-synthesis-lobe.png')
-plt.show()
+

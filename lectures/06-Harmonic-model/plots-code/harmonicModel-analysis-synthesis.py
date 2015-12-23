@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
@@ -48,4 +51,4 @@ plt.title('yh')
 plt.tight_layout()
 UF.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
 plt.savefig('harmonicModel-analysis-synthesis.png')
-plt.show()
+

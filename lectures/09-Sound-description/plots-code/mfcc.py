@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import essentia.standard as ess
 
@@ -35,4 +38,4 @@ plt.title('MFCCs')
 plt.autoscale(tight=True)
 plt.tight_layout()
 plt.savefig('mfcc.png')
-plt.show()
+

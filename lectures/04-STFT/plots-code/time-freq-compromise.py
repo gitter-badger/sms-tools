@@ -5,6 +5,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 
 import stft as STFT
 import utilFunctions as UF
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming
 from scipy.fftpack import fft
@@ -41,4 +44,4 @@ plt.autoscale(tight=True)
 
 plt.tight_layout()
 plt.savefig('time-freq-compromise.png')
-plt.show()
+

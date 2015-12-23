@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import essentia.standard as ess
 
@@ -46,4 +49,4 @@ plt.legend()
 
 plt.tight_layout()
 plt.savefig('loudness.png')
-plt.show()
+

@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import os, sys
@@ -53,4 +56,4 @@ plt.scatter(query[indC2,0],query[indC2,1], c='r', alpha=1, s=50)
 
 plt.tight_layout()
 plt.savefig('knn.png')
-plt.show()
+

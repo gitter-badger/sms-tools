@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -30,4 +33,4 @@ plt.title ('pX; Hamming window, N=2048')
 
 plt.tight_layout()
 plt.savefig('oboe-spectrum-hamming-2.png')
-plt.show()
+

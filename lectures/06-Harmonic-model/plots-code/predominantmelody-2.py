@@ -1,4 +1,7 @@
 import sys, csv, os
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 from essentia import *
 from essentia.standard import *
 from pylab import *
@@ -72,5 +75,3 @@ plt.title('mX + prominent melody (carnatic.wav)')
 tight_layout()
 savefig('predominantmelody-2.png')
 UF.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')
-
-show()

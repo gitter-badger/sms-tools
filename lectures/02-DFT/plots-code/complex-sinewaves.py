@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -15,4 +18,4 @@ for k in range(N):
 
 plt.tight_layout()
 plt.savefig('complex-sinewaves.png')
-plt.show()
+

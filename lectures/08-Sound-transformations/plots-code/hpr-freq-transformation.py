@@ -1,6 +1,9 @@
 # function call to the transformation functions of relevance for the hpsModel
 
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import sys, os
@@ -89,4 +92,3 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('hpr-freq-transformations.png')
-plt.show(block=False)

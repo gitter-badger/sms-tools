@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import math
@@ -34,4 +37,4 @@ plt.title('mX + peaks + f0 multiples (oboe-A4.wav)')
 
 plt.tight_layout()
 plt.savefig('spectral-peaks-and-f0.png')
-plt.show()
+

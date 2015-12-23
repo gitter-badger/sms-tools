@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
@@ -51,4 +54,4 @@ plt.title("y; Ns = 512")
 
 plt.tight_layout()
 plt.savefig('sine-analysis-synthesis.png')
-plt.show()
+

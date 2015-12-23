@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -43,4 +46,4 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('anal-synth.png')
-plt.show()
+

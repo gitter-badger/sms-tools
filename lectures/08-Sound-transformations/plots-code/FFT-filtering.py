@@ -1,4 +1,7 @@
 import math
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -59,4 +62,4 @@ plt.title('pY')
 
 plt.tight_layout()
 plt.savefig('FFT-filtering.png')
-plt.show()
+

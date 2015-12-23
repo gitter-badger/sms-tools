@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
@@ -15,4 +18,4 @@ plt.xlabel('input time')
 plt.ylabel('output time')
 plt.autoscale(tight=True)
 plt.savefig('timescale.png')
-plt.show()
+

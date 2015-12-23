@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 tol = 1e-5
 
@@ -33,4 +36,4 @@ plt.axis([-N/2,N/2-1,-np.pi,np.pi])
 
 plt.tight_layout()
 plt.savefig('dft-real-sine.png')
-plt.show()
+

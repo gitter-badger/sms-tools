@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming
 from scipy.fftpack import fft, fftshift
@@ -35,4 +38,4 @@ plt.title('magnitude spectrum: mX3, N=32')
 
 plt.tight_layout()
 plt.savefig('zero-padding.png')
-plt.show()
+

@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import os, sys
@@ -21,4 +24,4 @@ plt.xlabel('second dimension', fontsize =16)
 
 plt.tight_layout()
 plt.savefig('euclidian-distance.png')
-plt.show()
+

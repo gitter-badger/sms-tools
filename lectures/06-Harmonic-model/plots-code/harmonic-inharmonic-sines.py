@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
@@ -65,4 +68,3 @@ plt.title('mX + sine frequencies (vignesh.wav)')
 
 plt.tight_layout()
 plt.savefig('harmonic-inharmonic-sines.png')
-plt.show()

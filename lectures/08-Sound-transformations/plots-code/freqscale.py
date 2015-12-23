@@ -1,4 +1,7 @@
 import numpy as np
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
@@ -14,4 +17,4 @@ plt.xlabel('time')
 plt.ylabel('scaling factor')
 plt.autoscale(tight=True)
 plt.savefig('freqscale.png')
-plt.show()
+

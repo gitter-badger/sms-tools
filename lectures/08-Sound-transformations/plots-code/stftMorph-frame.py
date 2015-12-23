@@ -1,5 +1,8 @@
 import numpy as np
 import time, os, sys
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, resample
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
@@ -74,4 +77,4 @@ plt.title('pY')
 plt.tight_layout()
 
 plt.savefig('stftMorph-frame.png')
-plt.show()
+

@@ -1,4 +1,7 @@
 import math
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
@@ -52,4 +55,4 @@ plt.title('pX2')
 
 plt.tight_layout()
 plt.savefig('window-size.png')
-plt.show()
+

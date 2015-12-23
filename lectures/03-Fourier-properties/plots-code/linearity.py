@@ -1,3 +1,6 @@
+# matplotlib without any blocking GUI
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io.wavfile import read
@@ -51,4 +54,4 @@ plt.axis([0,N,0,1])
 
 plt.tight_layout()
 plt.savefig('linearity.png')
-plt.show()
+
