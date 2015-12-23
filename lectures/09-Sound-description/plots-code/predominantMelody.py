@@ -13,7 +13,7 @@ H = 128
 M = 2048
 
 
-predominantMelody = PredominantMelody(frameSize=M, hopSize=H)
+predominantMelody = PredominantPitchMelodia(frameSize=M, hopSize=H)
 x = MonoLoader(filename = filename, sampleRate = fs)()
 
 pitch, pitchConfidence = predominantMelody(x)
