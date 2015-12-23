@@ -126,7 +126,7 @@ Audio can be transformed by modifying its model.
 
 ## Authors
 
-The [people](authors.md) who contributed to this software.
+The [people](AUTHORS) who contributed to this software.
 
 ## License
 
