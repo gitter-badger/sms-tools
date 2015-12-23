@@ -12,6 +12,10 @@ $ sh run_regression_test.sh
 The actual outputs are stored in the actual/ dir to find out what was
 different.
 
+The test also makes a code coverage report.
+
+$ open cover/index.html
+
 The files are compared using the MD5 hash. Missing files are spotted, while
 superfluous files are not checked.
 
