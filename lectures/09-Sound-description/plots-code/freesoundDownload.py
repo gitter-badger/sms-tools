@@ -2,9 +2,6 @@ import os, sys
 import freesound as fs
 import json
 
-# obtain the API key from freesound.org and add it here
-Key = "????????????"
-
 descriptors = [ 'lowlevel.spectral_centroid.mean',
                 'lowlevel.spectral_centroid.var',
                 'lowlevel.mfcc.mean',
@@ -124,6 +121,16 @@ def downloadSoundsFreesound(queryText = "", API_Key = "", outputDir = "", topNRe
 ######
 
 if __name__ == '__main__':
+    if not 'FREESOUND_API_KEY' in os.environ:
+        print("""Please obtain the Freesound API key from freesound.org and
+provide it via the FREESOUND_API_KEY environment variable. For example:
+
+cat 'export FREESOUND_API_KEY="<paste your key here>"' >> ~/.profile && source ~/.profile
+        """)
+        sys.exit(1)
+
+    Key = os.environ['FREESOUND_API_KEY']
+
     output_dir = 'freesound-sounds'
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)
