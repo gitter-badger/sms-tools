@@ -3,7 +3,7 @@
 This directory includes the slides (ODT) and resources for lectures of the
 [Audio Signal Processing for Music Applications
 ](https://www.coursera.org/course/audio)
-course by prog. Xaviera Serra.
+course by prof. Xavier Serra.
 
 Besides the slides there's a Python code which generates the plots and
 other resources (eg. sounds) used in the slides.
