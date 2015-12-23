@@ -123,6 +123,11 @@ def downloadSoundsFreesound(queryText = "", API_Key = "", outputDir = "", topNRe
 
 ######
 
-downloadSoundsFreesound(queryText = 'trumpet', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir = 'freesound-sounds')
-downloadSoundsFreesound(queryText = 'violin', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir = 'freesound-sounds')
-downloadSoundsFreesound(queryText = 'flute', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir = 'freesound-sounds')
+if __name__ == '__main__':
+    output_dir = 'freesound-sounds'
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)
+
+    downloadSoundsFreesound(queryText = 'trumpet', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir=output_dir)
+    downloadSoundsFreesound(queryText = 'violin', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir=output_dir)
+    downloadSoundsFreesound(queryText = 'flute', API_Key = Key, tag = 'single-note',  duration=(0.5, 4), topNResults = 20, outputDir=output_dir)
