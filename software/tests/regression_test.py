@@ -7,7 +7,7 @@ quickly. Many examples of models and transfomations are ran in this test.
 $ python regression_test.py --save-expected
 
 # then run the test against the expected outputs
-$ sh run_regression_test.sh
+$ ./run_regression_test.sh
 
 The actual outputs are stored in the actual/ dir to find out what was
 different.
