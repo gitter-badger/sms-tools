@@ -8,8 +8,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mo
 import utilFunctions as UF
 import sineModel as SM
 
-def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02, 
-					maxnSines=150, freqDevOffset=10, freqDevSlope=0.001):
+def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02,
+	maxnSines=150, freqDevOffset=10, freqDevSlope=0.001,
+	interactive=True, plotFile=False):
 	"""
 	Perform analysis/synthesis using the sinusoidal model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -78,9 +79,13 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_sine_model.png' % UF.stripFile(inputFile))
+
 
 
 if __name__ == "__main__":
 	main()
-

@@ -10,8 +10,9 @@ import sineModel as SM
 import sineTransformations as ST
 import utilFunctions as UF
 
-def analysis(inputFile='../../sounds/mridangam.wav', window='hamming', M=801, N=2048, t=-90, 
-	minSineDur=0.01, maxnSines=150, freqDevOffset=20, freqDevSlope=0.02):
+def analysis(inputFile='../../sounds/mridangam.wav', window='hamming', M=801, N=2048, t=-90,
+	minSineDur=0.01, maxnSines=150, freqDevOffset=20, freqDevSlope=0.02,
+	interactive=True, plotFile=False):
 	"""
 	Analyze a sound with the sine model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -84,13 +85,18 @@ def analysis(inputFile='../../sounds/mridangam.wav', window='hamming', M=801, N=
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show(block=False)
+
+	if interactive:
+		plt.show(block=False)
+	if plotFile:
+		plt.savefig('output_plots/%s_sine_transformation_analysis.png' % UF.stripFile(inputFile))
 
 	return inputFile, fs, tfreq, tmag
 
 
-def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array([0, 2.0, 1, .3]), 
-	timeScaling = np.array([0, .0, .671, .671, 1.978, 1.978+1.0])):
+def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array([0, 2.0, 1, .3]),
+	timeScaling = np.array([0, .0, .671, .671, 1.978, 1.978+1.0]),
+	interactive=True, plotFile=False):
 	"""
 	Transform the analysis values returned by the analysis function and synthesize the sound
 	inputFile: name of input file; fs: sampling rate of input file	
@@ -145,12 +151,18 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
 
-if __name__ == "__main__":
-	
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_sine_transformation_synthesis.png' % UF.stripFile(inputFile))
+
+def main(interactive=True, plotFile=False):
 	# analysis
-	inputFile, fs, tfreq, tmag = analysis()
+	inputFile, fs, tfreq, tmag = analysis(interactive=interactive, plotFile=plotFile)
 
 	# transformation and synthesis
-	transformation_synthesis (inputFile, fs, tfreq, tmag)
+	transformation_synthesis(inputFile, fs, tfreq, tmag, interactive=interactive, plotFile=plotFile)
+
+if __name__ == "__main__":
+	main()

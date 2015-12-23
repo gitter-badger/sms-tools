@@ -403,6 +403,6 @@ def stochasticResidualAnal(x, N, H, sfreq, smag, sphase, fs, stocf):
 	return stocEnv
 
 
-
-
-
+def stripFile(filePath):
+	'extracts file name without directories and extension'
+	return os.path.splitext(os.path.basename(filePath))[0]

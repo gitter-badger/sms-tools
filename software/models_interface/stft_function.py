@@ -8,7 +8,8 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mo
 import utilFunctions as UF
 import stft as STFT
 
-def main(inputFile = '../../sounds/piano.wav', window = 'hamming', M = 1024, N = 1024, H = 512):
+def main(inputFile = '../../sounds/piano.wav', window = 'hamming', M = 1024, N = 1024, H = 512,
+	interactive=True, plotFile=False):
 	"""
 	analysis/synthesis using the STFT
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -81,8 +82,12 @@ def main(inputFile = '../../sounds/piano.wav', window = 'hamming', M = 1024, N =
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
-	
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_stft_model.png' % UF.stripFile(inputFile))
+
 
 if __name__ == "__main__":
 	main()

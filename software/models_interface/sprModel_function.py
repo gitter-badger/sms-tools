@@ -9,8 +9,9 @@ import utilFunctions as UF
 import sprModel as SPR
 import stft as STFT
 
-def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80, 
-	minSineDur=0.02, maxnSines=150, freqDevOffset=10, freqDevSlope=0.001):
+def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80,
+	minSineDur=0.02, maxnSines=150, freqDevOffset=10, freqDevSlope=0.001,
+	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
 	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
@@ -95,7 +96,12 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_spr_model.png' % UF.stripFile(inputFile))
+
 
 if __name__ == "__main__":
 	main()

@@ -8,8 +8,9 @@ from scipy.signal import get_window
 import spsModel as SPS
 import utilFunctions as UF
 
-def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02, 
-	maxnSines=150, freqDevOffset=10, freqDevSlope=0.001, stocf=0.2):
+def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02,
+	maxnSines=150, freqDevOffset=10, freqDevSlope=0.001, stocf=0.2,
+	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
 	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
@@ -92,7 +93,12 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_sps_model.png' % UF.stripFile(inputFile))
+
 
 if __name__ == "__main__":
 	main()

@@ -9,8 +9,9 @@ import utilFunctions as UF
 import sineModel as SM
 import harmonicModel as HM
 
-def main(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=2048, t=-90, 
-	minSineDur=0.1, nH=100, minf0=130, maxf0=300, f0et=7, harmDevSlope=0.01):
+def main(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=2048, t=-90,
+	minSineDur=0.1, nH=100, minf0=130, maxf0=300, f0et=7, harmDevSlope=0.01,
+	interactive=True, plotFile=False):
 	"""
 	Analysis and synthesis using the harmonic model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -79,7 +80,11 @@ def main(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=2048
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_harmonic_model.png' % UF.stripFile(inputFile))
 
 if __name__ == "__main__":
 	main()

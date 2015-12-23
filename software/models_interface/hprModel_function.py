@@ -9,8 +9,9 @@ import utilFunctions as UF
 import hprModel as HPR
 import stft as STFT
 
-def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100, 
-	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01):
+def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100,
+	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01,
+	interactive=True, plotFile=False):
 	"""
 	Perform analysis/synthesis using the harmonic plus residual model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -97,7 +98,12 @@ def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_hpr_model.png' % UF.stripFile(inputFile))
+
 
 if __name__ == "__main__":
 	main()

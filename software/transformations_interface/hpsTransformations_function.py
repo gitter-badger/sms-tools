@@ -11,8 +11,9 @@ import hpsTransformations as HPST
 import harmonicTransformations as HT
 import utilFunctions as UF
 
-def analysis(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100, 
-	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01, stocf=0.1):
+def analysis(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100,
+	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01, stocf=0.1,
+	interactive=True, plotFile=False):
 	"""
 	Analyze a sound with the harmonic plus stochastic model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -97,14 +98,19 @@ def analysis(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show(block=False)
+
+	if interactive:
+		plt.show(block=False)
+	if plotFile:
+		plt.savefig('output_plots/%s_hps_transformation_analysis.png' % UF.stripFile(inputFile))
 
 	return inputFile, fs, hfreq, hmag, mYst
 
 
-def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.array([0, 1.2, 2.01, 1.2, 2.679, .7, 3.146, .7]), 
-	freqStretching = np.array([0, 1, 2.01, 1, 2.679, 1.5, 3.146, 1.5]), timbrePreservation = 1, 
-	timeScaling = np.array([0, 0, 2.138, 2.138-1.0, 3.146, 3.146])):
+def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.array([0, 1.2, 2.01, 1.2, 2.679, .7, 3.146, .7]),
+	freqStretching = np.array([0, 1, 2.01, 1, 2.679, 1.5, 3.146, 1.5]), timbrePreservation = 1,
+	timeScaling = np.array([0, 0, 2.138, 2.138-1.0, 3.146, 3.146]),
+	interactive=True, plotFile=False):
 	"""
 	transform the analysis values returned by the analysis function and synthesize the sound
 	inputFile: name of input file
@@ -172,12 +178,18 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
 
-if __name__ == "__main__":
-	
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % UF.stripFile(inputFile))
+
+def main(interactive=True, plotFile=False):
 	# analysis
-	inputFile, fs, hfreq, hmag, mYst = analysis()
+	inputFile, fs, hfreq, hmag, mYst = analysis(interactive=interactive, plotFile=plotFile)
 
 	# transformation and synthesis
-	transformation_synthesis(inputFile, fs, hfreq, hmag, mYst)
+	transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, interactive=interactive, plotFile=plotFile)
+
+if __name__ == "__main__":
+	main()

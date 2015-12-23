@@ -11,10 +11,11 @@ import hpsTransformations as HPST
 import harmonicTransformations as HT
 import utilFunctions as UF
 
-def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=1001, N1=1024, t1=-100, 
+def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=1001, N1=1024, t1=-100,
 	minSineDur1=0.05, nH=60, minf01=200, maxf01=300, f0et1=10, harmDevSlope1=0.01, stocf=0.1,
-	inputFile2='../../sounds/soprano-E4.wav', window2='blackman', M2=901, N2=1024, t2=-100, 
-	minSineDur2=0.05, minf02=250, maxf02=500, f0et2=10, harmDevSlope2=0.01):
+	inputFile2='../../sounds/soprano-E4.wav', window2='blackman', M2=901, N2=1024, t2=-100,
+	minSineDur2=0.05, minf02=250, maxf02=500, f0et2=10, harmDevSlope2=0.01,
+	interactive=True, plotFile=False):
 	"""
 	Analyze two sounds with the harmonic plus stochastic model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
@@ -98,12 +99,20 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 		plt.title('harmonics + stochastic spectrogram of sound 2')
 
 	plt.tight_layout()
-	plt.show(block=False)
-	
+
+	if interactive:
+		plt.show(block=False)
+	if plotFile:
+		plt.savefig('output_plots/%s_%s_hps_morph_analysis.png' % (
+			UF.stripFile(inputFile1),
+			UF.stripFile(inputFile2)
+		))
+
 	return inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2
 
 def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2,
-	hfreqIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1]), hmagIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1]), stocIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])):
+	hfreqIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1]), hmagIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1]), stocIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1]),
+	interactive=True, plotFile=False):
 	"""
 	Transform the analysis values returned by the analysis function and synthesize the sound
 	inputFile1: name of input file 1
@@ -168,12 +177,21 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
-	
 
-if __name__ == "__main__":
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_%s_hps_morph_synthesis.png' % (
+			UF.stripFile(inputFile1),
+			UF.stripFile(inputFile2)
+		))
+
+def main(interactive=True, plotFile=False):
 	# analysis
-	inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2 = analysis()
+	inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2 = analysis(interactive=interactive, plotFile=plotFile)
 
 	# transformation and synthesis
-	transformation_synthesis (inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2)
+	transformation_synthesis(inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2, interactive=interactive, plotFile=plotFile)
+
+if __name__ == "__main__":
+	main()

@@ -8,8 +8,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mo
 import utilFunctions as UF
 import hpsModel as HPS
 
-def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100, 
-	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01, stocf=0.1):
+def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601, N=1024, t=-100,
+	minSineDur=0.1, nH=100, minf0=350, maxf0=700, f0et=5, harmDevSlope=0.01, stocf=0.1,
+	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
 	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
@@ -93,7 +94,12 @@ def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_hps_model.png' % UF.stripFile(inputFile))
+
 
 if __name__ == "__main__":
 	main()

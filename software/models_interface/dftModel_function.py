@@ -8,7 +8,8 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mo
 import utilFunctions as UF
 import dftModel as DFT
 
-def main(inputFile = '../../sounds/piano.wav', window = 'blackman', M = 511, N = 1024, time = .2):
+def main(inputFile = '../../sounds/piano.wav', window = 'blackman', M = 511, N = 1024, time = .2,
+	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
 	window: analysis window type (choice of rectangular, hanning, hamming, blackman, blackmanharris)	
@@ -71,7 +72,11 @@ def main(inputFile = '../../sounds/piano.wav', window = 'blackman', M = 511, N =
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_dft_model.png' % UF.stripFile(inputFile))
 
 if __name__ == "__main__":
 	main()

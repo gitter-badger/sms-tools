@@ -8,7 +8,8 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mo
 import utilFunctions as UF
 import stochasticModel as STM
 
-def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1):
+def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1,
+	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
 	H: hop size, N: fft size
@@ -59,7 +60,12 @@ def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1):
 	plt.xlabel('time (sec)')
 
 	plt.tight_layout()
-	plt.show()
-  
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_stochastic_model.png' % UF.stripFile(inputFile))
+
+
 if __name__ == "__main__":
 	main()

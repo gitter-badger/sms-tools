@@ -10,8 +10,9 @@ import stft as STFT
 import utilFunctions as UF
 import stftTransformations as STFTT
 
-def main(inputFile1='../../sounds/ocean.wav', inputFile2='../../sounds/speech-male.wav', window1='hamming',  window2='hamming', 
-	M1=1024, M2=1024, N1=1024, N2=1024, H1=256, smoothf = .5, balancef = 0.2):
+def main(inputFile1='../../sounds/ocean.wav', inputFile2='../../sounds/speech-male.wav', window1='hamming',  window2='hamming',
+	M1=1024, M2=1024, N1=1024, N2=1024, H1=256, smoothf = .5, balancef = 0.2,
+	interactive=True, plotFile=False):
 	"""
 	Function to perform a morph between two sounds
 	inputFile1: name of input sound file to be used as source
@@ -90,7 +91,14 @@ def main(inputFile1='../../sounds/ocean.wav', inputFile2='../../sounds/speech-ma
 	plt.title('output sound: y')
 
 	plt.tight_layout()
-	plt.show()
+
+	if interactive:
+		plt.show()
+	if plotFile:
+		plt.savefig('output_plots/%s_%s_stft_morph.png' % (
+			UF.stripFile(inputFile1),
+			UF.stripFile(inputFile2)
+		))
 
 if __name__ == '__main__':
 	main()
