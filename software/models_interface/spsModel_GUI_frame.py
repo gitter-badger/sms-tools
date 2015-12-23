@@ -5,11 +5,11 @@ from scipy.io.wavfile import read
 import spsModel_function
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class SpsModel_frame:
-	
-	def __init__(self, parent):  
-			 
+
+	def __init__(self, parent):
+
 			self.parent = parent
 			self.initUI()
 
@@ -146,7 +146,7 @@ class SpsModel_frame:
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
 
 	def browse_file(self):
-			
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
 
 		#set the text of the self.filelocation
@@ -154,10 +154,10 @@ class SpsModel_frame:
 		self.filelocation.insert(0,self.filename)
 
 	def compute_model(self):
-			
+
 		try:
 			inputFile = self.filelocation.get()
-			window = self.w_type.get()			
+			window = self.w_type.get()
 			M = int(self.M.get())
 			N = int(self.N.get())
 			t = int(self.t.get())
@@ -166,7 +166,7 @@ class SpsModel_frame:
 			freqDevOffset = int(self.freqDevOffset.get())
 			freqDevSlope = float(self.freqDevSlope.get())
 			stocf = float(self.stocf.get())
-			
+
 			spsModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
 
 		except ValueError as errorMessage:

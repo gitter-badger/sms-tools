@@ -30,11 +30,11 @@ yf0 = UF.sinewaveSynth(f0, .8, H, fs)
 f0[f0==0] = np.nan
 maxplotfreq = 800.0
 numFrames = int(mX[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                             
-binFreq = fs*np.arange(N*maxplotfreq/fs)/N                        
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = fs*np.arange(N*maxplotfreq/fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:,:N*maxplotfreq/fs+1]))
 plt.autoscale(tight=True)
-  
+
 plt.plot(frmTime, f0, linewidth=2, color='k')
 plt.autoscale(tight=True)
 plt.title('mX + f0 (piano.wav), TWM')
@@ -43,4 +43,3 @@ plt.tight_layout()
 plt.savefig('f0Twm-piano.png')
 UF.wavwrite(yf0, fs, 'f0Twm-piano.wav')
 plt.show()
-

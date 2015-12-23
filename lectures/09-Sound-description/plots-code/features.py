@@ -62,10 +62,10 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
       plt.scatter(x_cord,y_cord, c = colors[ii], s=50, hold = True, alpha=0.75)
       if anotOn==1:
          plt.annotate(soundId, xy=(x_cord, y_cord), xytext=(x_cord, y_cord))
-    
+
     circ = Line2D([0], [0], linestyle="none", marker="o", alpha=0.75, markersize=10, markerfacecolor=colors[ii])
     legArray.append(circ)
-  
+
   plt.ylabel(descInput[1], fontsize =16)
   plt.xlabel(descInput[0], fontsize =16)
   plt.legend(legArray, catArray ,numpoints=1,bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=len(catArray), mode="expand", borderaxespad=0.)
@@ -73,18 +73,8 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
   plt.savefig('features.png')
   plt.show()
 
-  
+
 
 ########################
 
 plotFeatures('freesound-sounds', descInput = ('lowlevel.spectral_centroid.mean','lowlevel.mfcc.mean.2'), anotOn =0)
-  
-  
-  
-  
-  
-      
-    
-    
-    
-  

@@ -13,7 +13,7 @@ def hpsTimeScale(hfreq, hmag, stocEnv, timeScaling):
 
 	if (timeScaling.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Time scaling array does not have an even size")
-		
+
 	L = hfreq[:,0].size                                    # number of input frames
 	maxInTime = max(timeScaling[::2])                      # maximum value used as input times
 	maxOutTime = max(timeScaling[1::2])                    # maximum value used in output times
@@ -30,8 +30,8 @@ def hpsTimeScale(hfreq, hmag, stocEnv, timeScaling):
 		yhmag = np.vstack((yhmag, hmag[round(l),:]))         # get the closest input frame
 		ystocEnv = np.vstack((ystocEnv, stocEnv[round(l),:])) # get the closest input frame
 	return yhfreq, yhmag, ystocEnv
-	
-	
+
+
 def hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp):
 	"""
 	Morph between two sounds using the harmonic plus stochastic model
@@ -45,13 +45,13 @@ def hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIn
 
 	if (hfreqIntp.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Harmonic frequencies interpolation array does not have an even size")
-		
+
 	if (hmagIntp.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Harmonic magnitudes interpolation does not have an even size")
-		
+
 	if (stocIntp.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Stochastic component array does not have an even size")
-		
+
 	L1 = hfreq1[:,0].size                                    # number of frames of sound 1
 	L2 =  hfreq2[:,0].size                                   # number of frames of sound 2
 	hfreqIntp[::2] = (L1-1)*hfreqIntp[::2]/hfreqIntp[-2]     # normalize input values
@@ -66,7 +66,7 @@ def hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIn
 	yhfreq = np.zeros_like(hfreq1)                           # create empty output matrix
 	yhmag = np.zeros_like(hmag1)                             # create empty output matrix
 	ystocEnv = np.zeros_like(stocEnv1)                       # create empty output matrix
-	
+
 	for l in range(L1):                                      # generate morphed frames
 		# identify harmonics that are present in both frames
 		harmonics = np.intersect1d(np.array(np.nonzero(hfreq1[l,:]), dtype=np.int)[0], np.array(np.nonzero(hfreq2[round(L2*l/float(L1)),:]), dtype=np.int)[0])
@@ -77,5 +77,3 @@ def hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIn
 		# interpolate the stochastic envelopes of both frames
 		ystocEnv[l,:] =  (1-stocIndexes[l])* stocEnv1[l,:] + stocIndexes[l] * stocEnv2[round(L2*l/float(L1)),:]
 	return yhfreq, yhmag, ystocEnv
-	
-

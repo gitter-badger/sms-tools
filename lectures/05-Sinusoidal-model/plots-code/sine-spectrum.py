@@ -15,7 +15,7 @@ hM = int(M/2.0)
 w = np.hamming(M)
 mX, pX = DFT.dftAnal(x1, w, N)
 freqaxis = fs*np.arange(0,mX.size)/float(N)
-taxis = np.arange(N)/float(fs) 
+taxis = np.arange(N)/float(fs)
 
 plt.figure(1, figsize=(9.5, 7))
 

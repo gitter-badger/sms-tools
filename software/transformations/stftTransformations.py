@@ -19,12 +19,12 @@ def stftFiltering(x, fs, w, N, H, filter):
 	hM2 = int(math.floor(M/2))                     # half analysis window size by floor
 	x = np.append(np.zeros(hM2),x)                 # add zeros at beginning to center first window at sample 0
 	x = np.append(x,np.zeros(hM1))                 # add zeros at the end to analyze last sample
-	pin = hM1                                      # initialize sound pointer in middle of analysis window       
+	pin = hM1                                      # initialize sound pointer in middle of analysis window
 	pend = x.size-hM1                              # last sample to start a frame
 	w = w / sum(w)                                 # normalize analysis window
 	y = np.zeros(x.size)                           # initialize output array
-	while pin<=pend:                               # while sound pointer is smaller than last sample      
-	#-----analysis-----  
+	while pin<=pend:                               # while sound pointer is smaller than last sample
+	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                    # select one frame of input sound
 		mX, pX = DFT.dftAnal(x1, w, N)             # compute dft
 	#------transformation-----
@@ -47,26 +47,26 @@ def stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
 	balancef: balance between the 2 sounds, from 0 to 1, where 0 is sound 1 and 1 is sound 2
 	returns y: output sound
 	"""
-	
+
 	if (N2/2*smoothf < 3):                           # raise exception if decimation factor too small
 		raise ValueError("Smooth factor too small")
-		
+
 	if (smoothf > 1):                                # raise exception if decimation factor too big
 		raise ValueError("Smooth factor above 1")
-	
+
 	if (balancef > 1 or balancef < 0):               # raise exception if balancef outside 0-1
 		raise ValueError("Balance factor outside range")
-	
+
 	if (H1 <= 0):                                    # raise error if hop size 0 or negative
 		raise ValueError("Hop size (H1) smaller or equal to 0")
-			
+
 	M1 = w1.size                                     # size of analysis window
 	hM1_1 = int(math.floor((M1+1)/2))                # half analysis window size by rounding
 	hM1_2 = int(math.floor(M1/2))                    # half analysis window size by floor
 	L = int(x1.size/H1)	                             # number of frames for x1
 	x1 = np.append(np.zeros(hM1_2),x1)               # add zeros at beginning to center first window at sample 0
 	x1 = np.append(x1,np.zeros(hM1_1))               # add zeros at the end to analyze last sample
-	pin1 = hM1_1                                     # initialize sound pointer in middle of analysis window       
+	pin1 = hM1_1                                     # initialize sound pointer in middle of analysis window
 	w1 = w1 / sum(w1)                                # normalize analysis window
 	M2 = w2.size                                     # size of analysis window
 	hM2_1 = int(math.floor((M2+1)/2))                # half analysis window size by rounding
@@ -74,10 +74,10 @@ def stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
 	H2 = int(x2.size/L)                              # hop size for second sound
 	x2 = np.append(np.zeros(hM2_2),x2)               # add zeros at beginning to center first window at sample 0
 	x2 = np.append(x2,np.zeros(hM2_1))               # add zeros at the end to analyze last sample
-	pin2 = hM2_1                                     # initialize sound pointer in middle of analysis window  
+	pin2 = hM2_1                                     # initialize sound pointer in middle of analysis window
 	y = np.zeros(x1.size)                            # initialize output array
-	for l in range(L):                                   
-	#-----analysis-----  
+	for l in range(L):
+	#-----analysis-----
 		mX1, pX1 = DFT.dftAnal(x1[pin1-hM1_1:pin1+hM1_2], w1, N1)           # compute dft
 		mX2, pX2 = DFT.dftAnal(x2[pin2-hM2_1:pin2+hM2_2], w2, N2)           # compute dft
 	#-----transformation-----

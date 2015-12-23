@@ -7,11 +7,11 @@ from scipy.io.wavfile import read
 import harmonicModel_function
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class HarmonicModel_frame:
-  
-	def __init__(self, parent):  
-		 
+
+	def __init__(self, parent):
+
 		self.parent = parent
 		self.initUI()
 
@@ -19,7 +19,7 @@ class HarmonicModel_frame:
 
 		choose_label = "Input file (.wav, mono and 44100 sampling rate):"
 		Label(self.parent, text=choose_label).grid(row=0, column=0, sticky=W, padx=5, pady=(10,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation = Entry(self.parent)
 		self.filelocation.focus_set()
@@ -31,7 +31,7 @@ class HarmonicModel_frame:
 		#BUTTON TO BROWSE SOUND FILE
 		self.open_file = Button(self.parent, text="Browse...", command=self.browse_file) #see: def browse_file(self)
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE
 		self.preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
@@ -143,17 +143,17 @@ class HarmonicModel_frame:
 		options['filetypes'] = [('All files', '.*'), ('Wav files', '.wav')]
 		options['initialdir'] = '../../sounds/'
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
- 
+
 	def browse_file(self):
-		
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
 		self.filelocation.insert(0,self.filename)
 
 	def compute_model(self):
-		
+
 		try:
 			inputFile = self.filelocation.get()
 			window = self.w_type.get()
@@ -166,7 +166,7 @@ class HarmonicModel_frame:
 			maxf0 = int(self.maxf0.get())
 			f0et = int(self.f0et.get())
 			harmDevSlope = float(self.harmDevSlope.get())
-			
+
 			harmonicModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
 		except ValueError as errorMessage:

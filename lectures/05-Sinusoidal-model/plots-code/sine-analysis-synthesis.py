@@ -20,8 +20,8 @@ x1 = x[pin:pin+w.size]
 mX, pX = DFT.dftAnal(x1, w, N)
 ploc = UF.peakDetection(mX, t)
 iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
-freqs = iploc*fs/N 
-Y = UF.genSpecSines(freqs, ipmag, ipphase, Ns, fs)       
+freqs = iploc*fs/N
+Y = UF.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))
@@ -35,7 +35,7 @@ plt.title("x (oboe-A4.wav), M = 601")
 
 plt.subplot(4,1,2)
 plt.plot(np.arange(mX.size), mX, 'r', lw=1.5)
-plt.plot(iploc, ipmag, marker='x', color='b', linestyle='', markeredgewidth=1.5) 
+plt.plot(iploc, ipmag, marker='x', color='b', linestyle='', markeredgewidth=1.5)
 plt.axis([0, hN,-90,max(mX)+2])
 plt.title("mX + spectral peaks; Blackman, N = 1024")
 

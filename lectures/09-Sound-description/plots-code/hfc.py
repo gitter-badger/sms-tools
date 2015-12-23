@@ -12,10 +12,10 @@ hfc = ess.HFC()
 x = ess.MonoLoader(filename = '../../../sounds/speech-male.wav', sampleRate = fs)()
 hfcs = []
 
-for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):  
-  mX = spectrum(window(frame))        
+for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):
+  mX = spectrum(window(frame))
   hfc_val = hfc(mX)
-  hfcs.append(hfc_val)            
+  hfcs.append(hfc_val)
 hfcs = np.array(hfcs)
 
 plt.figure(1, figsize=(9.5, 5))
@@ -27,8 +27,8 @@ plt.ylabel('amplitude')
 plt.title('x (speech-male.wav)')
 
 plt.subplot(2,1,2)
-frmTime = H*np.arange(hfcs.size)/float(fs)    
-plt.plot(frmTime, hfcs, 'g', lw=1.5)  
+frmTime = H*np.arange(hfcs.size)/float(fs)
+plt.plot(frmTime, hfcs, 'g', lw=1.5)
 plt.axis([0, x.size/float(fs), min(hfcs), max(hfcs)])
 plt.xlabel('time (sec)')
 plt.ylabel('high frequency content')

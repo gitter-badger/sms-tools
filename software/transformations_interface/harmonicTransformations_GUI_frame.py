@@ -8,19 +8,19 @@ import numpy as np
 import harmonicTransformations_function as hT
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class HarmonicTransformations_frame:
-  
-	def __init__(self, parent):  
-		 
-		self.parent = parent        
+
+	def __init__(self, parent):
+
+		self.parent = parent
 		self.initUI()
 
 	def initUI(self):
 
 		choose_label = "inputFile:"
 		Label(self.parent, text=choose_label).grid(row=0, column=0, sticky=W, padx=5, pady=(10,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation = Entry(self.parent)
 		self.filelocation.focus_set()
@@ -32,7 +32,7 @@ class HarmonicTransformations_frame:
 		#BUTTON TO BROWSE SOUND FILE
 		open_file = Button(self.parent, text="...", command=self.browse_file) #see: def browse_file(self)
 		open_file.grid(row=0, column=0, sticky=W, padx=(340, 6), pady=(10,2)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE
 		preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		preview.grid(row=0, column=0, sticky=W, padx=(385,6), pady=(10,2))
@@ -131,7 +131,7 @@ class HarmonicTransformations_frame:
 		#BUTTON TO DO THE ANALYSIS OF THE SOUND
 		self.compute = Button(self.parent, text="Analysis/Synthesis", command=self.analysis, bg="dark red", fg="white")
 		self.compute.grid(row=4, column=0, padx=5, pady=(10,5), sticky=W)
-		
+
 		#BUTTON TO PLAY ANALYSIS/SYNTHESIS OUTPUT
 		self.output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_harmonicModel.wav'), bg="gray30", fg="white")
 		self.output.grid(row=4, column=0, padx=(145,5), pady=(10,5), sticky=W)
@@ -193,15 +193,15 @@ class HarmonicTransformations_frame:
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
 
 	def browse_file(self):
-		
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
 		self.filelocation.insert(0,self.filename)
 
 	def analysis(self):
-		
+
 		try:
 			inputFile = self.filelocation.get()
 			window =  self.w_type.get()

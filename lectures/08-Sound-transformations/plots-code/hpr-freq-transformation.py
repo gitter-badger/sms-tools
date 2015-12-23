@@ -15,7 +15,7 @@ inputFile='../../../sounds/flute-A4.wav'
 window='blackman'
 M=801
 N=2048
-t=-90 
+t=-90
 minSineDur=0.1
 nH=40
 minf0=350
@@ -53,15 +53,15 @@ plt.title('x (flute-A4.wav)')
 plt.subplot(4,1,2)
 maxplotbin = int(N*maxplotfreq/fs)
 numFrames = int(mXr[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                       
-binFreq = np.arange(maxplotbin+1)*float(fs)/N                         
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = np.arange(maxplotbin+1)*float(fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mXr[:,:maxplotbin+1]))
 plt.autoscale(tight=True)
 
 harms = hfreq*np.less(hfreq,maxplotfreq)
 harms[harms==0] = np.nan
 numFrames = int(harms[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs) 
+frmTime = H*np.arange(numFrames)/float(fs)
 plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 plt.autoscale(tight=True)
 plt.title('harmonics + residual spectrogram')
@@ -69,15 +69,15 @@ plt.title('harmonics + residual spectrogram')
 plt.subplot(4,1,3)
 maxplotbin = int(N*maxplotfreq/fs)
 numFrames = int(mXr[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                       
-binFreq = np.arange(maxplotbin+1)*float(fs)/N                         
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = np.arange(maxplotbin+1)*float(fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mXr[:,:maxplotbin+1]))
 plt.autoscale(tight=True)
 
 harms = hfreqt*np.less(hfreqt,maxplotfreq)
 harms[harms==0] = np.nan
 numFrames = int(harms[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs) 
+frmTime = H*np.arange(numFrames)/float(fs)
 plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 plt.autoscale(tight=True)
 plt.title('transposed and stretched harmonics + residual spectrogram')

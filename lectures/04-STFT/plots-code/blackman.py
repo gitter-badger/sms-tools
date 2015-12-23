@@ -5,7 +5,7 @@ from scipy import signal
 
 M = 64
 N = 512
-hN = N/2     
+hN = N/2
 hM = M/2
 fftbuffer = np.zeros(N)
 mX1 = np.zeros(N)
@@ -18,9 +18,9 @@ plt.axis([-hN, hN, 0, 1.1])
 
 
 X = fft(fftbuffer)
-mX = 20*np.log10(abs(X)) 
+mX = 20*np.log10(abs(X))
 mX1[:hN] = mX[hN:]
-mX1[N-hN:] = mX[:hN]      
+mX1[N-hN:] = mX[:hN]
 
 plt.subplot(2,1,2)
 plt.plot(np.arange(-hN, hN), mX1-max(mX), 'r', lw=1.5)

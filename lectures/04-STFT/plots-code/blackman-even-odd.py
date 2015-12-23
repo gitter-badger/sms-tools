@@ -5,7 +5,7 @@ from scipy import signal
 
 M = 32
 N = 128
-hN = N/2     
+hN = N/2
 hM = M/2
 fftbuffer = np.zeros(N)
 w = signal.blackman(M)
@@ -17,11 +17,11 @@ plt.plot(np.arange(-hM, hM), w, 'b', lw=1.5)
 plt.axis([-hM, hM-1, 0, 1.05])
 plt.title('w1, M=32')
 
-fftbuffer = np.zeros(N)                         
-fftbuffer[:hM] = w[hM:] 
+fftbuffer = np.zeros(N)
+fftbuffer[:hM] = w[hM:]
 fftbuffer[N-hM:] = w[:hM]
 X = fft(fftbuffer)
-mX = 20*np.log10(abs(fftshift(X)))    
+mX = 20*np.log10(abs(fftshift(X)))
 plt.subplot(3,2,3)
 plt.plot(np.arange(-hN, hN), mX-max(mX), 'r', lw=1.5)
 plt.axis([-hN/2,hN/2,-80,1])
@@ -35,7 +35,7 @@ plt.title('pW1')
 
 M = 31
 N = 128
-hN = N/2     
+hN = N/2
 hM = (M+1)/2
 fftbuffer = np.zeros(N)
 w = signal.blackman(M)
@@ -45,11 +45,11 @@ plt.plot(np.arange(-hM, hM-1), w, 'b', lw=1.5)
 plt.axis([-hM, hM, 0, 1.05])
 plt.title('w2, M=31')
 
-fftbuffer = np.zeros(N) 
-fftbuffer[:hM] = w[hM-1:] 
-fftbuffer[N-hM+1:] = w[:hM-1]                         
+fftbuffer = np.zeros(N)
+fftbuffer[:hM] = w[hM-1:]
+fftbuffer[N-hM+1:] = w[:hM-1]
 X = fft(fftbuffer)
-mX = 20*np.log10(abs(fftshift(X)))    
+mX = 20*np.log10(abs(fftshift(X)))
 plt.subplot(3,2,4)
 plt.plot(np.arange(-hN, hN), mX-max(mX), 'r', lw=1.5)
 plt.axis([-hN/2,hN/2-1,-80,1])

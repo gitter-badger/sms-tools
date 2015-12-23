@@ -14,13 +14,13 @@ def TWM (pfreq, pmag, maxnpeaks, f0c):
   # pfreq, pmag: peak frequencies in Hz and magnitudes, maxnpeaks: maximum number of peaks used
   # f0cand: frequencies of f0 candidates
   # returns f0: fundamental frequency detected
-  
+
   p = 0.5                                          # weighting by frequency value
   q = 1.4                                          # weighting related to magnitude of peaks
   r = 0.5                                          # scaling related to magnitude of peaks
   rho = 0.33                                       # weighting of MP error
   Amax = max(pmag)                                 # maximum peak magnitude
-  
+
   harmonic = np.matrix(f0c)
   ErrorPM = np.zeros(harmonic.size)                 # initialize PM errors
   MaxNPM = min(maxnpeaks, pfreq.size)
@@ -62,9 +62,9 @@ minf0 = 100
 maxf0 = 1500
 w = blackman (M)
 x1 = x[start:start+M]
-mX, pX = DFT.dftAnal(x1, w, N)          
-ploc = UF.peakDetection(mX, t)    
-iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc) 
+mX, pX = DFT.dftAnal(x1, w, N)
+ploc = UF.peakDetection(mX, t)
+iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
 ipfreq = fs * iploc/N
 f0cand = np.arange(minf0, maxf0, 1.0)
 maxnpeaks = 10
@@ -75,8 +75,8 @@ plt.figure(1, figsize=(9, 7))
 plt.subplot (2,1,1)
 plt.plot(freqaxis,mX,'r', lw=1.5)
 plt.axis([100,5100,-80,max(mX)+1])
-plt.plot(fs * iploc / N, ipmag, marker='x', color='b', linestyle='', markeredgewidth=1.5) 
-plt.title('mX + peaks (oboe-A4.wav)')   
+plt.plot(fs * iploc / N, ipmag, marker='x', color='b', linestyle='', markeredgewidth=1.5)
+plt.title('mX + peaks (oboe-A4.wav)')
 
 plt.subplot (2,1,2)
 plt.plot(f0cand,ErrorPM[0], 'b', label = 'ErrorPM', lw=1.2)
@@ -89,4 +89,3 @@ plt.title('TWM Errors')
 plt.tight_layout()
 plt.savefig('f0-TWM-errors-1.png')
 plt.show()
-

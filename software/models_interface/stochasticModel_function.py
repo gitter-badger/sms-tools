@@ -19,16 +19,16 @@ def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1,
 	# read input sound
 	(fs, x) = UF.wavread(inputFile)
 
-	# compute stochastic model                                          
-	stocEnv = STM.stochasticModelAnal(x, H, N, stocf)             
+	# compute stochastic model
+	stocEnv = STM.stochasticModelAnal(x, H, N, stocf)
 
 	# synthesize sound from stochastic model
-	y = STM.stochasticModelSynth(stocEnv, H, N)    
+	y = STM.stochasticModelSynth(stocEnv, H, N)
 
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModel.wav'
 
 	# write output sound
-	UF.wavwrite(y, fs, outputFile)               
+	UF.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -44,8 +44,8 @@ def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1,
 	# plot stochastic representation
 	plt.subplot(3,1,2)
 	numFrames = int(stocEnv[:,0].size)
-	frmTime = H*np.arange(numFrames)/float(fs)                             
-	binFreq = np.arange(stocf*(N/2+1))*float(fs)/(stocf*N)                      
+	frmTime = H*np.arange(numFrames)/float(fs)
+	binFreq = np.arange(stocf*(N/2+1))*float(fs)/(stocf*N)
 	plt.pcolormesh(frmTime, binFreq, np.transpose(stocEnv))
 	plt.autoscale(tight=True)
 	plt.xlabel('time (sec)')

@@ -19,15 +19,15 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 	"""
 	Analyze two sounds with the harmonic plus stochastic model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
-	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
-	M: analysis window size 
+	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)
+	M: analysis window size
 	N: fft size (power of two, bigger or equal than M)
-	t: magnitude threshold of spectral peaks 
+	t: magnitude threshold of spectral peaks
 	minSineDur: minimum duration of sinusoidal tracks
 	nH: maximum number of harmonics
 	minf0: minimum fundamental frequency in sound
 	maxf0: maximum fundamental frequency in sound
-	f0et: maximum error accepted in f0 detection algorithm                                                                                            
+	f0et: maximum error accepted in f0 detection algorithm
 	harmDevSlope: allowed deviation of harmonic tracks, higher harmonics have higher allowed deviation
 	stocf: decimation factor used for the stochastic approximation
 	returns inputFile: input file name; fs: sampling rate of input file,
@@ -59,7 +59,7 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 	numFrames = int(stocEnv1[:,0].size)
 	sizeEnv = int(stocEnv1[0,:].size)
 	frmTime = H*np.arange(numFrames)/float(fs1)
-	binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv                      
+	binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv
 	plt.pcolormesh(frmTime, binFreq, np.transpose(stocEnv1[:,:sizeEnv*maxplotfreq/(.5*fs1)+1]))
 	plt.autoscale(tight=True)
 
@@ -69,7 +69,7 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 		harms = harms*np.less(harms,maxplotfreq)
 		harms[harms==0] = np.nan
 		numFrames = int(harms[:,0].size)
-		frmTime = H*np.arange(numFrames)/float(fs1) 
+		frmTime = H*np.arange(numFrames)/float(fs1)
 		plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 		plt.xlabel('time (sec)')
 		plt.ylabel('frequency (Hz)')
@@ -81,7 +81,7 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 	numFrames = int(stocEnv2[:,0].size)
 	sizeEnv = int(stocEnv2[0,:].size)
 	frmTime = H*np.arange(numFrames)/float(fs2)
-	binFreq = (.5*fs2)*np.arange(sizeEnv*maxplotfreq/(.5*fs2))/sizeEnv                      
+	binFreq = (.5*fs2)*np.arange(sizeEnv*maxplotfreq/(.5*fs2))/sizeEnv
 	plt.pcolormesh(frmTime, binFreq, np.transpose(stocEnv2[:,:sizeEnv*maxplotfreq/(.5*fs2)+1]))
 	plt.autoscale(tight=True)
 
@@ -91,7 +91,7 @@ def analysis(inputFile1='../../sounds/violin-B3.wav', window1='blackman', M1=100
 		harms = harms*np.less(harms,maxplotfreq)
 		harms[harms==0] = np.nan
 		numFrames = int(harms[:,0].size)
-		frmTime = H*np.arange(numFrames)/float(fs2) 
+		frmTime = H*np.arange(numFrames)/float(fs2)
 		plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 		plt.xlabel('time (sec)')
 		plt.ylabel('frequency (Hz)')
@@ -124,7 +124,7 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	hmagIntp: interpolation factor between the harmonic magnitudes of the two sounds, 0 is sound 1 and 1 is sound 2  (time,value pairs)
 	stocIntp: interpolation factor between the stochastic representation of the two sounds, 0 is sound 1 and 1 is sound 2  (time,value pairs)
 	"""
-	
+
 	# size of fft used in synthesis
 	Ns = 512
 	# hop size (has to be 1/4 of Ns)
@@ -133,10 +133,10 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	# morph the two sounds
 	yhfreq, yhmag, ystocEnv = HPST.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
-	# synthesis 
+	# synthesis
 	y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
-	# write output sound 
+	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_hpsMorph.wav'
 	UF.wavwrite(y, fs, outputFile)
 
@@ -151,7 +151,7 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	numFrames = int(ystocEnv[:,0].size)
 	sizeEnv = int(ystocEnv[0,:].size)
 	frmTime = H*np.arange(numFrames)/float(fs)
-	binFreq = (.5*fs)*np.arange(sizeEnv*maxplotfreq/(.5*fs))/sizeEnv                      
+	binFreq = (.5*fs)*np.arange(sizeEnv*maxplotfreq/(.5*fs))/sizeEnv
 	plt.pcolormesh(frmTime, binFreq, np.transpose(ystocEnv[:,:sizeEnv*maxplotfreq/(.5*fs)+1]))
 	plt.autoscale(tight=True)
 
@@ -161,7 +161,7 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 		harms = harms*np.less(harms,maxplotfreq)
 		harms[harms==0] = np.nan
 		numFrames = int(harms[:,0].size)
-		frmTime = H*np.arange(numFrames)/float(fs) 
+		frmTime = H*np.arange(numFrames)/float(fs)
 		plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 		plt.xlabel('time (sec)')
 		plt.ylabel('frequency (Hz)')

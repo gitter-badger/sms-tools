@@ -13,8 +13,8 @@ import math
 N = 512
 pin = 5000
 w = np.ones(501)
-hM1 = int(math.floor((w.size+1)/2)) 
-hM2 = int(math.floor(w.size/2))  
+hM1 = int(math.floor((w.size+1)/2))
+hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
 
 

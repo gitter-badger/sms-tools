@@ -8,12 +8,12 @@ import numpy as np
 import hpsMorph_function as hM
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class HpsMorph_frame:
-  
-	def __init__(self, parent):  
-		 
-		self.parent = parent        
+
+	def __init__(self, parent):
+
+		self.parent = parent
 		self.initUI()
 
 	def initUI(self):
@@ -21,7 +21,7 @@ class HpsMorph_frame:
 		## INPUT FILE 1
 		choose1_label = "inputFile1:"
 		Label(self.parent, text=choose1_label).grid(row=0, column=0, sticky=W, padx=5, pady=(10,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation1 = Entry(self.parent)
 		self.filelocation1.focus_set()
@@ -33,11 +33,11 @@ class HpsMorph_frame:
 		#BUTTON TO BROWSE SOUND FILE 1
 		open_file1 = Button(self.parent, text="...", command=self.browse_file1) #see: def browse_file(self)
 		open_file1.grid(row=0, column=0, sticky=W, padx=(330, 6), pady=(10,2)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE 1
 		preview1 = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation1.get()), bg="gray30", fg="white")
 		preview1.grid(row=0, column=0, sticky=W, padx=(375,6), pady=(10,2))
-		
+
 		#ANALYSIS WINDOW TYPE SOUND 1
 		wtype1_label = "window1:"
 		Label(self.parent, text=wtype1_label).grid(row=1, column=0, sticky=W, padx=5, pady=(4,2))
@@ -126,7 +126,7 @@ class HpsMorph_frame:
 		## INPUT FILE 2
 		choose2_label = "inputFile2:"
 		Label(self.parent, text=choose2_label).grid(row=5, column=0, sticky=W, padx=5, pady=(2,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation2 = Entry(self.parent)
 		self.filelocation2.focus_set()
@@ -138,7 +138,7 @@ class HpsMorph_frame:
 		#BUTTON TO BROWSE SOUND FILE 2
 		open_file2 = Button(self.parent, text="...", command=self.browse_file2) #see: def browse_file(self)
 		open_file2.grid(row=5, column=0, sticky=W, padx=(330, 6), pady=(2,2)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE 2
 		preview2 = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation2.get()), bg="gray30", fg="white")
 		preview2.grid(row=5, column=0, sticky=W, padx=(375,6), pady=(2,2))
@@ -298,25 +298,25 @@ class HpsMorph_frame:
 		options['filetypes'] = [('All files', '.*'), ('Wav files', '.wav')]
 		options['initialdir'] = '../../sounds/'
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
- 
+
 	def browse_file1(self):
-		
+
 		self.filename1 = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation1.delete(0, END)
 		self.filelocation1.insert(0,self.filename1)
- 
+
 	def browse_file2(self):
-		
+
 		self.filename2 = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation2.delete(0, END)
 		self.filelocation2.insert(0,self.filename2)
 
 	def analysis(self):
-		
+
 		try:
 			inputFile1 = self.filelocation1.get()
 			window1 =  self.w1_type.get()
@@ -328,10 +328,10 @@ class HpsMorph_frame:
 			maxf01 = int(self.maxf01.get())
 			f0et1 = int(self.f0et1.get())
 			harmDevSlope1 = float(self.harmDevSlope1.get())
-			
+
 			nH = int(self.nH.get())
 			stocf = float(self.stocf.get())
-			
+
 			inputFile2 = self.filelocation2.get()
 			window2 =  self.w2_type.get()
 			M2 = int(self.M2.get())

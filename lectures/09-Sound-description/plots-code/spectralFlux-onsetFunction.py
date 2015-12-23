@@ -14,13 +14,13 @@ x = ess.MonoLoader(filename = '../../../sounds/speech-male.wav', sampleRate = fs
 fluxes = []
 onsetDetections = []
 
-for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):  
-  mX = spectrum(window(frame))        
+for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):
+  mX = spectrum(window(frame))
   flux_val = flux(mX)
   fluxes.append(flux_val)
   onsetDetection_val = onsetDetection(mX, mX)
-  onsetDetections.append(onsetDetection_val)            
-onsetDetections = np.array(onsetDetections)            
+  onsetDetections.append(onsetDetection_val)
+onsetDetections = np.array(onsetDetections)
 fluxes = np.array(fluxes)
 
 plt.figure(1, figsize=(9.5, 7))
@@ -32,9 +32,9 @@ plt.ylabel('amplitude')
 plt.title('x (speech-male.wav)')
 
 plt.subplot(2,1,2)
-frmTime = H*np.arange(fluxes.size)/float(fs)    
-plt.plot(frmTime, fluxes/max(fluxes), 'g', lw=1.5, label ='normalized spectral flux')  
-plt.plot(frmTime, onsetDetections/max(onsetDetections), 'c', lw=1.5, label = 'normalized onset detection')  
+frmTime = H*np.arange(fluxes.size)/float(fs)
+plt.plot(frmTime, fluxes/max(fluxes), 'g', lw=1.5, label ='normalized spectral flux')
+plt.plot(frmTime, onsetDetections/max(onsetDetections), 'c', lw=1.5, label = 'normalized onset detection')
 plt.axis([0, x.size/float(fs), 0, 1])
 plt.legend()
 

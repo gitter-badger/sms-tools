@@ -5,8 +5,8 @@
 #include <string.h>
 #include <math.h>
 
-#ifndef UTILFUNCTIONS_H 
-    
+#ifndef UTILFUNCTIONS_H
+
 #define UTILFUNCTIONS_H
 
 #define BH_SIZE 1001
@@ -31,7 +31,7 @@
 #define TWM_q 1.4                  //weighting related to magnitude of peaks
 #define TWM_r 0.5                  //scaling related to magnitude of peaks
 #define TWM_rho 0.33               //weighting of MP error
-#define MAXNPEAKS 10               // maximum number of peaks used for TWM 
+#define MAXNPEAKS 10               // maximum number of peaks used for TWM
 
 void genbh92lobe_C(double *x, double *y, int N);
 void genspecsines_C(double *iploc, double *ipmag, double *ipphase, int n_peaks, double *real, double*imag, int size_spec);

@@ -14,13 +14,13 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 	interactive=True, plotFile=False):
 	"""
 	inputFile: input sound file (monophonic with sampling rate of 44100)
-	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
-	M: analysis window size 
+	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)
+	M: analysis window size
 	N: fft size (power of two, bigger or equal than M)
-	t: magnitude threshold of spectral peaks 
+	t: magnitude threshold of spectral peaks
 	minSineDur: minimum duration of sinusoidal tracks
 	maxnSines: maximum number of parallel sinusoids
-	freqDevOffset: frequency deviation allowed in the sinusoids from frame to frame at frequency 0   
+	freqDevOffset: frequency deviation allowed in the sinusoids from frame to frame at frequency 0
 	freqDevSlope: slope of the frequency deviation, higher frequencies have bigger deviation
 	"""
 
@@ -38,7 +38,7 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 
 	# perform sinusoidal plus residual analysis
 	tfreq, tmag, tphase, xr = SPR.sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
-		
+
 	# compute spectrogram of residual
 	mXr, pXr = STFT.stftAnal(xr, w, N, H)
 
@@ -68,16 +68,16 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 	plt.ylabel('amplitude')
 	plt.xlabel('time (sec)')
 	plt.title('input sound: x')
-		
+
 	# plot the magnitude spectrogram of residual
 	plt.subplot(3,1,2)
 	maxplotbin = int(N*maxplotfreq/fs)
 	numFrames = int(mXr[:,0].size)
-	frmTime = H*np.arange(numFrames)/float(fs)                       
-	binFreq = np.arange(maxplotbin+1)*float(fs)/N                         
+	frmTime = H*np.arange(numFrames)/float(fs)
+	binFreq = np.arange(maxplotbin+1)*float(fs)/N
 	plt.pcolormesh(frmTime, binFreq, np.transpose(mXr[:,:maxplotbin+1]))
 	plt.autoscale(tight=True)
-		
+
 	# plot the sinusoidal frequencies on top of the residual spectrogram
 	if (tfreq.shape[1] > 0):
 		tracks = tfreq*np.less(tfreq, maxplotfreq)

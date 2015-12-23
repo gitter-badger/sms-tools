@@ -39,4 +39,3 @@ plt.title('Blackman, M=201, H=50')
 plt.tight_layout()
 plt.savefig('window-overlap.png')
 plt.show()
-

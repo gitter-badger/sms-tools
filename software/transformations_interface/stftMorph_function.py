@@ -38,10 +38,10 @@ def main(inputFile1='../../sounds/ocean.wav', inputFile2='../../sounds/speech-ma
 
 	# compute the magnitude and phase spectrogram of input sound (for plotting)
 	mX1, pX1 = STFT.stftAnal(x1, w1, N1, H1)
-	
+
 	# compute the magnitude and phase spectrogram of output sound (for plotting)
 	mY, pY = STFT.stftAnal(y, w1, N1, H1)
-	
+
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_stftMorph.wav'
 	UF.wavwrite(y, fs, outputFile)
@@ -63,19 +63,19 @@ def main(inputFile1='../../sounds/ocean.wav', inputFile2='../../sounds/speech-ma
 	# plot magnitude spectrogram of sound 1
 	plt.subplot(4,1,2)
 	numFrames = int(mX1[:,0].size)
-	frmTime = H1*np.arange(numFrames)/float(fs)                             
-	binFreq = fs*np.arange(N1*maxplotfreq/fs)/N1  
+	frmTime = H1*np.arange(numFrames)/float(fs)
+	binFreq = fs*np.arange(N1*maxplotfreq/fs)/N1
 	plt.pcolormesh(frmTime, binFreq, np.transpose(mX1[:,:N1*maxplotfreq/fs+1]))
 	plt.xlabel('time (sec)')
 	plt.ylabel('frequency (Hz)')
 	plt.title('magnitude spectrogram of x')
 	plt.autoscale(tight=True)
 
-	# plot magnitude spectrogram of morphed sound 
+	# plot magnitude spectrogram of morphed sound
 	plt.subplot(4,1,3)
 	numFrames = int(mY[:,0].size)
-	frmTime = H1*np.arange(numFrames)/float(fs)                             
-	binFreq = fs*np.arange(N1*maxplotfreq/fs)/N1 
+	frmTime = H1*np.arange(numFrames)/float(fs)
+	binFreq = fs*np.arange(N1*maxplotfreq/fs)/N1
 	plt.pcolormesh(frmTime, binFreq, np.transpose(mY[:,:N1*maxplotfreq/fs+1]))
 	plt.xlabel('time (sec)')
 	plt.ylabel('frequency (Hz)')

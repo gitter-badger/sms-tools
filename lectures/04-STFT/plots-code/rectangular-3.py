@@ -4,7 +4,7 @@ from scipy.fftpack import fft
 
 M = 10
 N = 100
-hN = N/2     
+hN = N/2
 hM = M/2
 k = np.arange(-hM, hM, M/float(N))
 W = 20*np.log10(abs(np.sin(np.pi*k)/np.sin(np.pi*k/M)))

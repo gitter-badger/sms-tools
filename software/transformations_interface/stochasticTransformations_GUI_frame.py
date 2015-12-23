@@ -8,19 +8,19 @@ import numpy as np
 import stochasticTransformations_function as sT
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class StochasticTransformations_frame:
-  
-	def __init__(self, parent):  
-		 
-		self.parent = parent        
+
+	def __init__(self, parent):
+
+		self.parent = parent
 		self.initUI()
 
 	def initUI(self):
 
 		choose_label = "inputFile:"
 		Label(self.parent, text=choose_label).grid(row=0, column=0, sticky=W, padx=5, pady=(10,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation = Entry(self.parent)
 		self.filelocation.focus_set()
@@ -32,7 +32,7 @@ class StochasticTransformations_frame:
 		#BUTTON TO BROWSE SOUND FILE
 		open_file = Button(self.parent, text="...", command=self.browse_file) #see: def browse_file(self)
 		open_file.grid(row=0, column=0, sticky=W, padx=(280, 6), pady=(10,2)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE
 		preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		preview.grid(row=0, column=0, sticky=W, padx=(325,6), pady=(10,2))
@@ -71,11 +71,11 @@ class StochasticTransformations_frame:
 		options['filetypes'] = [('All files', '.*'), ('Wav files', '.wav')]
 		options['initialdir'] = '../../sounds/'
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
- 
+
 	def browse_file(self):
-		
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
 		self.filelocation.insert(0,self.filename)

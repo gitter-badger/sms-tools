@@ -12,37 +12,37 @@ import sineModel as SM
 def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""
 	Fundamental frequency detection of a sound using twm algorithm
-	x: input sound; fs: sampling rate; w: analysis window; 
-	N: FFT size; t: threshold in negative dB, 
-	minf0: minimum f0 frequency in Hz, maxf0: maximim f0 frequency in Hz, 
+	x: input sound; fs: sampling rate; w: analysis window;
+	N: FFT size; t: threshold in negative dB,
+	minf0: minimum f0 frequency in Hz, maxf0: maximim f0 frequency in Hz,
 	f0et: error threshold in the f0 detection (ex: 5),
 	returns f0: fundamental frequency
 	"""
 	if (minf0 < 0):                                            # raise exception if minf0 is smaller than 0
 		raise ValueError("Minumum fundamental frequency (minf0) smaller than 0")
-	
+
 	if (maxf0 >= 10000):                                       # raise exception if maxf0 is bigger than fs/2
 		raise ValueError("Maximum fundamental frequency (maxf0) bigger than 10000Hz")
-	
+
 	if (H <= 0):                                               # raise error if hop size 0 or negative
 		raise ValueError("Hop size (H) smaller or equal to 0")
-		
+
 	hN = N/2                                                   # size of positive spectrum
 	hM1 = int(math.floor((w.size+1)/2))                        # half analysis window size by rounding
 	hM2 = int(math.floor(w.size/2))                            # half analysis window size by floor
 	x = np.append(np.zeros(hM2),x)                             # add zeros at beginning to center first window at sample 0
 	x = np.append(x,np.zeros(hM1))                             # add zeros at the end to analyze last sample
-	pin = hM1                                                  # init sound pointer in middle of anal window          
+	pin = hM1                                                  # init sound pointer in middle of anal window
 	pend = x.size - hM1                                        # last sample to start a frame
 	fftbuffer = np.zeros(N)                                    # initialize buffer for FFT
 	w = w / sum(w)                                             # normalize analysis window
 	f0 = []                                                    # initialize f0 output
 	f0t = 0                                                    # initialize f0 track
 	f0stable = 0                                               # initialize f0 stable
-	while pin<pend:             
+	while pin<pend:
 		x1 = x[pin-hM1:pin+hM2]                                  # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                           # compute dft           
-		ploc = UF.peakDetection(mX, t)                           # detect peak locations   
+		mX, pX = DFT.dftAnal(x1, w, N)                           # compute dft
+		ploc = UF.peakDetection(mX, t)                           # detect peak locations
 		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)      # refine peak values
 		ipfreq = fs * iploc/N                                    # convert locations to Hez
 		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
@@ -92,10 +92,10 @@ def harmonicDetection(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01
 def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal harmonic model
-	x: input sound, fs: sampling rate, w: analysis window, 
-	N: FFT size (minimum 512), t: threshold in negative dB, 
-	nH: maximum number of harmonics, minf0: minimum f0 frequency in Hz, 
-	maxf0: maximim f0 frequency in Hz, 
+	x: input sound, fs: sampling rate, w: analysis window,
+	N: FFT size (minimum 512), t: threshold in negative dB,
+	nH: maximum number of harmonics, minf0: minimum f0 frequency in Hz,
+	maxf0: maximim f0 frequency in Hz,
 	f0et: error threshold in the f0 detection (ex: 5),
 	returns y: output array sound
 	"""
@@ -107,8 +107,8 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	x = np.append(x,np.zeros(hM1))                          # add zeros at the end to analyze last sample
 	Ns = 512                                                # FFT size for synthesis (even)
 	H = Ns/4                                                # Hop size used for analysis and synthesis
-	hNs = Ns/2      
-	pin = max(hNs, hM1)                                     # init sound pointer in middle of anal window          
+	hNs = Ns/2
+	pin = max(hNs, hM1)                                     # init sound pointer in middle of anal window
 	pend = x.size - max(hNs, hM1)                           # last sample to start a frame
 	fftbuffer = np.zeros(N)                                 # initialize buffer for FFT
 	yh = np.zeros(Ns)                                       # initialize output sound frame
@@ -116,18 +116,18 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	w = w / sum(w)                                          # normalize analysis window
 	sw = np.zeros(Ns)                                       # initialize synthesis window
 	ow = triang(2*H)                                        # overlapping window
-	sw[hNs-H:hNs+H] = ow      
+	sw[hNs-H:hNs+H] = ow
 	bh = blackmanharris(Ns)                                 # synthesis window
 	bh = bh / sum(bh)                                       # normalize synthesis window
 	sw[hNs-H:hNs+H] = sw[hNs-H:hNs+H] / bh[hNs-H:hNs+H]     # window for overlap-add
 	hfreqp = []
 	f0t = 0
 	f0stable = 0
-	while pin<pend:             
-	#-----analysis-----             
+	while pin<pend:
+	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
 		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
-		ploc = UF.peakDetection(mX, t)                        # detect peak locations     
+		ploc = UF.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N
 		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
@@ -139,10 +139,10 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 	#-----synthesis-----
-		Yh = UF.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines          
+		Yh = UF.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines
 		fftbuffer = np.real(ifft(Yh))                         # inverse FFT
 		yh[:hNs-1] = fftbuffer[hNs+1:]                        # undo zero-phase window
-		yh[hNs-1:] = fftbuffer[:hNs+1] 
+		yh[hNs-1:] = fftbuffer[:hNs+1]
 		y[pin-hNs:pin+hNs] += sw*yh                           # overlap-add
 		pin += H                                              # advance sound pointer
 	y = np.delete(y, range(hM2))                            # delete half of first window which was added in stftAnal
@@ -152,8 +152,8 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
 	"""
 	Analysis of a sound using the sinusoidal harmonic model
-	x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512); t: threshold in negative dB, 
-	nH: maximum number of harmonics;  minf0: minimum f0 frequency in Hz, 
+	x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512); t: threshold in negative dB,
+	nH: maximum number of harmonics;  minf0: minimum f0 frequency in Hz,
 	maxf0: maximim f0 frequency in Hz; f0et: error threshold in the f0 detection (ex: 5),
 	harmDevSlope: slope of harmonic deviation; minSineDur: minimum length of harmonics
 	returns xhfreq, xhmag, xhphase: harmonic frequencies, magnitudes and phases
@@ -161,23 +161,23 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 
 	if (minSineDur <0):                                     # raise exception if minSineDur is smaller than 0
 		raise ValueError("Minimum duration of sine tracks smaller than 0")
-		
+
 	hN = N/2                                                # size of positive spectrum
 	hM1 = int(math.floor((w.size+1)/2))                     # half analysis window size by rounding
 	hM2 = int(math.floor(w.size/2))                         # half analysis window size by floor
 	x = np.append(np.zeros(hM2),x)                          # add zeros at beginning to center first window at sample 0
 	x = np.append(x,np.zeros(hM2))                          # add zeros at the end to analyze last sample
-	pin = hM1                                               # init sound pointer in middle of anal window          
+	pin = hM1                                               # init sound pointer in middle of anal window
 	pend = x.size - hM1                                     # last sample to start a frame
 	fftbuffer = np.zeros(N)                                 # initialize buffer for FFT
 	w = w / sum(w)                                          # normalize analysis window
 	hfreqp = []                                             # initialize harmonic frequencies of previous frame
 	f0t = 0                                                 # initialize f0 track
 	f0stable = 0                                            # initialize f0 stable
-	while pin<=pend:           
+	while pin<=pend:
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft            
-		ploc = UF.peakDetection(mX, t)                        # detect peak locations   
+		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		ploc = UF.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N                                 # convert locations to Hz
 		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
@@ -199,4 +199,3 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 		pin += H                                              # advance sound pointer
 	xhfreq = SM.cleaningSineTracks(xhfreq, round(fs*minSineDur/H))     # delete tracks shorter than minSineDur
 	return xhfreq, xhmag, xhphase
-

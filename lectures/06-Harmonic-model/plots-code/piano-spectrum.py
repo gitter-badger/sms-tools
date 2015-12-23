@@ -9,12 +9,12 @@ import dftModel as DFT
 import utilFunctions as UF
 
 (fs, x) = UF.wavread('../../../sounds/piano.wav')
-M = 1100 
+M = 1100
 w = np.blackman(M)
 N = 2048
 pin = .3*fs
-hM1 = int(math.floor((w.size+1)/2)) 
-hM2 = int(math.floor(w.size/2))  
+hM1 = int(math.floor((w.size+1)/2))
+hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
 mX, pX = DFT.dftAnal(x1, w, N)
 

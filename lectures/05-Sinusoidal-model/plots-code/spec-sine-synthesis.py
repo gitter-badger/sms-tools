@@ -19,7 +19,7 @@ w = hamming(255)
 mX, pX = DFT.dftAnal(x, w, N)
 y = DFT.dftSynth(mX,pX,M)*sum(w)
 freqaxis = fs*np.arange(mX.size)/float(N)
-taxis = np.arange(N)/float(fs) 
+taxis = np.arange(N)/float(fs)
 
 plt.figure(1, figsize=(9, 5))
 plt.subplot(3,2,1)

@@ -7,12 +7,12 @@ from scipy.io.wavfile import read
 import stochasticModel_function
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../models/'))
 import utilFunctions as UF
- 
+
 class StochasticModel_frame:
-	
-	def __init__(self, parent):  
-			 
-		self.parent = parent        
+
+	def __init__(self, parent):
+
+		self.parent = parent
 		self.initUI()
 
 	def initUI(self):
@@ -83,7 +83,7 @@ class StochasticModel_frame:
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
 
 	def browse_file(self):
-			
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
 
 		#set the text of the self.filelocation
@@ -91,13 +91,13 @@ class StochasticModel_frame:
 		self.filelocation.insert(0,self.filename)
 
 	def compute_model(self):
-			
+
 		try:
 			inputFile = self.filelocation.get()
 			H = int(self.H.get())
 			N = int(self.N.get())
 			stocf = float(self.stocf.get())
-				
+
 			stochasticModel_function.main(inputFile, H, N, stocf)
 
 		except ValueError as errorMessage:

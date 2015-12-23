@@ -17,7 +17,7 @@ class Stft_frame:
 
 		choose_label = "Input file (.wav, mono and 44100 sampling rate):"
 		Label(self.parent, text=choose_label).grid(row=0, column=0, sticky=W, padx=5, pady=(10,2))
- 
+
 		#TEXTBOX TO PRINT PATH OF THE SOUND FILE
 		self.filelocation = Entry(self.parent)
 		self.filelocation.focus_set()
@@ -29,7 +29,7 @@ class Stft_frame:
 		#BUTTON TO BROWSE SOUND FILE
 		self.open_file = Button(self.parent, text="Browse...", command=self.browse_file) #see: def browse_file(self)
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
- 
+
 		#BUTTON TO PREVIEW SOUND FILE
 		self.preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
@@ -87,24 +87,24 @@ class Stft_frame:
 		options['filetypes'] = [('All files', '.*'), ('Wav files', '.wav')]
 		options['initialdir'] = '../../sounds/'
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
- 
+
 	def browse_file(self):
-		
+
 		self.filename = tkFileDialog.askopenfilename(**self.file_opt)
- 
+
 		#set the text of the self.filelocation
 		self.filelocation.delete(0, END)
 		self.filelocation.insert(0,self.filename)
 
 	def compute_model(self):
-		
+
 		try:
 			inputFile = self.filelocation.get()
 			window = self.w_type.get()
 			M = int(self.M.get())
 			N = int(self.N.get())
 			H = int(self.H.get())
-		
+
 			stft_function.main(inputFile, window, M, N, H)
 
 		except ValueError as errorMessage:

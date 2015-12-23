@@ -12,7 +12,7 @@ def sineTimeScaling(sfreq, smag, timeScaling):
 	"""
 	if (timeScaling.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Time scaling array does not have an even size")
-		
+
 	L = sfreq.shape[0]                                     # number of input frames
 	maxInTime = max(timeScaling[::2])                      # maximum value used as input times
 	maxOutTime = max(timeScaling[1::2])                    # maximum value used in output times
@@ -37,14 +37,14 @@ def sineFreqScaling(sfreq, freqScaling):
 	"""
 	if (freqScaling.size % 2 != 0):                        # raise exception if array not even length
 		raise ValueError("Frequency scaling array does not have an even size")
-		
+
 	L = sfreq.shape[0]                                     # number of input frames
 	# create interpolation object from the scaling values
-	freqScalingEnv = np.interp(np.arange(L), L*freqScaling[::2]/freqScaling[-2], freqScaling[1::2]) 
+	freqScalingEnv = np.interp(np.arange(L), L*freqScaling[::2]/freqScaling[-2], freqScaling[1::2])
 	ysfreq = np.zeros_like(sfreq)                          # create empty output matrix
 	for l in range(L):                                     # go through all frames
 		ind_valid = np.where(sfreq[l,:]!=0)[0]               # check if there are frequency values
 		if ind_valid.size == 0:                              # if no values go to next frame
 			continue
-		ysfreq[l,ind_valid] = sfreq[l,ind_valid] * freqScalingEnv[l] # scale of frequencies 
+		ysfreq[l,ind_valid] = sfreq[l,ind_valid] * freqScalingEnv[l] # scale of frequencies
 	return ysfreq

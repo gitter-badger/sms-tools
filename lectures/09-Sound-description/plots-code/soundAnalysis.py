@@ -16,7 +16,7 @@ def fetchDataDetails(inputDir, descExt = '.json'):
           dataDetails[cname]={}
         fDict = json.load(open(os.path.join(rname, cname, sname, fname),'r'))
         dataDetails[cname][sname]={'file': fname, 'feature':fDict}
-        
+
 
   return dataDetails
 
@@ -66,26 +66,26 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
       plt.scatter(x_cord,y_cord, c = colors[ii], s=200, hold = True, alpha=0.75)
       if anotOn==1:
          plt.annotate(soundId, xy=(x_cord, y_cord), xytext=(x_cord, y_cord))
-    
+
     circ = Line2D([0], [0], linestyle="none", marker="o", alpha=0.75, markersize=10, markerfacecolor=colors[ii])
     legArray.append(circ)
-  
+
   plt.ylabel(descInput[1], fontsize =16)
   plt.xlabel(descInput[0], fontsize =16)
   plt.legend(legArray, catArray ,numpoints=1,bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=len(catArray), mode="expand", borderaxespad=0.)
 
   plt.show()
-  
-  
+
+
 def eucDistFeatures(ftrDict1, ftrDict2):
-  
+
   f1 =  convFtrDict2List(ftrDict1)
   f2 =  convFtrDict2List(ftrDict2)
-  
+
   return eucDist(f1, f2)
 
 def eucDist(vec1, vec2):
-  
+
   return np.sqrt(np.sum(np.power(np.array(vec1) - np.array(vec2), 2)))
 
 def convFtrDict2List(ftrDict):
@@ -95,17 +95,17 @@ def convFtrDict2List(ftrDict):
       ftr.extend(ftrDict[key][0])
     else:
       ftr.extend(ftrDict[key])
-      
+
   return ftr
 
 
 def computeSimilarSounds(queryFile, targetDir):
-  
+
   dataDetails = fetchDataDetails(targetDir)
-  
+
   #reading query feature dictionary
   qFtr = json.load(open(queryFile, 'r'))
-  
+
   dist = []
   #iterating over classes
   for cname in dataDetails.keys():
@@ -113,34 +113,34 @@ def computeSimilarSounds(queryFile, targetDir):
     for sname in dataDetails[cname].keys():
       eucDist = eucDistFeatures(qFtr, dataDetails[cname][sname]['feature'])
       dist.append([eucDist, sname, cname])
-  
+
   #sorting the array based on the dist
   indSort = np.argsort(np.array(dist)[:,0])
   return (np.array(dist)[indSort,:]).tolist()
 
 def classifySoundkNN(queryFile, targetDir, K):
-  
+
   distances = computeSimilarSounds(queryFile, targetDir)
   print distances
   #note that we go from 1 becasue 0th index will be the query file itself
   classes = (np.array(distances)[1:K+1,2]).tolist()
-  
+
   freqCnt = []
   for ii in range(K):
     freqCnt.append(classes.count(classes[ii]))
   indMax = np.argmax(freqCnt)
-  
+
   print "This sample belongs to class: " + str(classes[indMax])
-  
+
   return classes[indMax]
 
 def clusterSounds(targetDir, nCluster = -1):
-  
+
   dataDetails = fetchDataDetails(targetDir)
-  
+
   ftrArr = []
   infoArr = []
-  
+
   if nCluster ==-1:
     nCluster = len(dataDetails.keys())
   for cname in dataDetails.keys():
@@ -148,38 +148,24 @@ def clusterSounds(targetDir, nCluster = -1):
     for sname in dataDetails[cname].keys():
       ftrArr.append(convFtrDict2List(dataDetails[cname][sname]['feature']))
       infoArr.append([sname, cname])
-      
+
   ftrArr = np.array(ftrArr)
   infoArr = np.array(infoArr)
   print ftrArr.shape
-  
+
   ftrArrWhite = whiten(ftrArr)
-  
+
   print nCluster
   centroids, distortion = kmeans(ftrArrWhite, nCluster)
   clusResults = -1*np.ones(ftrArrWhite.shape[0])
-  
+
   for ii in range(ftrArrWhite.shape[0]):
     diff = centroids - ftrArrWhite[ii,:]
     diff = np.sum(np.power(diff,2), axis = 1)
     indMin = np.argmin(diff)
     clusResults[ii] = indMin
-    
+
   for ii in range(nCluster):
     print "Sounds in cluster number " + str(ii+1)
     ind = np.where(clusResults==ii)[0]
     print infoArr[ind]
-  
-  
-    
-
-  
-  
-  
-  
-  
-      
-    
-    
-    
-  

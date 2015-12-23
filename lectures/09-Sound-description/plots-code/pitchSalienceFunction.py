@@ -11,9 +11,9 @@ M = 2048
 N = 2*M
 guessUnvoiced = True
 
-window = Windowing(type='hann', zeroPadding=N-M) 
+window = Windowing(type='hann', zeroPadding=N-M)
 spectrum = Spectrum(size=N)
-spectralPeaks = SpectralPeaks(minFrequency=50, maxFrequency=10000, maxPeaks=100, sampleRate=fs, 
+spectralPeaks = SpectralPeaks(minFrequency=50, maxFrequency=10000, maxPeaks=100, sampleRate=fs,
 				magnitudeThreshold=0, orderBy="magnitude")
 pitchSalienceFunction = PitchSalienceFunction()
 pitchSalienceFunctionPeaks = PitchSalienceFunctionPeaks(minFrequency=100, maxFrequency=300)
@@ -41,7 +41,7 @@ plt.ylabel('amplitude')
 plt.title('x (orchestra.wav)')
 
 plt.subplot(2,1,2)
-frmTime = H*np.arange(totalSaliences.size)/float(fs)  
+frmTime = H*np.arange(totalSaliences.size)/float(fs)
 plot(frmTime, totalSaliences, color='c', linewidth = 1.5)
 plt.axis([0, x.size/float(fs), min(totalSaliences), max(totalSaliences)])
 plt.ylabel('max pitch salience')

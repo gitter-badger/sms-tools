@@ -25,7 +25,7 @@ plt.ylabel('amplitude')
 plt.title('x (carnatic.wav)')
 
 plt.subplot(2,1,2)
-frmTime = H*np.arange(pitch.size)/float(fs) 
+frmTime = H*np.arange(pitch.size)/float(fs)
 pitch[pitch==0]=nan
 plot(frmTime, pitch, color='g', linewidth = 1.5)
 plt.axis([0, x.size/float(fs), 100, 300])

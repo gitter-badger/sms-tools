@@ -6,8 +6,8 @@ N = 256
 M = 63
 f0 = 1000
 fs = 10000
-A0 = .8 
-hN = N/2 
+A0 = .8
+hN = N/2
 hM = (M+1)/2
 fftbuffer = np.zeros(N)
 X1 = np.zeros(N, dtype='complex')
@@ -23,11 +23,11 @@ plt.plot(np.arange(-hM+1, hM), w, 'b', lw=1.5)
 plt.axis([-hM+1, hM, 0, 1])
 
 fftbuffer[:hM] = w[hM-1:]
-fftbuffer[N-hM+1:] = w[:hM-1]  
+fftbuffer[N-hM+1:] = w[:hM-1]
 X = fft(fftbuffer)
 X1[:hN] = X[hN:]
 X1[N-hN:] = X[:hN]
-mX = 20*np.log10(abs(X1))       
+mX = 20*np.log10(abs(X1))
 
 plt.subplot(2,3,2)
 plt.title('mW')
@@ -52,7 +52,7 @@ fftbuffer[N-hM+1:] = xw[:hM-1]
 X = fft(fftbuffer)
 X2[:hN] = X[hN:]
 X2[N-hN:] = X[:hN]
-mX2 = 20*np.log10(abs(X2))  
+mX2 = 20*np.log10(abs(X2))
 
 plt.subplot(2,3,5)
 plt.title('mXW')

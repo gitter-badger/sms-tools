@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import utilFunctions as UF
 (fs, x) = UF.wavread('../../../sounds/piano.wav')
 start = 13860
-M = 800 
+M = 800
 xp = x[start:start+M]/float(max(x[start:start+M]))
 r = ess.AutoCorrelation(normalization = 'standard')(xp)
 r = r / max(r)

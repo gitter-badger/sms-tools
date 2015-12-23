@@ -12,15 +12,15 @@ import dftModel as DF
 w = np.hamming(511)
 N = 512
 pin = 5000
-hM1 = int(math.floor((w.size+1)/2)) 
-hM2 = int(math.floor(w.size/2)) 
-fftbuffer = np.zeros(N)  
+hM1 = int(math.floor((w.size+1)/2))
+hM2 = int(math.floor(w.size/2))
+fftbuffer = np.zeros(N)
 x1 = x[pin-hM1:pin+hM2]
 xw = x1*w
 fftbuffer[:hM1] = xw[hM2:]
-fftbuffer[N-hM2:] = xw[:hM2]        
+fftbuffer[N-hM2:] = xw[:hM2]
 X = fftshift(fft(fftbuffer))
-mX = 20 * np.log10(abs(X))       
+mX = 20 * np.log10(abs(X))
 pX = np.unwrap(np.angle(X))
 
 plt.figure(1, figsize=(9.5, 7))

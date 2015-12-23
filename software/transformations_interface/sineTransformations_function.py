@@ -16,11 +16,11 @@ def analysis(inputFile='../../sounds/mridangam.wav', window='hamming', M=801, N=
 	"""
 	Analyze a sound with the sine model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
-	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
+	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)
 	M: analysis window size; N: fft size (power of two, bigger or equal than M)
 	t: magnitude threshold of spectral peaks; minSineDur: minimum duration of sinusoidal tracks
 	maxnSines: maximum number of parallel sinusoids
-	freqDevOffset: frequency deviation allowed in the sinusoids from frame to frame at frequency 0   
+	freqDevOffset: frequency deviation allowed in the sinusoids from frame to frame at frequency 0
 	freqDevSlope: slope of the frequency deviation, higher frequencies have bigger deviation
 	returns inputFile: input file name; fs: sampling rate of input file,
 	        tfreq, tmag: sinusoidal frequencies and magnitudes
@@ -63,7 +63,7 @@ def analysis(inputFile='../../sounds/mridangam.wav', window='hamming', M=801, N=
 	plt.ylabel('amplitude')
 	plt.xlabel('time (sec)')
 	plt.title('input sound: x')
-		
+
 	# plot the sinusoidal frequencies
 	if (tfreq.shape[1] > 0):
 		plt.subplot(3,1,2)
@@ -99,7 +99,7 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	interactive=True, plotFile=False):
 	"""
 	Transform the analysis values returned by the analysis function and synthesize the sound
-	inputFile: name of input file; fs: sampling rate of input file	
+	inputFile: name of input file; fs: sampling rate of input file
 	tfreq, tmag: sinusoidal frequencies and magnitudes
 	freqScaling: frequency scaling factors, in time-value pairs
 	timeScaling: time scaling factors, in time-value pairs
@@ -111,16 +111,16 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	# hop size (has to be 1/4 of Ns)
 	H = 128
 
-	# frequency scaling of the sinusoidal tracks 
+	# frequency scaling of the sinusoidal tracks
 	ytfreq = ST.sineFreqScaling(tfreq, freqScaling)
 
-	# time scale the sinusoidal tracks 
+	# time scale the sinusoidal tracks
 	ytfreq, ytmag = ST.sineTimeScaling(ytfreq, tmag, timeScaling)
 
-	# synthesis 
+	# synthesis
 	y = SM.sineModelSynth(ytfreq, ytmag, np.array([]), Ns, H, fs)
 
-	# write output sound 
+	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModelTransformation.wav'
 	UF.wavwrite(y,fs, outputFile)
 

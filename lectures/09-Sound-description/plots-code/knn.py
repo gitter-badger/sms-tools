@@ -28,7 +28,7 @@ for kk in range(query.shape[0]):
     for pp in range(class1.shape[0]):
         euc = eucDist(query[kk,:], class1[pp,:])
         dist.append([euc, 1])
-    
+
     for pp in range(class2.shape[0]):
         euc = eucDist(query[kk,:], class2[pp,:])
         dist.append([euc, 2])
@@ -36,7 +36,7 @@ for kk in range(query.shape[0]):
     dist = np.array(dist)
     indSort = np.argsort(dist[:,0])
     topKDist = dist[indSort[:K],1]
-    predClass.append(mode(topKDist)[0][0].tolist()) 
+    predClass.append(mode(topKDist)[0][0].tolist())
 
 predClass = np.array(predClass)
 indC1 = np.where(predClass==1)[0]

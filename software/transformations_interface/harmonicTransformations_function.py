@@ -18,17 +18,17 @@ def analysis(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=
 	"""
 	Analyze a sound with the harmonic model
 	inputFile: input sound file (monophonic with sampling rate of 44100)
-	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)	
-	M: analysis window size 
+	window: analysis window type (rectangular, hanning, hamming, blackman, blackmanharris)
+	M: analysis window size
 	N: fft size (power of two, bigger or equal than M)
-	t: magnitude threshold of spectral peaks 
+	t: magnitude threshold of spectral peaks
 	minSineDur: minimum duration of sinusoidal tracks
 	nH: maximum number of harmonics
 	minf0: minimum fundamental frequency in sound
 	maxf0: maximum fundamental frequency in sound
-	f0et: maximum error accepted in f0 detection algorithm                                                                                            
+	f0et: maximum error accepted in f0 detection algorithm
 	harmDevSlope: allowed deviation of harmonic tracks, higher harmonics have higher allowed deviation
-	returns inputFile: input file name; fs: sampling rate of input file, tfreq, 
+	returns inputFile: input file name; fs: sampling rate of input file, tfreq,
 						tmag: sinusoidal frequencies and magnitudes
 	"""
 
@@ -69,7 +69,7 @@ def analysis(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=
 	plt.ylabel('amplitude')
 	plt.xlabel('time (sec)')
 	plt.title('input sound: x')
-	
+
 	if (hfreq.shape[1] > 0):
 		plt.subplot(3,1,2)
 		tracks = np.copy(hfreq)
@@ -105,7 +105,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	"""
 	Transform the analysis values returned by the analysis function and synthesize the sound
 	inputFile: name of input file
-	fs: sampling rate of input file	
+	fs: sampling rate of input file
 	tfreq, tmag: sinusoidal frequencies and magnitudes
 	freqScaling: frequency scaling factors, in time-value pairs
 	freqStretchig: frequency stretching factors, in time-value pairs
@@ -119,16 +119,16 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	# hop size (has to be 1/4 of Ns)
 	H = 128
 
-	# frequency scaling of the harmonics 
+	# frequency scaling of the harmonics
 	yhfreq, yhmag = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scale the sound
 	yhfreq, yhmag = ST.sineTimeScaling(yhfreq, yhmag, timeScaling)
 
-	# synthesis 
+	# synthesis
 	y = SM.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)
-	
-	# write output sound 
+
+	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModelTransformation.wav'
 	UF.wavwrite(y, fs, outputFile)
 
@@ -137,7 +137,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 
 	# frequency range to plot
 	maxplotfreq = 15000.0
-		
+
 	# plot the transformed sinusoidal frequencies
 	plt.subplot(2,1,1)
 	if (yhfreq.shape[1] > 0):

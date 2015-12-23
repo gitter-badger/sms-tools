@@ -27,11 +27,11 @@ plt.figure(1, figsize=(9.5, 7))
 maxplotfreq = 800.0
 maxplotbin = int(N*maxplotfreq/fs)
 numFrames = int(mX[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                             
-binFreq = np.arange(maxplotbin+1)*float(fs)/N                         
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = np.arange(maxplotbin+1)*float(fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:,:maxplotbin+1]))
 plt.autoscale(tight=True)
-  
+
 tracks = tfreq*np.less(tfreq, maxplotfreq)
 tracks[tracks<=0] = np.nan
 plt.plot(frmTime, tracks, 'x', color='k', markeredgewidth=1.5)

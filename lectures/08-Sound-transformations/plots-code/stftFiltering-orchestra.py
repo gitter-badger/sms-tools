@@ -24,8 +24,8 @@ mY,pY = STFT.stftAnal(y, w, N, H)
 plt.figure(1, figsize=(12, 9))
 plt.subplot(311)
 numFrames = int(mX[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                             
-binFreq = np.arange(mX[0,:].size)*float(fs)/N                         
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = np.arange(mX[0,:].size)*float(fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mX))
 plt.title('mX (orchestra.wav)')
 plt.autoscale(tight=True)
@@ -37,8 +37,8 @@ plt.title('filter shape')
 
 plt.subplot(313)
 numFrames = int(mY[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)                             
-binFreq = np.arange(mY[0,:].size)*float(fs)/N                         
+frmTime = H*np.arange(numFrames)/float(fs)
+binFreq = np.arange(mY[0,:].size)*float(fs)/N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mY))
 plt.title('mY')
 plt.autoscale(tight=True)

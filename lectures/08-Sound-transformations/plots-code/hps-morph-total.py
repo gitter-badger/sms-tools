@@ -62,7 +62,7 @@ plt.subplot(3,1,1)
 numFrames = int(stocEnv1[:,0].size)
 sizeEnv = int(stocEnv1[0,:].size)
 frmTime = H*np.arange(numFrames)/float(fs1)
-binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv                      
+binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv
 plt.pcolormesh(frmTime, binFreq, np.transpose(stocEnv1[:,:sizeEnv*maxplotfreq/(.5*fs1)+1]))
 plt.autoscale(tight=True)
 
@@ -70,7 +70,7 @@ plt.autoscale(tight=True)
 harms = hfreq1*np.less(hfreq1,maxplotfreq)
 harms[harms==0] = np.nan
 numFrames = int(harms[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs1) 
+frmTime = H*np.arange(numFrames)/float(fs1)
 plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 plt.autoscale(tight=True)
 plt.title('x1 (violin-B3.wav): harmonics + stochastic spectrogram')
@@ -80,7 +80,7 @@ plt.subplot(3,1,2)
 numFrames = int(stocEnv2[:,0].size)
 sizeEnv = int(stocEnv2[0,:].size)
 frmTime = H*np.arange(numFrames)/float(fs2)
-binFreq = (.5*fs2)*np.arange(sizeEnv*maxplotfreq/(.5*fs2))/sizeEnv                      
+binFreq = (.5*fs2)*np.arange(sizeEnv*maxplotfreq/(.5*fs2))/sizeEnv
 plt.pcolormesh(frmTime, binFreq, np.transpose(stocEnv2[:,:sizeEnv*maxplotfreq/(.5*fs2)+1]))
 plt.autoscale(tight=True)
 
@@ -88,7 +88,7 @@ plt.autoscale(tight=True)
 harms = hfreq2*np.less(hfreq2,maxplotfreq)
 harms[harms==0] = np.nan
 numFrames = int(harms[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs2) 
+frmTime = H*np.arange(numFrames)/float(fs2)
 plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 plt.autoscale(tight=True)
 plt.title('x2 (soprano-E4.wav): harmonics + stochastic spectrogram')
@@ -98,7 +98,7 @@ plt.subplot(3,1,3)
 numFrames = int(ystocEnv[:,0].size)
 sizeEnv = int(ystocEnv[0,:].size)
 frmTime = H*np.arange(numFrames)/float(fs1)
-binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv                      
+binFreq = (.5*fs1)*np.arange(sizeEnv*maxplotfreq/(.5*fs1))/sizeEnv
 plt.pcolormesh(frmTime, binFreq, np.transpose(ystocEnv[:,:sizeEnv*maxplotfreq/(.5*fs1)+1]))
 plt.autoscale(tight=True)
 
@@ -106,7 +106,7 @@ plt.autoscale(tight=True)
 harms = yhfreq*np.less(yhfreq,maxplotfreq)
 harms[harms==0] = np.nan
 numFrames = int(harms[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs1) 
+frmTime = H*np.arange(numFrames)/float(fs1)
 plt.plot(frmTime, harms, color='k', ms=3, alpha=1)
 plt.autoscale(tight=True)
 plt.title('y: harmonics + stochastic spectrogram')
@@ -114,5 +114,3 @@ plt.title('y: harmonics + stochastic spectrogram')
 plt.tight_layout()
 plt.savefig('hps-morph-total.png')
 plt.show()
-	
-

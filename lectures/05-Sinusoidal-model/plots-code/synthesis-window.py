@@ -21,17 +21,17 @@ x1 = x[pin:pin+w.size]
 mX, pX = DFT.dftAnal(x1, w, N)
 ploc = UF.peakDetection(mX, t)
 iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
-freqs = iploc*fs/N 
-Y = UF.genSpecSines(freqs, ipmag, ipphase, Ns, fs)       
+freqs = iploc*fs/N
+Y = UF.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))
-sw = np.zeros(Ns) 
-ow = triang(2*H);    
-sw[hNs-H:hNs+H] = ow  
-bh = blackmanharris(Ns)     
-bh = bh / sum(bh)     
-sw[hNs-H:hNs+H] = sw[hNs-H:hNs+H] / bh[hNs-H:hNs+H]  
+sw = np.zeros(Ns)
+ow = triang(2*H);
+sw[hNs-H:hNs+H] = ow
+bh = blackmanharris(Ns)
+bh = bh / sum(bh)
+sw[hNs-H:hNs+H] = sw[hNs-H:hNs+H] / bh[hNs-H:hNs+H]
 
 
 plt.figure(1, figsize=(9, 6))

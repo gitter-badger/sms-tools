@@ -12,10 +12,10 @@ centroid = ess.Centroid(range=fs/2.0)
 x = ess.MonoLoader(filename = '../../../sounds/speech-male.wav', sampleRate = fs)()
 centroids = []
 
-for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):  
-  mX = spectrum(window(frame))        
+for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H, startFromZero=True):
+  mX = spectrum(window(frame))
   centroid_val = centroid(mX)
-  centroids.append(centroid_val)            
+  centroids.append(centroid_val)
 centroids = np.array(centroids)
 
 plt.figure(1, figsize=(9.5, 5))
@@ -27,8 +27,8 @@ plt.ylabel('amplitude')
 plt.title('x (speech-male.wav)')
 
 plt.subplot(2,1,2)
-frmTime = H*np.arange(centroids.size)/float(fs)    
-plt.plot(frmTime, centroids, 'g', lw=1.5)  
+frmTime = H*np.arange(centroids.size)/float(fs)
+plt.plot(frmTime, centroids, 'g', lw=1.5)
 plt.axis([0, x.size/float(fs), min(centroids), max(centroids)])
 plt.xlabel('time (sec)')
 plt.ylabel('frequency (Hz)')

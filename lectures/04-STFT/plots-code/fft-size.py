@@ -13,7 +13,7 @@ M = 512
 N = 512
 start = .8*fs
 x1 = x[start:start+M]
-xw = x1 * np.hamming(M) 
+xw = x1 * np.hamming(M)
 
 plt.figure(1, figsize=(9.5, 6))
 plt.subplot(311)
@@ -33,7 +33,7 @@ start = .8*fs
 x1 = x[start:start+M]
 xw = x1 * np.hamming(M)
 mX, pX = DF.dftAnal(x1, np.hamming(M), N)
-         
+
 plt.subplot(313)
 plt.plot((fs/2.0)*np.arange(mX.size)/float(mX.size), mX, 'r', lw=1.5)
 plt.axis([0,fs/4.0,-85,max(mX)])

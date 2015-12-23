@@ -19,7 +19,7 @@ def main(inputFile='../../sounds/rain.wav', stocf=0.1, timeScaling = np.array([0
 	timeScaling: time scaling factors, in time-value pairs
 	"""
 
-	# hop size 
+	# hop size
 	H = 128
 
 	# read input sound
@@ -27,13 +27,13 @@ def main(inputFile='../../sounds/rain.wav', stocf=0.1, timeScaling = np.array([0
 
 	# perform stochastic analysis
 	mYst = STC.stochasticModelAnal(x, H, H*2, stocf)
-	        
+
 	# perform time scaling of stochastic representation
 	ystocEnv = STCT.stochasticTimeScale(mYst, timeScaling)
-	
+
 	# synthesize output sound
 	y = STC.stochasticModelSynth(ystocEnv, H, H*2)
-	
+
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModelTransformation.wav'
 	UF.wavwrite(y, fs, outputFile)
@@ -52,8 +52,8 @@ def main(inputFile='../../sounds/rain.wav', stocf=0.1, timeScaling = np.array([0
 	# plot stochastic representation
 	plt.subplot(4,1,2)
 	numFrames = int(mYst[:,0].size)
-	frmTime = H*np.arange(numFrames)/float(fs)                             
-	binFreq = np.arange(stocf*H)*float(fs)/(stocf*2*H)                      
+	frmTime = H*np.arange(numFrames)/float(fs)
+	binFreq = np.arange(stocf*H)*float(fs)/(stocf*2*H)
 	plt.pcolormesh(frmTime, binFreq, np.transpose(mYst))
 	plt.autoscale(tight=True)
 	plt.xlabel('time (sec)')
@@ -63,8 +63,8 @@ def main(inputFile='../../sounds/rain.wav', stocf=0.1, timeScaling = np.array([0
 	# plot modified stochastic representation
 	plt.subplot(4,1,3)
 	numFrames = int(ystocEnv[:,0].size)
-	frmTime = H*np.arange(numFrames)/float(fs)                             
-	binFreq = np.arange(stocf*H)*float(fs)/(stocf*2*H)                      
+	frmTime = H*np.arange(numFrames)/float(fs)
+	binFreq = np.arange(stocf*H)*float(fs)/(stocf*2*H)
 	plt.pcolormesh(frmTime, binFreq, np.transpose(ystocEnv))
 	plt.autoscale(tight=True)
 	plt.xlabel('time (sec)')

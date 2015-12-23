@@ -18,8 +18,8 @@ except ImportError:
 	print "-------------------------------------------------------------------------------"
 	print "\n"
 	sys.exit(0)
-	
-winsound_imported = False	
+
+winsound_imported = False
 if sys.platform == "win32":
 	try:
 		import winsound

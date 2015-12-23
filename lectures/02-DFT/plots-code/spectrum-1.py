@@ -11,8 +11,8 @@ import dftModel as DFT
 w = np.hamming(511)
 N = 512
 pin = 5000
-hM1 = int(math.floor((w.size+1)/2)) 
-hM2 = int(math.floor(w.size/2))  
+hM1 = int(math.floor((w.size+1)/2))
+hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
 mX, pX = DFT.dftAnal(x1, w, N)
 
