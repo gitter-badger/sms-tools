@@ -118,11 +118,11 @@ A model provides a different representation of audio than the time-domain sample
 
 Audio can be transformed by modifying its model.
 
-- [STFT transformations](stftTransformations.py)
-- [Sinusoidal transformations](sineTransformations.py)
-- [Harmonic transformations](harmonicTransformations.py)
-- [Stochastic transformations](stochasticTransformations.py)
-- [Harmonic + stochastic transformations](hpsTransformations.py)
+- [STFT transformations](software/transformations/stftTransformations.py)
+- [Sinusoidal transformations](software/transformations/sineTransformations.py)
+- [Harmonic transformations](software/transformations/harmonicTransformations.py)
+- [Stochastic transformations](software/transformations/stochasticTransformations.py)
+- [Harmonic + stochastic transformations](software/transformations/hpsTransformations.py)
 
 ## Authors
 
