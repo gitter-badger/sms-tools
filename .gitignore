@@ -68,10 +68,10 @@ target/
 workspace_dev/*
 workspace/*
 !workspace/README.txt
-software/models_interface/output_sounds/*.wav
-software/transformations_interface/output_sounds/*.wav
 
 .coverage
 *,cover
 cover/
 htmlcov/
+
+output_sounds/

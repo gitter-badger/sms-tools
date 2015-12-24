@@ -27,7 +27,7 @@ class HpsMorph_frame:
 		self.filelocation1["width"] = 30
 		self.filelocation1.grid(row=0,column=0, sticky=W, padx=(75, 5), pady=(10,2))
 		self.filelocation1.delete(0, END)
-		self.filelocation1.insert(0, '../../sounds/violin-B3.wav')
+		self.filelocation1.insert(0, 'sounds/violin-B3.wav')
 
 		#BUTTON TO BROWSE SOUND FILE 1
 		open_file1 = Button(self.parent, text="...", command=self.browse_file1) #see: def browse_file(self)
@@ -132,7 +132,7 @@ class HpsMorph_frame:
 		self.filelocation2["width"] = 30
 		self.filelocation2.grid(row=5,column=0, sticky=W, padx=(75, 5), pady=(2,2))
 		self.filelocation2.delete(0, END)
-		self.filelocation2.insert(0, '../../sounds/soprano-E4.wav')
+		self.filelocation2.insert(0, 'sounds/soprano-E4.wav')
 
 		#BUTTON TO BROWSE SOUND FILE 2
 		open_file2 = Button(self.parent, text="...", command=self.browse_file2) #see: def browse_file(self)
@@ -295,7 +295,7 @@ class HpsMorph_frame:
 		self.file_opt = options = {}
 		options['defaultextension'] = '.wav'
 		options['filetypes'] = [('All files', '.*'), ('Wav files', '.wav')]
-		options['initialdir'] = '../../sounds/'
+		options['initialdir'] = 'sounds/'
 		options['title'] = 'Open a mono audio file .wav with sample frequency 44100 Hz'
 
 	def browse_file1(self):
