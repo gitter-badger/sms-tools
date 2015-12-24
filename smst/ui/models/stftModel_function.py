@@ -6,8 +6,9 @@ import os
 from scipy.signal import get_window
 import smst.models.utilFunctions as UF
 import smst.models.stftModel as STFT
+from .. import demo_sound_path
 
-def main(inputFile = 'sounds/piano.wav', window = 'hamming', M = 1024, N = 1024, H = 512,
+def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024, N = 1024, H = 512,
 	interactive=True, plotFile=False):
 	"""
 	analysis/synthesis using the STFT
