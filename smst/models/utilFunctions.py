@@ -84,15 +84,24 @@ def wavplay(filename):
 
 def wavwrite(y, fs, filename):
 	"""
-	Write a sound file from an array with the sound and the sampling rate
+	Write a sound file from an array with the sound and the sampling rate.
+	Creates the directory for the file if it does not exist.
 	y: floating point array of one dimension, fs: sampling rate
-	filename: name of file to create
+	filename: name of file to create (can be a path)
 	"""
+
+	dir = os.path.dirname(filename)
+	print(dir)
+	ensureDirectory(dir)
 
 	x = copy.deepcopy(y)                         # copy array
 	x *= INT16_FAC                               # scaling floating point -1 to 1 range signal to int16 range
 	x = np.int16(x)                              # converting to int16 type
 	write(filename, fs, x)
+
+def ensureDirectory(dir):
+	if not os.path.isdir(dir):
+		os.makedirs(dir)
 
 def peakDetection(mX, t):
 	"""
