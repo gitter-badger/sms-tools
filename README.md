@@ -10,8 +10,6 @@ This repository contains a library written in Python (with a bit of C) and compl
   - `models` - code for models that can represent sounds
   - `transformations` - code for transforming sounds
   - `ui` - command-line and graphical interface for demo purposes
-    - `models`
-    - `transformations`
 - `tests` - automated tests
 - `lectures` - lecture slides + code to generate the plots and other resources
 - `sounds` - selected example sounds from Freesound used in the course
@@ -75,13 +73,18 @@ $ python compileModule.py build_ext --inplace
 
 ## How to use?
 
+The scripts to run the graphical user interface (GUI) are expected to run in
+the project directory. The sound paths are relative to it.
+
+- `sounds` - input sounds
+- `output_sounds` - output sounds processed by the models
+
 ### Models GUI
 
 The basic sound analysis/synthesis functions, or models, are in the directory `smst/models` and there is a graphical interface and individual example functions in `smst/ui/models`. To execute the models GUI type:
 
 ```
-sms-tools$ cd smst/ui/models
-$ python models_GUI.py
+sms-tools$ python models_gui.py
 ```
 
 ### Transformations GUI
@@ -89,8 +92,7 @@ $ python models_GUI.py
 To execute the transformations GUI that calls various sound transformation functions type:
 
 ```
-sms-tools$ cd smst/ui/transformations
-$ python transformations_GUI.py
+sms-tools$ python transformations_gui.py
 ```
 
 ### Coding projects/assignments
