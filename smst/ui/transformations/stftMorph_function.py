@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.stft as STFT
+import smst.models.stftModel as STFT
 import smst.models.utilFunctions as UF
 import smst.transformations.stftTransformations as STFTT
 from .. import demo_sound_path
@@ -36,10 +36,10 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
 	y = STFTT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
 
 	# compute the magnitude and phase spectrogram of input sound (for plotting)
-	mX1, pX1 = STFT.stftAnal(x1, w1, N1, H1)
+	mX1, pX1 = STFT.stftModelAnal(x1, w1, N1, H1)
 
 	# compute the magnitude and phase spectrogram of output sound (for plotting)
-	mY, pY = STFT.stftAnal(y, w1, N1, H1)
+	mY, pY = STFT.stftModelAnal(y, w1, N1, H1)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_stftMorph.wav'

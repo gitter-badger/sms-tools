@@ -5,7 +5,7 @@ import numpy as np
 import math
 import dftModel as DFT
 
-def stft(x, w, N, H):
+def stftModel(x, w, N, H):
 	"""
 	Analysis/synthesis of a sound using the short-time Fourier transform
 	x: input sound, w: analysis window, N: FFT size, H: hop size
@@ -32,11 +32,11 @@ def stft(x, w, N, H):
 		y1 = DFT.dftSynth(mX, pX, M)                 # compute idft
 		y[pin-hM1:pin+hM2] += H*y1                   # overlap-add to generate output sound
 		pin += H                                     # advance sound pointer
-	y = np.delete(y, range(hM2))                   # delete half of first window which was added in stftAnal
-	y = np.delete(y, range(y.size-hM1, y.size))    # delete half of the last window which as added in stftAnal
+	y = np.delete(y, range(hM2))                   # delete half of first window which was added in stftModelAnal
+	y = np.delete(y, range(y.size-hM1, y.size))    # delete half of the last window which as added in stftModelAnal
 	return y
 
-def stftAnal(x, w, N, H) :
+def stftModelAnal(x, w, N, H) :
 	"""
 	Analysis of a sound using the short-time Fourier transform
 	x: input array sound, w: analysis window, N: FFT size, H: hop size
@@ -65,7 +65,7 @@ def stftAnal(x, w, N, H) :
 		pin += H                                      # advance sound pointer
 	return xmX, xpX
 
-def stftSynth(mY, pY, M, H) :
+def stftModelSynth(mY, pY, M, H) :
 	"""
 	Synthesis of a sound using the short-time Fourier transform
 	mY: magnitude spectra, pY: phase spectra, M: window size, H: hop-size
@@ -80,6 +80,6 @@ def stftSynth(mY, pY, M, H) :
 		y1 = DFT.dftSynth(mY[i,:], pY[i,:], M)         # compute idft
 		y[pin-hM1:pin+hM2] += H*y1                     # overlap-add to generate output sound
 		pin += H                                       # advance sound pointer
-	y = np.delete(y, range(hM2))                     # delete half of first window which was added in stftAnal
-	y = np.delete(y, range(y.size-hM1, y.size))      # delete the end of the sound that was added in stftAnal
+	y = np.delete(y, range(hM2))                     # delete half of first window which was added in stftModelAnal
+	y = np.delete(y, range(y.size-hM1, y.size))      # delete the end of the sound that was added in stftModelAnal
 	return y

@@ -376,8 +376,8 @@ def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
 		xrw = np.real(fftshift(ifft(Xr)))                # inverse FFT
 		xr[pin:pin+N] += xrw*sw                          # overlap-add
 		pin += H                                         # advance sound pointer
-	xr = np.delete(xr, range(hN))                      # delete half of first window which was added in stftAnal
-	xr = np.delete(xr, range(xr.size-hN, xr.size))     # delete half of last window which was added in stftAnal
+	xr = np.delete(xr, range(hN))                      # delete half of first window which was added in stftModelAnal
+	xr = np.delete(xr, range(xr.size-hN, xr.size))     # delete half of last window which was added in stftModelAnal
 	return xr
 
 def stochasticResidualAnal(x, N, H, sfreq, smag, sphase, fs, stocf):

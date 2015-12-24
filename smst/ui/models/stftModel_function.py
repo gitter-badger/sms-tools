@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
 import smst.models.utilFunctions as UF
-import smst.models.stft as STFT
+import smst.models.stftModel as STFT
 
 def main(inputFile = 'sounds/piano.wav', window = 'hamming', M = 1024, N = 1024, H = 512,
 	interactive=True, plotFile=False):
@@ -25,10 +25,10 @@ def main(inputFile = 'sounds/piano.wav', window = 'hamming', M = 1024, N = 1024,
 	w = get_window(window, M)
 
 	# compute the magnitude and phase spectrogram
-	mX, pX = STFT.stftAnal(x, w, N, H)
+	mX, pX = STFT.stftModelAnal(x, w, N, H)
 
 	# perform the inverse stft
-	y = STFT.stftSynth(mX, pX, M, H)
+	y = STFT.stftModelSynth(mX, pX, M, H)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stft.wav'

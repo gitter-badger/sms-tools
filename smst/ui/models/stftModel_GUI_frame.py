@@ -1,10 +1,10 @@
-# GUI frame for the stft_function.py
+# GUI frame for the stftModel_function.py
 
 from Tkinter import *
 import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
-import stft_function
+import stftModel_function
 import smst.models.utilFunctions as UF
 
 class Stft_frame:
@@ -104,7 +104,7 @@ class Stft_frame:
 			N = int(self.N.get())
 			H = int(self.H.get())
 
-			stft_function.main(inputFile, window, M, N, H)
+			stftModel_function.main(inputFile, window, M, N, H)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)

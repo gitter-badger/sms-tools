@@ -6,7 +6,7 @@ import os
 from scipy.signal import get_window
 import smst.models.utilFunctions as UF
 import smst.models.hprModel as HPR
-import smst.models.stft as STFT
+import smst.models.stftModel as STFT
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M=601, N=1024, t=-100,
@@ -39,7 +39,7 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	hfreq, hmag, hphase, xr = HPR.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
 	# compute spectrogram of residual
-	mXr, pXr = STFT.stftAnal(xr, w, N, H)
+	mXr, pXr = STFT.stftModelAnal(xr, w, N, H)
 
 	# synthesize hpr model
 	y, yh = HPR.hprModelSynth(hfreq, hmag, hphase, xr, Ns, H, fs)

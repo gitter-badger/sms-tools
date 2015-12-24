@@ -110,7 +110,7 @@ The code can be imported as python modules.
 A model provides a different representation of audio than the time-domain samples. The models live in the `smst.models` package.
 
 - `dftModel` - [Discrete Fourier Transform](smst/models/dftModel.py) - spectrum of a single frame
-- `stft` - [Short-time Fourier Transform](smst/models/stft.py) - spectrogram
+- `stftModel` - [Short-time Fourier Transform](smst/models/stftModel.py) - spectrogram
 - `sineModel` - [Sinusoidal model](smst/models/sineModel.py) - for plain tones
 - `harmonicModel` - [Harmonic model](smst/models/harmonicModel.py) - for harmonic tones
 - `stochasticModel` - [Stochastic model](smst/models/stochasticModel.py) - for noises
