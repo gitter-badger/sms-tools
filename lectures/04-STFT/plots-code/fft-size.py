@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import dftModel as DF
-import utilFunctions as UF
+import smst.models.dftModel as DF
+import smst.models.utilFunctions as UF
 
 (fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
 M = 512
@@ -44,4 +44,3 @@ plt.title('mX, N = 2048')
 
 plt.tight_layout()
 plt.savefig('fft-size.png')
-

@@ -6,8 +6,8 @@ from essentia import *
 from essentia.standard import *
 from pylab import *
 from numpy import *
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import stft as STFT
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.stft as STFT
 
 filename = '../../../sounds/carnatic.wav'
 hopSize = 128

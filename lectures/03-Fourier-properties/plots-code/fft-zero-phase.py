@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
 import sys
+import os
 
-sys.path.append('../../../software/models/')
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.utilFunctions as UF
 
 (fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
 N = 512
@@ -46,4 +47,3 @@ plt.title('pX')
 
 plt.tight_layout()
 plt.savefig('fft-zero-phase.png')
-

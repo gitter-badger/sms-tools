@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.fftpack import fft, fftshift
 import sys
 
-sys.path.append('../../../software/models/')
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.utilFunctions as UF
 
 (fs, x) = UF.wavread('../../../sounds/soprano-E4.wav')
 N = 1024
@@ -44,4 +44,3 @@ plt.axis([0,N/2,min(pX1),max(pX1)])
 
 plt.tight_layout()
 plt.savefig('unwrap.png')
-

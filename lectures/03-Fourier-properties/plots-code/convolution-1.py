@@ -7,10 +7,10 @@ import time, os, sys
 from scipy.fftpack import fft, ifft, fftshift
 import math
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import utilFunctions as UF
-import dftModel as DF
+import smst.models.utilFunctions as UF
+import smst.models.dftModel as DF
 (fs, x) = UF.wavread('../../../sounds/ocean.wav')
 (fs, x2) = UF.wavread('../../../sounds/impulse-response.wav')
 x1 = x[40000:44096]

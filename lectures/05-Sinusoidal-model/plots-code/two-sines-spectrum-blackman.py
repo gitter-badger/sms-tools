@@ -6,10 +6,10 @@ import numpy as np
 import time, os, sys
 import math
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import utilFunctions as UF
-import dftModel as DF
+import smst.models.utilFunctions as UF
+import smst.models.dftModel as DF
 (fs, x) = UF.wavread('../../../sounds/sine-440-490.wav')
 w = np.blackman(5291)
 N = 16384

@@ -5,9 +5,9 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, resample
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import dftModel as DFT
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.dftModel as DFT
+import smst.models.utilFunctions as UF
 import math
 
 (fs, x1) = UF.wavread('../../../sounds/orchestra.wav')

@@ -7,11 +7,11 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
 import sys, os, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import stft as STFT
-import utilFunctions as UF
-import harmonicModel as HM
+import smst.models.stft as STFT
+import smst.models.utilFunctions as UF
+import smst.models.harmonicModel as HM
 
 
 (fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))

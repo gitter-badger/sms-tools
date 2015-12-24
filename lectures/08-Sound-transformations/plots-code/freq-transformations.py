@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import dftModel as DFT
-import utilFunctions as UF
+import smst.models.dftModel as DFT
+import smst.models.utilFunctions as UF
 
 f0 = 1.0
 harms = np.arange(1,6)*f0

@@ -5,10 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import sineModel as SM
-import stft as STFT
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.sineModel as SM
+import smst.models.stft as STFT
+import smst.models.utilFunctions as UF
 
 plt.figure(1, figsize=(9, 7))
 

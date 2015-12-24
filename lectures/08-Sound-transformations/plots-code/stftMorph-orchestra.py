@@ -6,15 +6,14 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import dftModel as DFT
-import utilFunctions as UF
-import stftTransformations as STFTT
-import stochasticModel as STOC
+import smst.models.dftModel as DFT
+import smst.models.utilFunctions as UF
+import smst.models.stftTransformations as STFTT
+import smst.models.stochasticModel as STOC
 import math
-import stft as STFT
+import smst.models.stft as STFT
 
 (fs, x1) = UF.wavread('../../../sounds/orchestra.wav')
 (fs, x2) = UF.wavread('../../../sounds/speech-male.wav')
@@ -61,4 +60,3 @@ plt.autoscale(tight=True)
 plt.tight_layout()
 UF.wavwrite(y, fs, 'orchestra-speech-stftMorph.wav')
 plt.savefig('stftMorph-orchestra.png')
-

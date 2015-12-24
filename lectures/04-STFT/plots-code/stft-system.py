@@ -1,10 +1,10 @@
 import numpy as np
 import time, os, sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import stft as STFT
-import utilFunctions as UF
+import smst.models.stft as STFT
+import smst.models.utilFunctions as UF
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -49,4 +49,3 @@ plt.title('y')
 plt.tight_layout()
 plt.savefig('stft-system.png')
 UF.wavwrite(y, fs, 'piano-stft.wav')
-

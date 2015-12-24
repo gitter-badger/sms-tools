@@ -8,8 +8,8 @@ import math
 import sys, os, time
 from scipy.fftpack import fft, ifft
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.utilFunctions as UF
 
 
 def stochasticModelFrame(x, w, N, stocf) :

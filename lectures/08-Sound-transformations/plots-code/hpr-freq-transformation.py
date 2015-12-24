@@ -7,12 +7,11 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
-import hprModel as HPR
-import stft as STFT
-import harmonicTransformations as HT
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.hprModel as HPR
+import smst.models.stft as STFT
+import smst.transformations.harmonicTransformations as HT
+import smst.models.utilFunctions as UF
 
 inputFile='../../../sounds/flute-A4.wav'
 window='blackman'

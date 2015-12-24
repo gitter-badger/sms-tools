@@ -4,11 +4,10 @@ import time, os, sys
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
-import utilFunctions as UF
-import stftTransformations as STFTT
-import stft as STFT
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.utilFunctions as UF
+import smst.models.stftTransformations as STFTT
+import smst.models.stft as STFT
 
 (fs, x) = UF.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(2048)
@@ -49,4 +48,3 @@ plt.autoscale(tight=True)
 plt.tight_layout()
 UF.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
 plt.savefig('stftFiltering-orchestra.png')
-

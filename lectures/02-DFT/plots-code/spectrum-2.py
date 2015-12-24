@@ -6,9 +6,9 @@ import numpy as np
 import sys
 import math
 
-sys.path.append('../../../software/models/')
-import utilFunctions as UF
-import dftModel as DFT
+sys.path.append('../../../')
+import smst.models.utilFunctions as UF
+import smst.models.dftModel as DFT
 
 (fs, x) = UF.wavread('../../../sounds/violin-B3.wav')
 w = np.hamming(1024)
@@ -40,4 +40,3 @@ plt.ylabel('phase (radians)')
 
 plt.tight_layout()
 plt.savefig('spectrum-2.png')
-

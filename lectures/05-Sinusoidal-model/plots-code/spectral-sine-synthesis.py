@@ -8,11 +8,11 @@ from scipy.fftpack import fft, ifft, fftshift
 import math
 import sys, os, functools, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import stft as STFT
-import sineModel as SM
-import utilFunctions as UF
+import smst.models.stft as STFT
+import smst.models.sineModel as SM
+import smst.models.utilFunctions as UF
 
 Ns = 256
 hNs = Ns/2

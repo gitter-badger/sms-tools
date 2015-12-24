@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import dftModel as DF
-import utilFunctions as UF
+import smst.models.dftModel as DF
+import smst.models.utilFunctions as UF
 import math
 
 (fs, x) = UF.wavread('../../../sounds/violin-B3.wav')
@@ -46,4 +46,3 @@ plt.title ('mX (blackman window)')
 
 plt.tight_layout()
 plt.savefig('windows-2.png')
-

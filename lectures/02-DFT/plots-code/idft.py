@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-sys.path.append('../../../software/models/')
-import dftModel as DFT
+sys.path.append('../../../')
+import smst.models.dftModel as DFT
 import math
 
 k0 = 8.5
@@ -34,4 +34,3 @@ plt.axis([-N/2,N/2-1,min(y), max(y)])
 
 plt.tight_layout()
 plt.savefig('idft.png')
-

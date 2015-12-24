@@ -4,9 +4,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import os
 from scipy.signal import sawtooth
-sys.path.append('../../../software/models/')
-import dftModel as DF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.dftModel as DF
 
 N = 128
 x1 = sawtooth(2*np.pi*np.arange(-N/2,N/2)/float(N))
@@ -47,4 +48,3 @@ plt.axis([0,pX2.size,min(pX2),max(pX2)])
 
 plt.tight_layout()
 plt.savefig('shift.png')
-

@@ -5,11 +5,11 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import sys, os, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import stft as STFT
-import sineModel as SM
-import utilFunctions as UF
+import smst.models.stft as STFT
+import smst.models.sineModel as SM
+import smst.models.utilFunctions as UF
 
 (fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/bendir.wav'))
 w = np.hamming(2001)

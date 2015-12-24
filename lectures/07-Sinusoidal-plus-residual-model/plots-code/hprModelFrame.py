@@ -8,10 +8,10 @@ import math
 from scipy.fftpack import fft, ifft, fftshift
 import sys, os, functools, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import dftModel as DFT
-import utilFunctions as UF
-import harmonicModel as HM
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.dftModel as DFT
+import smst.models.utilFunctions as UF
+import smst.models.harmonicModel as HM
 
 (fs, x) = UF.wavread('../../../sounds/flute-A4.wav')
 pos = .8*fs

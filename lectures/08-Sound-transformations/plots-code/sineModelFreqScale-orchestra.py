@@ -7,13 +7,12 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
 import sys, os, functools, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import sineModel as SM
-import stft as STFT
-import utilFunctions as UF
-import sineTransformations as SMT
+import smst.models.sineModel as SM
+import smst.models.stft as STFT
+import smst.models.utilFunctions as UF
+import smst.transformations.sineTransformations as SMT
 
 (fs, x) = UF.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(801)
@@ -80,4 +79,3 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('sineModelFreqScale-orchestra.png')
-

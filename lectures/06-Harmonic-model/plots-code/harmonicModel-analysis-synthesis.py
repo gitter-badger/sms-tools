@@ -5,10 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-import harmonicModel as HM
-import sineModel as SM
-import utilFunctions as UF
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+import smst.models.harmonicModel as HM
+import smst.models.sineModel as SM
+import smst.models.utilFunctions as UF
 
 
 (fs, x) = UF.wavread('../../../sounds/vignesh.wav')

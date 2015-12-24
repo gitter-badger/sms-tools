@@ -4,13 +4,14 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import os
 from scipy.fftpack import fft, ifft, fftshift
 import math
 
-sys.path.append('../../../software/models/')
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import utilFunctions as UF
-import dftModel as DF
+import smst.models.utilFunctions as UF
+import smst.models.dftModel as DF
 (fs, x) = UF.wavread('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)
 N = 512
@@ -47,4 +48,3 @@ plt.ylabel('phase (radians)')
 
 plt.tight_layout()
 plt.savefig('symmetry.png')
-

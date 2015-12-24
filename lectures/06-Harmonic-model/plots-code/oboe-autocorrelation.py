@@ -7,9 +7,9 @@ import math
 import time, os, sys
 import essentia.standard as ess
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import utilFunctions as UF
+import smst.models.utilFunctions as UF
 (fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
 
 M = 500

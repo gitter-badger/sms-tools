@@ -7,10 +7,10 @@ from scipy.signal import hamming
 import sys, os
 import essentia.standard as ess
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import utilFunctions as UF
-import stft as STFT
+import smst.models.utilFunctions as UF
+import smst.models.stft as STFT
 
 
 def f0Yin(x, N, H, minf0, maxf0):

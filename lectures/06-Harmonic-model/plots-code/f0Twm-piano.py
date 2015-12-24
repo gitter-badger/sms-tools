@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackman
 import math
 import sys, os, functools, time
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import dftModel as DFT
-import utilFunctions as UF
-import stft as STFT
-import sineModel as SM
-import harmonicModel as HM
+import smst.models.dftModel as DFT
+import smst.models.utilFunctions as UF
+import smst.models.stft as STFT
+import smst.models.sineModel as SM
+import smst.models.harmonicModel as HM
 
 (fs, x) = UF.wavread('../../../sounds/piano.wav')
 w = np.blackman(1501)

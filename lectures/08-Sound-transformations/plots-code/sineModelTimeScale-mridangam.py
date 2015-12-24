@@ -9,14 +9,13 @@ import math
 import sys, os, functools, time
 from scipy.interpolate import interp1d
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/models/'))
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../software/transformations/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import sineModel as SM
-import stft as STFT
-import sineModel as SM
-import utilFunctions as UF
-import sineTransformations as SMT
+import smst.models.sineModel as SM
+import smst.models.stft as STFT
+import smst.models.sineModel as SM
+import smst.models.utilFunctions as UF
+import smst.transformations.sineTransformations as SMT
 
 
 (fs, x) = UF.wavread('../../../sounds/mridangam.wav')
@@ -83,4 +82,3 @@ plt.title('y')
 plt.tight_layout()
 UF.wavwrite(y, fs, 'mridangam-sineModelTimeScale.wav')
 plt.savefig('sineModelTimeScale-mridangam.png')
-
