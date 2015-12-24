@@ -41,6 +41,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
 from smst.ui.models import \
     dftModel_function, \
+    stftModel_function, \
     harmonicModel_function, \
     hprModel_function, \
     hpsModel_function, \
@@ -58,6 +59,7 @@ from smst.ui.transformations import \
 
 modules = {
     'dftModel_function': dftModel_function,
+    'stftModel_function': stftModel_function,
     'harmonicModel_function': harmonicModel_function,
     'hprModel_function': hprModel_function,
     'hpsModel_function': hpsModel_function,
