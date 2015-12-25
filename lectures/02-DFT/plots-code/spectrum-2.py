@@ -7,10 +7,10 @@ import sys
 import math
 
 sys.path.append('../../../')
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.dftModel as DFT
 
-(fs, x) = UF.wavread('../../../sounds/violin-B3.wav')
+(fs, x) = utils.wavread('../../../sounds/violin-B3.wav')
 w = np.hamming(1024)
 N = 1024
 pin = 5000

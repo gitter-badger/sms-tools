@@ -4,7 +4,7 @@ import time, os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.stft as STFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming
 
 
-(fs, x) = UF.wavread('../../../sounds/piano.wav')
+(fs, x) = utils.wavread('../../../sounds/piano.wav')
 w = np.hamming(1024)
 N = 1024
 H = 512
@@ -48,4 +48,4 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('stft-system.png')
-UF.wavwrite(y, fs, 'piano-stft.wav')
+utils.wavwrite(y, fs, 'piano-stft.wav')

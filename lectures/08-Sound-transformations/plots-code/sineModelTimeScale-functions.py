@@ -11,9 +11,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/mridangam.wav')
+(fs, x) = utils.wavread('../../../sounds/mridangam.wav')
 x1 = x[:int(1.49*fs)]
 w = np.hamming(801)
 N = 2048

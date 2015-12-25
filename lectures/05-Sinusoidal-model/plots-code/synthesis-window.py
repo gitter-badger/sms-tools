@@ -8,9 +8,9 @@ import sys, os, functools, time
 from scipy.fftpack import fft, ifft, fftshift
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 M = 601
 w = np.blackman(M)
 N = 1024
@@ -22,10 +22,10 @@ pin = 5000
 t = -70
 x1 = x[pin:pin+w.size]
 mX, pX = DFT.dftAnal(x1, w, N)
-ploc = UF.peakDetection(mX, t)
-iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
+ploc = utils.peakDetection(mX, t)
+iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
 freqs = iploc*fs/N
-Y = UF.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
+Y = utils.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))

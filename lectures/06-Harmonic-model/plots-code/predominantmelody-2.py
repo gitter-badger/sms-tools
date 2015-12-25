@@ -8,7 +8,7 @@ from pylab import *
 from numpy import *
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.stft as STFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 filename = '../../../sounds/carnatic.wav'
 hopSize = 128
@@ -54,7 +54,7 @@ pitch, confidence = run_pitch_contours_melody(contours_bins,
                                               contours_start_times,
                                               duration)
 
-yf0 = UF.sinewaveSynth(pitch, .6, hopSize, sampleRate)
+yf0 = utils.sinewaveSynth(pitch, .6, hopSize, sampleRate)
 
 figure(1, figsize=(9, 6))
 
@@ -74,4 +74,4 @@ plot(time, pitch, color='k', linewidth = 2)
 plt.title('mX + prominent melody (carnatic.wav)')
 tight_layout()
 savefig('predominantmelody-2.png')
-UF.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')
+utils.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')

@@ -7,9 +7,9 @@ from scipy.fftpack import fft, fftshift
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
 N = 1024
 x1 = np.blackman(N)*x[40000:40000+N]
 

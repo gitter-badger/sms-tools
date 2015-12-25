@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 M = 256
 N = 256

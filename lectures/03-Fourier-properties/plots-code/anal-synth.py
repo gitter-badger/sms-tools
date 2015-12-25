@@ -8,12 +8,12 @@ import time, os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 from scipy.io.wavfile import read
 from scipy.fftpack import fft, ifft
 import math
 
-(fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 w = np.hanning(501)
 N = 512
 pin = 5000

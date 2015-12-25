@@ -8,10 +8,10 @@ import sys, os, functools, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.harmonicModel as HM
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 
-(fs, x) = UF.wavread('../../../sounds/vignesh.wav')
+(fs, x) = utils.wavread('../../../sounds/vignesh.wav')
 w = np.blackman(1201)
 N = 2048
 t = -90
@@ -49,6 +49,6 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.title('yh')
 
 plt.tight_layout()
-UF.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
+utils.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
 plt.savefig('harmonicModel-analysis-synthesis.png')
 

@@ -10,11 +10,11 @@ import sys, os, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.stft as STFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.harmonicModel as HM
 
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))
+(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))
 w = np.blackman(551)
 N = 1024
 t = -100
@@ -30,7 +30,7 @@ H = Ns/4
 
 mX, pX = STFT.stftAnal(x, w, N, H)
 hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-xr = UF.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
+xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
 mXr, pXr = STFT.stftAnal(xr, hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
@@ -84,4 +84,4 @@ plt.title('pXr')
 
 plt.tight_layout()
 plt.savefig('hprModelAnal-flute.png')
-UF.wavwrite(5*xr, fs, 'flute-residual.wav')
+utils.wavwrite(5*xr, fs, 'flute-residual.wav')

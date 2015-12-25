@@ -6,7 +6,7 @@ import os
 from scipy.io.wavfile import read
 import numpy as np
 import hpsMorph_function as hM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 class HpsMorph_frame:
 
@@ -34,7 +34,7 @@ class HpsMorph_frame:
 		open_file1.grid(row=0, column=0, sticky=W, padx=(330, 6), pady=(10,2)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE 1
-		preview1 = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation1.get()), bg="gray30", fg="white")
+		preview1 = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation1.get()), bg="gray30", fg="white")
 		preview1.grid(row=0, column=0, sticky=W, padx=(375,6), pady=(10,2))
 
 		#ANALYSIS WINDOW TYPE SOUND 1
@@ -139,7 +139,7 @@ class HpsMorph_frame:
 		open_file2.grid(row=5, column=0, sticky=W, padx=(330, 6), pady=(2,2)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE 2
-		preview2 = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation2.get()), bg="gray30", fg="white")
+		preview2 = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation2.get()), bg="gray30", fg="white")
 		preview2.grid(row=5, column=0, sticky=W, padx=(375,6), pady=(2,2))
 
 
@@ -288,7 +288,7 @@ class HpsMorph_frame:
 		self.compute.grid(row=18, column=0, padx=5, pady=(10,15), sticky=W)
 
 		#BUTTON TO PLAY TRANSFORMATION SYNTHESIS OUTPUT
-		self.transf_output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation1.get())[:-4] + '_hpsMorph.wav'), bg="gray30", fg="white")
+		self.transf_output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation1.get())[:-4] + '_hpsMorph.wav'), bg="gray30", fg="white")
 		self.transf_output.grid(row=18, column=0, padx=(165,5), pady=(10,15), sticky=W)
 
 		# define options for opening file

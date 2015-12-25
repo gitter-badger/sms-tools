@@ -9,9 +9,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))
+(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))
 w = np.blackman(601)
 N = 1024
 H = 150

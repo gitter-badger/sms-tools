@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.hprModel as HPR
 import smst.models.stftModel as STFT
 from .. import demo_sound_path
@@ -30,7 +30,7 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	H = 128
 
 	# read input sound
-	(fs, x) = UF.wavread(inputFile)
+	(fs, x) = utils.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -50,9 +50,9 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hprModel.wav'
 
 	# write sounds files for harmonics, residual, and the sum
-	UF.wavwrite(yh, fs, outputFileSines)
-	UF.wavwrite(xr, fs, outputFileResidual)
-	UF.wavwrite(y, fs, outputFile)
+	utils.wavwrite(yh, fs, outputFileSines)
+	utils.wavwrite(xr, fs, outputFileResidual)
+	utils.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -102,7 +102,7 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_hpr_model.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_hpr_model.png' % utils.stripFile(inputFile))
 
 
 if __name__ == "__main__":

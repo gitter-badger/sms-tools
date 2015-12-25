@@ -9,10 +9,10 @@ import time, os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 
-(fs, x) = UF.wavread('../../../sounds/orchestra.wav')
+(fs, x) = utils.wavread('../../../sounds/orchestra.wav')
 N = 2048
 start = 1.0*fs
 x1 = x[start:start+N]

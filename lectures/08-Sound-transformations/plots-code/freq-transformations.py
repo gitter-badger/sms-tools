@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 f0 = 1.0
 harms = np.arange(1,6)*f0

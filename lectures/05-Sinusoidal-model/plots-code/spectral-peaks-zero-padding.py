@@ -9,9 +9,9 @@ import math
 import sys, os, functools, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 N = 512*2
 M = 511
 t = -60
@@ -22,7 +22,7 @@ hM = (M+1)/2
 
 x1 = x[start:start+M]
 mX, pX = DFT.dftAnal(x1, w, N)
-ploc = UF.peakDetection(mX, t)
+ploc = utils.peakDetection(mX, t)
 pmag = mX[ploc]
 freqaxis = fs*np.arange(mX.size)/float(N)
 

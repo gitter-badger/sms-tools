@@ -9,8 +9,8 @@ import essentia.standard as ess
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import smst.models.utilFunctions as UF
-(fs, x) = UF.wavread('../../../sounds/piano.wav')
+import smst.utils as utils
+(fs, x) = utils.wavread('../../../sounds/piano.wav')
 start = 13860
 M = 800
 xp = x[start:start+M]/float(max(x[start:start+M]))

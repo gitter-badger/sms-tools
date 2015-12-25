@@ -10,10 +10,10 @@ import sys, os, functools, time
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.harmonicModel as HM
 
-(fs, x) = UF.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
 pos = .8*fs
 M = 601
 hM1 = int(math.floor((M+1)/2))
@@ -34,13 +34,13 @@ x1 = x[pos-hM1:pos+hM2]
 x2 = x[pos-Ns/2-1:pos+Ns/2-1]
 
 mX, pX = DFT.dftAnal(x1, w, N)
-ploc = UF.peakDetection(mX, t)
-iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
+ploc = utils.peakDetection(mX, t)
+iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
 ipfreq = fs*iploc/N
-f0 = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0)
+f0 = utils.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0)
 hfreqp = []
 hfreq, hmag, hphase = HM.harmonicDetection(ipfreq, ipmag, ipphase, f0, nH, hfreqp, fs, harmDevSlope)
-Yh = UF.genSpecSines(hfreq, hmag, hphase, Ns, fs)
+Yh = utils.genSpecSines(hfreq, hmag, hphase, Ns, fs)
 mYh = 20 * np.log10(abs(Yh[:Ns/2]))
 pYh = np.unwrap(np.angle(Yh[:Ns/2]))
 bh=blackmanharris(Ns)

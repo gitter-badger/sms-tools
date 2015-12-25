@@ -8,9 +8,9 @@ import math
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/sine-440.wav')
+(fs, x) = utils.wavread('../../../sounds/sine-440.wav')
 M = 400
 x1 = x[2000:2000+M]
 N = 2048

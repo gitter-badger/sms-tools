@@ -11,7 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import smst.models.hpsModel as HPS
 import smst.transformations.hpsTransformations as HPST
 import smst.transformations.harmonicTransformations as HT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 inputFile1='../../../sounds/violin-B3.wav'
 window1='blackman'
@@ -40,8 +40,8 @@ harmDevSlope2=0.01
 Ns = 512
 H = 128
 
-(fs1, x1) = UF.wavread(inputFile1)
-(fs2, x2) = UF.wavread(inputFile2)
+(fs1, x1) = utils.wavread(inputFile1)
+(fs2, x2) = utils.wavread(inputFile2)
 w1 = get_window(window1, M1)
 w2 = get_window(window2, M2)
 hfreq1, hmag1, hphase1, stocEnv1 = HPS.hpsModelAnal(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
@@ -54,7 +54,7 @@ yhfreq, yhmag, ystocEnv = HPST.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, 
 
 y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
 
-UF.wavwrite(y,fs1, 'hps-morph.wav')
+utils.wavwrite(y,fs1, 'hps-morph.wav')
 
 plt.figure(figsize=(12, 9))
 frame = 200

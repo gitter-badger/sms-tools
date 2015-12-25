@@ -9,10 +9,10 @@ import math
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.dftModel as DF
-(fs, x) = UF.wavread('../../../sounds/ocean.wav')
-(fs, x2) = UF.wavread('../../../sounds/impulse-response.wav')
+(fs, x) = utils.wavread('../../../sounds/ocean.wav')
+(fs, x2) = utils.wavread('../../../sounds/impulse-response.wav')
 x1 = x[40000:44096]
 N = 4096
 

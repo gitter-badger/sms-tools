@@ -7,7 +7,7 @@ from scipy.fftpack import fft, ifft
 import math
 import dftModel as DFT
 import sineModel as SM
-import utilFunctions as UF
+from .. import utils
   
 def sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
 	"""
@@ -23,7 +23,7 @@ def sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDe
 	# perform sinusoidal analysis
 	tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 	Ns = 512
-	xr = UF.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
+	xr = utils.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
 	return tfreq, tmag, tphase, xr
 
 def sprModelSynth(tfreq, tmag, tphase, xr, N, H, fs):
@@ -71,8 +71,8 @@ def sprModel(x, fs, w, N, t):
   #-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
 		mX, pX = DFT.dftAnal(x1, w, N)                              # compute dft
-		ploc = UF.peakDetection(mX, t)                              # find peaks
-		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)          # refine peak values
+		ploc = utils.peakDetection(mX, t)                              # find peaks
+		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)          # refine peak values
 		ipfreq = fs*iploc/float(N)                                  # convert peak locations to Hertz
 		ri = pin-hNs-1                                              # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                        # window the input sound
@@ -81,7 +81,7 @@ def sprModel(x, fs, w, N, t):
 		fftbuffer[hNs:] = xw2[:hNs]
 		X2 = fft(fftbuffer)                                         # compute FFT for residual analysis
   #-----synthesis-----
-		Ys = UF.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
+		Ys = utils.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
 		Xr = X2-Ys;                                                 # get the residual complex spectrum
 		fftbuffer = np.zeros(Ns)
 		fftbuffer = np.real(ifft(Ys))                               # inverse FFT of sinusoidal spectrum

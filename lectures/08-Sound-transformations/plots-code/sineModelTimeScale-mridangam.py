@@ -14,11 +14,11 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.transformations.sineTransformations as SMT
 
 
-(fs, x) = UF.wavread('../../../sounds/mridangam.wav')
+(fs, x) = utils.wavread('../../../sounds/mridangam.wav')
 w = np.hamming(801)
 N = 2048
 t = -90
@@ -80,5 +80,5 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.title('y')
 
 plt.tight_layout()
-UF.wavwrite(y, fs, 'mridangam-sineModelTimeScale.wav')
+utils.wavwrite(y, fs, 'mridangam-sineModelTimeScale.wav')
 plt.savefig('sineModelTimeScale-mridangam.png')

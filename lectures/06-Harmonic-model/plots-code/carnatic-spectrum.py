@@ -9,9 +9,9 @@ import sys, os, functools, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/carnatic.wav')
+(fs, x) = utils.wavread('../../../sounds/carnatic.wav')
 pin = 1.4*fs
 w = np.blackman(1601)
 N = 4096

@@ -11,7 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import smst.models.hpsModel as HPS
 import smst.transformations.hpsTransformations as HPST
 import smst.transformations.harmonicTransformations as HT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 inputFile='../../../sounds/sax-phrase-short.wav'
 window='blackman'
@@ -29,7 +29,7 @@ stocf=0.1
 Ns = 512
 H = 128
 
-(fs, x) = UF.wavread(inputFile)
+(fs, x) = utils.wavread(inputFile)
 w = get_window(window, M)
 hfreq, hmag, hphase, mYst = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 timeScaling = np.array([0, 0, 2.138, 2.138-1.5, 3.146, 3.146])
@@ -37,7 +37,7 @@ yhfreq, yhmag, ystocEnv = HPST.hpsTimeScale(hfreq, hmag, mYst, timeScaling)
 
 y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
-UF.wavwrite(y,fs, 'hps-transformation.wav')
+utils.wavwrite(y,fs, 'hps-transformation.wav')
 
 
 plt.figure(figsize=(12, 9))

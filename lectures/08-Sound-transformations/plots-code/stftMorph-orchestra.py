@@ -9,14 +9,14 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.stftTransformations as STFTT
 import smst.models.stochasticModel as STOC
 import math
 import smst.models.stft as STFT
 
-(fs, x1) = UF.wavread('../../../sounds/orchestra.wav')
-(fs, x2) = UF.wavread('../../../sounds/speech-male.wav')
+(fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
+(fs, x2) = utils.wavread('../../../sounds/speech-male.wav')
 w1 = np.hamming(1024)
 N1 = 1024
 H1 = 256
@@ -58,5 +58,5 @@ plt.title('mY')
 plt.autoscale(tight=True)
 
 plt.tight_layout()
-UF.wavwrite(y, fs, 'orchestra-speech-stftMorph.wav')
+utils.wavwrite(y, fs, 'orchestra-speech-stftMorph.wav')
 plt.savefig('stftMorph-orchestra.png')

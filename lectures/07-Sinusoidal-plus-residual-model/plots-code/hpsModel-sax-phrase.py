@@ -7,11 +7,11 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
 import sys, os, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.hpsModel as HPS
 
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/sax-phrase-short.wav'))
+(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/sax-phrase-short.wav'))
 w = np.blackman(601)
 N = 1024
 t = -100
@@ -57,7 +57,7 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('hpsModel-sax-phrase.png')
-UF.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
-UF.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
-UF.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
+utils.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
+utils.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
+utils.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
 

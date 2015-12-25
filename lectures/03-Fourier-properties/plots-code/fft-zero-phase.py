@@ -8,9 +8,9 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
-(fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 N = 512
 M = 401
 hN = N/2

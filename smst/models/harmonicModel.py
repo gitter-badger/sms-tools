@@ -6,7 +6,7 @@ from scipy.signal import blackmanharris, triang
 from scipy.fftpack import ifft
 import math
 import dftModel as DFT
-import utilFunctions as UF
+from .. import utils
 import sineModel as SM
 
 def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
@@ -42,10 +42,10 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	while pin<pend:
 		x1 = x[pin-hM1:pin+hM2]                                  # select frame
 		mX, pX = DFT.dftAnal(x1, w, N)                           # compute dft
-		ploc = UF.peakDetection(mX, t)                           # detect peak locations
-		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)      # refine peak values
+		ploc = utils.peakDetection(mX, t)                           # detect peak locations
+		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)      # refine peak values
 		ipfreq = fs * iploc/N                                    # convert locations to Hez
-		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+		f0t = utils.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
 		if ((f0stable==0)&(f0t>0)) \
 				or ((f0stable>0)&(np.abs(f0stable-f0t)<f0stable/5.0)):
 			f0stable = f0t                                         # consider a stable f0 if it is close to the previous one
@@ -127,10 +127,10 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
 		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
-		ploc = UF.peakDetection(mX, t)                        # detect peak locations
-		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)   # refine peak values
+		ploc = utils.peakDetection(mX, t)                        # detect peak locations
+		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N
-		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+		f0t = utils.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
 		if ((f0stable==0)&(f0t>0)) \
 				or ((f0stable>0)&(np.abs(f0stable-f0t)<f0stable/5.0)):
 			f0stable = f0t                                     # consider a stable f0 if it is close to the previous one
@@ -139,7 +139,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 	#-----synthesis-----
-		Yh = UF.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines
+		Yh = utils.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines
 		fftbuffer = np.real(ifft(Yh))                         # inverse FFT
 		yh[:hNs-1] = fftbuffer[hNs+1:]                        # undo zero-phase window
 		yh[hNs-1:] = fftbuffer[:hNs+1]
@@ -177,10 +177,10 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 	while pin<=pend:
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
 		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
-		ploc = UF.peakDetection(mX, t)                        # detect peak locations
-		iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)   # refine peak values
+		ploc = utils.peakDetection(mX, t)                        # detect peak locations
+		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N                                 # convert locations to Hz
-		f0t = UF.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+		f0t = utils.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
 		if ((f0stable==0)&(f0t>0)) \
 				or ((f0stable>0)&(np.abs(f0stable-f0t)<f0stable/5.0)):
 			f0stable = f0t                                      # consider a stable f0 if it is close to the previous one

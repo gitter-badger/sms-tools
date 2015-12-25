@@ -8,7 +8,7 @@ import smst.models.sineModel as SM
 import smst.models.harmonicModel as HM
 import smst.transformations.sineTransformations as ST
 import smst.transformations.harmonicTransformations as HT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 from .. import demo_sound_path
 
 def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=2048, t=-90,
@@ -38,7 +38,7 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
 	H = 128
 
 	# read input sound
-	fs, x = UF.wavread(inputFile)
+	fs, x = utils.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -53,7 +53,7 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'
 
 	# write the sound resulting from the inverse stft
-	UF.wavwrite(y, fs, outputFile)
+	utils.wavwrite(y, fs, outputFile)
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -92,7 +92,7 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
 	if interactive:
 		plt.show(block=False)
 	if plotFile:
-		plt.savefig('output_plots/%s_harmonic_transformation_analysis.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_harmonic_transformation_analysis.png' % utils.stripFile(inputFile))
 
 	return inputFile, fs, hfreq, hmag
 
@@ -129,7 +129,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModelTransformation.wav'
-	UF.wavwrite(y, fs, outputFile)
+	utils.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 6))
@@ -162,7 +162,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_harmonic_transformation_synthesis.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_harmonic_transformation_synthesis.png' % utils.stripFile(inputFile))
 
 def main(interactive=True, plotFile=False):
 	# analysis

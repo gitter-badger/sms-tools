@@ -9,7 +9,7 @@ import sys, os, time
 from scipy.fftpack import fft, ifft
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 
 def stochasticModelFrame(x, w, N, stocf) :
@@ -39,7 +39,7 @@ def stochasticModelFrame(x, w, N, stocf) :
 
 # example call of stochasticModel function
 if __name__ == '__main__':
-  (fs, x) = UF.wavread('../../../sounds/ocean.wav')
+  (fs, x) = utils.wavread('../../../sounds/ocean.wav')
   w = np.hanning(1024)
   N = 1024
   stocf = 0.1

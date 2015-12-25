@@ -5,7 +5,7 @@ import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
 import stftModel_function
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 class Stft_frame:
 	def __init__(self, parent):
@@ -30,7 +30,7 @@ class Stft_frame:
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE
-		self.preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
+		self.preview = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
 
 		## STFT
@@ -77,7 +77,7 @@ class Stft_frame:
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
 		Label(self.parent, text=output_label).grid(row=7, column=0, sticky=W, padx=5, pady=(10,15))
-		self.output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_stft.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_stft.wav'), bg="gray30", fg="white")
 		self.output.grid(row=7, column=0, padx=(60,5), pady=(10,15), sticky=W)
 
 		# define options for opening file

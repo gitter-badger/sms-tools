@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.stftModel as STFT
 from .. import demo_sound_path
 
@@ -20,7 +20,7 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024,
 	"""
 
 	# read input sound (monophonic with sampling rate of 44100)
-	fs, x = UF.wavread(inputFile)
+	fs, x = utils.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -35,7 +35,7 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024,
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stft.wav'
 
 	# write the sound resulting from the inverse stft
-	UF.wavwrite(y, fs, outputFile)
+	utils.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -86,7 +86,7 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024,
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_stft_model.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_stft_model.png' % utils.stripFile(inputFile))
 
 
 if __name__ == "__main__":

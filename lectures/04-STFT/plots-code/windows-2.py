@@ -8,10 +8,10 @@ import time, os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DF
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import math
 
-(fs, x) = UF.wavread('../../../sounds/violin-B3.wav')
+(fs, x) = utils.wavread('../../../sounds/violin-B3.wav')
 N = 1024
 pin = 5000
 w = np.ones(801)

@@ -7,7 +7,7 @@ from scipy.signal import hamming, triang, blackmanharris
 import sys, os, functools, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 M = 255
 N = 4096

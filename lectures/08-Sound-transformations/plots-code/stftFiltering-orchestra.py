@@ -5,11 +5,11 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.stftTransformations as STFTT
 import smst.models.stft as STFT
 
-(fs, x) = UF.wavread('../../../sounds/orchestra.wav')
+(fs, x) = utils.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(2048)
 N = 2048
 H = 512
@@ -46,5 +46,5 @@ plt.title('mY')
 plt.autoscale(tight=True)
 
 plt.tight_layout()
-UF.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
+utils.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
 plt.savefig('stftFiltering-orchestra.png')

@@ -11,7 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 import smst.models.hprModel as HPR
 import smst.models.stft as STFT
 import smst.transformations.harmonicTransformations as HT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 inputFile='../../../sounds/flute-A4.wav'
 window='blackman'
@@ -27,7 +27,7 @@ harmDevSlope=0.1
 Ns = 512
 H = 128
 
-(fs, x) = UF.wavread(inputFile)
+(fs, x) = utils.wavread(inputFile)
 w = get_window(window, M)
 hfreq, hmag, hphase, xr = HPR.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
@@ -41,7 +41,7 @@ hfreqt, hmagt = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching,
 
 y, yh = HPR.hprModelSynth(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
 
-UF.wavwrite(y,fs, 'hpr-freq-transformation.wav')
+utils.wavwrite(y,fs, 'hpr-freq-transformation.wav')
 
 plt.figure(figsize=(12, 9))
 

@@ -8,12 +8,12 @@ import sys, os, functools, time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 plt.figure(1, figsize=(9, 7))
 
 plt.subplot(211)
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vibraphone-C6.wav'))
+(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vibraphone-C6.wav'))
 w = np.blackman(401)
 N = 512
 H = 100
@@ -40,7 +40,7 @@ plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (vibraphone-C6.wav)')
 
 plt.subplot(212)
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vignesh.wav'))
+(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vignesh.wav'))
 w = np.blackman(1101)
 N = 2048
 H = 250

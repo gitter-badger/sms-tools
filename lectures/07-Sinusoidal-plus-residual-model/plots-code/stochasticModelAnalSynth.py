@@ -10,11 +10,11 @@ import sys, os
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.stochasticModel as STM
 import smst.models.stft as STFT
 
-(fs, x) = UF.wavread('../../../sounds/ocean.wav')
+(fs, x) = utils.wavread('../../../sounds/ocean.wav')
 w = np.hamming(512)
 N = 512
 H = 256
@@ -52,5 +52,5 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 
 plt.tight_layout()
 plt.savefig('stochasticModelAnalSynth.png')
-UF.wavwrite(y, fs, 'ocean-synthesis.wav')
+utils.wavwrite(y, fs, 'ocean-synthesis.wav')
 

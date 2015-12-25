@@ -10,12 +10,12 @@ from scipy.fftpack import fft, ifft
 import essentia.standard as ess
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 
 lpc = ess.LPC(order=14)
 N= 512
-(fs, x) = UF.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
 first = 20000
 last = first+N
 x1 = x[first:last]

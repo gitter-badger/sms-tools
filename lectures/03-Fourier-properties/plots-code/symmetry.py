@@ -10,9 +10,9 @@ import math
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.dftModel as DF
-(fs, x) = UF.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)
 N = 512
 pin = 5000

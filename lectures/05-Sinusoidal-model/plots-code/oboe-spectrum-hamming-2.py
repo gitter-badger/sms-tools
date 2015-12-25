@@ -6,9 +6,9 @@ import numpy as np
 import time, os, sys
 import math
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.dftModel as DF
-(fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 w = np.hamming(801)
 N = 2048
 pin = 5000

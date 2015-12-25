@@ -7,7 +7,7 @@ import os
 import smst.models.hpsModel as HPS
 import smst.transformations.hpsTransformations as HPST
 import smst.transformations.harmonicTransformations as HT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 from .. import demo_sound_path
 
 def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M=601, N=1024, t=-100,
@@ -38,7 +38,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 	H = 128
 
 	# read input sound
-	(fs, x) = UF.wavread(inputFile)
+	(fs, x) = utils.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -51,7 +51,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel.wav'
-	UF.wavwrite(y,fs, outputFile)
+	utils.wavwrite(y,fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -101,7 +101,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 	if interactive:
 		plt.show(block=False)
 	if plotFile:
-		plt.savefig('output_plots/%s_hps_transformation_analysis.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_hps_transformation_analysis.png' % utils.stripFile(inputFile))
 
 	return inputFile, fs, hfreq, hmag, mYst
 
@@ -139,7 +139,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModelTransformation.wav'
-	UF.wavwrite(y,fs, outputFile)
+	utils.wavwrite(y,fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 6))
@@ -181,7 +181,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % utils.stripFile(inputFile))
 
 def main(interactive=True, plotFile=False):
 	# analysis

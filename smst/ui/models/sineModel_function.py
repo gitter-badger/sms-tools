@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.sineModel as SM
 from .. import demo_sound_path
 
@@ -29,7 +29,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	H = 128
 
 	# read input sound
-	fs, x = UF.wavread(inputFile)
+	fs, x = utils.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -44,7 +44,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
 
 	# write the synthesized sound obtained from the sinusoidal synthesis
-	UF.wavwrite(y, fs, outputFile)
+	utils.wavwrite(y, fs, outputFile)
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -83,7 +83,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_sine_model.png' % UF.stripFile(inputFile))
+		plt.savefig('output_plots/%s_sine_model.png' % utils.stripFile(inputFile))
 
 
 

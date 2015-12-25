@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, resample
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import math
 
-(fs, x1) = UF.wavread('../../../sounds/orchestra.wav')
-(fs, x2) = UF.wavread('../../../sounds/speech-male.wav')
+(fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
+(fs, x2) = utils.wavread('../../../sounds/speech-male.wav')
 w1 = np.hamming(1024)
 N1 = 1024
 H1 = 256

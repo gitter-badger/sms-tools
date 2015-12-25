@@ -9,7 +9,7 @@ import essentia.standard as ess
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 import smst.models.stft as STFT
 
 
@@ -34,7 +34,7 @@ def f0Yin(x, N, H, minf0, maxf0):
   return f0
 
 if __name__ == '__main__':
-  (fs, x) = UF.wavread('../../../sounds/bendir.wav')
+  (fs, x) = utils.wavread('../../../sounds/bendir.wav')
 
   plt.figure(1, figsize=(9, 7))
   N = 2048
@@ -51,7 +51,7 @@ if __name__ == '__main__':
   maxf0 = 300
   H = 256
   f0 = f0Yin(x, N, H, minf0, maxf0)
-  yf0 = UF.sinewaveSynth(f0, .8, H, fs)
+  yf0 = utils.sinewaveSynth(f0, .8, H, fs)
   frmTime = H*np.arange(f0.size)/float(fs)
   plt.plot(frmTime, f0, linewidth=2, color='k')
   plt.autoscale(tight=True)
@@ -59,5 +59,5 @@ if __name__ == '__main__':
 
   plt.tight_layout()
   plt.savefig('f0Yin.png')
-  UF.wavwrite(yf0, fs, 'f0Yin.wav')
+  utils.wavwrite(yf0, fs, 'f0Yin.wav')
   

@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..
 
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 Ns = 256
 hNs = Ns/2
@@ -25,7 +25,7 @@ yploc = Ns*freqs/fs
 ypmag = 20*np.log10(amps/2.0)
 ypphase = phases
 
-Y = UF.genSpecSines(freqs, ypmag, ypphase, Ns, fs)
+Y = utils.genSpecSines(freqs, ypmag, ypphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))

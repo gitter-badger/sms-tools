@@ -5,7 +5,7 @@ import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
 import hprModel_function
-import smst.models.utilFunctions as UF
+import smst.utils as utils
 
 class HprModel_frame:
 
@@ -32,7 +32,7 @@ class HprModel_frame:
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE
-		self.preview = Button(self.parent, text=">", command=lambda:UF.wavplay(self.filelocation.get()), bg="gray30", fg="white")
+		self.preview = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
 
 		## HARMONIC MODEL
@@ -133,19 +133,19 @@ class HprModel_frame:
 		#BUTTON TO PLAY SINE OUTPUT
 		output_label = "Sinusoidal:"
 		Label(self.parent, text=output_label).grid(row=13, column=0, sticky=W, padx=5, pady=(10,0))
-		self.output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel_sines.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel_sines.wav'), bg="gray30", fg="white")
 		self.output.grid(row=13, column=0, padx=(80,5), pady=(10,0), sticky=W)
 
 		#BUTTON TO PLAY RESIDUAL OUTPUT
 		output_label = "Residual:"
 		Label(self.parent, text=output_label).grid(row=14, column=0, sticky=W, padx=5, pady=(5,0))
-		self.output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel_residual.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel_residual.wav'), bg="gray30", fg="white")
 		self.output.grid(row=14, column=0, padx=(80,5), pady=(5,0), sticky=W)
 
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
 		Label(self.parent, text=output_label).grid(row=15, column=0, sticky=W, padx=5, pady=(5,15))
-		self.output = Button(self.parent, text=">", command=lambda:UF.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hprModel.wav'), bg="gray30", fg="white")
 		self.output.grid(row=15, column=0, padx=(80,5), pady=(5,15), sticky=W)
 
 
