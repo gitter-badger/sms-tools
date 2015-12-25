@@ -1,5 +1,5 @@
 from Tkinter import *
-from notebook import *   # window with tabs
+from ..notebook import *   # window with tabs
 
 from dftModel_GUI_frame import *
 from stft_GUI_frame import *

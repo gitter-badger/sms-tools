@@ -1,5 +1,5 @@
 from Tkinter import *
-from notebook import *   # window with tabs
+from ..notebook import *   # window with tabs
 
 from stftMorph_GUI_frame import *
 from sineTransformations_GUI_frame import *
