@@ -91,7 +91,6 @@ def wavwrite(y, fs, filename):
 	"""
 
 	dir = os.path.dirname(filename)
-	print(dir)
 	ensureDirectory(dir)
 
 	x = copy.deepcopy(y)                         # copy array
