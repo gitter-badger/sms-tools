@@ -35,7 +35,11 @@ import sys
 import matplotlib as mpl
 mpl.use('Agg')
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+import smst.ui
+
+# An ugly hack to use the correct directory with sounds even for smst installed
+# as a package.
+smst.ui.demo_sound_path = lambda file_name: os.path.join('../sounds', file_name)
 
 # TODO: try to make the module handing a bit less verbose
 
@@ -95,8 +99,9 @@ def assert_module_outputs(module_name):
     exp_dir = 'expected/%s/' % module_name
     expected_files = glob.glob('%soutput*/*' % exp_dir)
     for exp_file in expected_files:
-        actual_file = exp_file.replace('expected/', 'actual/')
-        assert_file_equals(exp_file, actual_file)
+        if not exp_file.endswith('.png'):
+            actual_file = exp_file.replace('expected/', 'actual/')
+            assert_file_equals(exp_file, actual_file)
 
 def assert_file_equals(file1, file2):
     assert file_md5(file1) == file_md5(file2)
