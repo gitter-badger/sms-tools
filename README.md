@@ -43,8 +43,6 @@ git clone https://github.com/MTG/sms-tools.git
 
 Otherwise [download the current version as a ZIP](https://github.com/MTG/sms-tools/archive/master.zip) and extract it.
 
-At present, SMS tools are not available as a Python package, eg. via PyPI.
-
 ### Python & its packages
 
 #### Anaconda
