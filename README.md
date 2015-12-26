@@ -62,13 +62,37 @@ In OSX (which we do not support but that should work) you install these modules 
 $ pip install ipython numpy matplotlib scipy cython
 ```
 
-### General
+### Building & installing
 
-Then, for using the tools, after downloading the whole package, you need to compile some C functions.
+SMS tools are provided in the `smst` Python package.
+
+It is needed to build the cython extensions and also it is convenient to have
+the library installed in the system, so that it can be easily imported without
+relying on some absolute location.
+
+#### Development mode
+
+In case you plan to modify the library code
+you can install the `smst` package in the development mode, ie. all code changes
+will
 
 ```
-sms-tools$ cd smst/models/utilFunctions_C
-$ python compileModule.py build_ext --inplace
+sms-tools$ pip install -e .
+```
+
+#### Building the package
+
+In case you plan just to use the package and not modify its code often you can
+just build and install the package.
+
+```
+sms-tools$ pip install .
+```
+
+### Uninstalling
+
+```
+sms-tools$ pip uninstall smst
 ```
 
 ## How to use?
