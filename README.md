@@ -142,6 +142,8 @@ The code can be imported as python modules.
 
 ### Models
 
+```audio -> [analysis] -> model -> [synthesis] -> reconstructed audio```
+
 A model provides a different representation of audio than the time-domain samples. The models live in the `smst.models` package.
 
 - `dftModel` - [Discrete Fourier Transform](smst/models/dftModel.py) - spectrum of a single frame
@@ -155,6 +157,8 @@ A model provides a different representation of audio than the time-domain sample
 - `hpsModel` - [Harmonic + stochastic model](smst/models/hpsModel.py)
 
 ### Transformations
+
+```model -> [transformation] -> transformed model```
 
 Audio can be transformed by modifying its model. The transformations live in the `smst.transformations` package.
 
