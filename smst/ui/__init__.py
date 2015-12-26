@@ -11,16 +11,6 @@ def demo_sound_path(file_name):
     'locates a demo sound file'
     return os.path.join(_sound_dir, file_name)
 
-# this allows to run GUI for models or transformations
-# $ smst-ui-models
-# $ smst-ui-transformations
-
-def main_ui_models():
-    import smst.ui.models.models_GUI
-
-def main_ui_transformations():
-    import smst.ui.transformations.transformations_GUI
-
 # this allow to run an example of each model or transformation
 # eg. $ smst-model dftModel
 

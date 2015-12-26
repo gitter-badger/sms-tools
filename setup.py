@@ -129,8 +129,8 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'smst-ui-models=smst.ui:main_ui_models',
-            'smst-ui-transformations=smst.ui:main_ui_transformations',
+            'smst-ui-models=smst.ui.models.models_GUI:main',
+            'smst-ui-transformations=smst.ui.transformations.transformations_GUI:main',
             'smst-model=smst.ui:main_model',
             'smst-transformation=smst.ui:main_transformation',
         ],
