@@ -4,8 +4,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import os
-import sys
-
 
 import smst.models.dftModel as DFT
 import smst.utils as utils

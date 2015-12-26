@@ -3,13 +3,12 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
-import os
 from scipy.fftpack import fft, ifft, fftshift
 import math
 
 import smst.utils as utils
 import smst.models.dftModel as DF
+
 (fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)
 N = 512

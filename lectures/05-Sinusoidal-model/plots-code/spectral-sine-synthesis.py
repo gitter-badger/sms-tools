@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 from scipy.fftpack import fft, ifft, fftshift
 import math
-import sys, os, functools, time
+import os, functools, time
 
 
 import smst.models.stft as STFT

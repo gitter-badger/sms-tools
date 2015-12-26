@@ -5,7 +5,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 
-
 plt.figure(1, figsize=(9.5, 6))
 
 N= 1000
@@ -41,4 +40,3 @@ plt.title('Blackman, M=201, H=50')
 
 plt.tight_layout()
 plt.savefig('window-overlap.png')
-

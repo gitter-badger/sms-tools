@@ -3,9 +3,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
-import os
 from scipy.signal import sawtooth
+
 import smst.models.dftModel as DF
 
 N = 128

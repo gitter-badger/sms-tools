@@ -4,7 +4,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import os, sys
+import os
 import json
 from scipy.cluster.vq import vq, kmeans, whiten
 
@@ -74,7 +74,7 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
   plt.legend(legArray, catArray ,numpoints=1,bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=len(catArray), mode="expand", borderaxespad=0.)
 
   plt.savefig('features.png')
-  
+
 
 
 

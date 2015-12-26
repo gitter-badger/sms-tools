@@ -4,7 +4,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
-import sys, os, functools, time
+import os, functools, time
 from scipy.fftpack import fft, ifft, fftshift
 
 import smst.models.dftModel as DFT

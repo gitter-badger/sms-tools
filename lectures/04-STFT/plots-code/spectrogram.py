@@ -1,8 +1,9 @@
 import numpy as np
-import time, os, sys
+import time
 
 import smst.models.stft as STFT
 import smst.utils as utils
+
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')

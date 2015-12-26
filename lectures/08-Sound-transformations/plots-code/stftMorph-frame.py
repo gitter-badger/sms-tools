@@ -1,5 +1,5 @@
 import numpy as np
-import time, os, sys
+import time
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')

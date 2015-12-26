@@ -3,7 +3,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time, os, sys
+import time, os
 from scipy.fftpack import fft, ifft, fftshift
 import math
 
@@ -56,4 +56,3 @@ plt.axis([0,N/2,-84,0])
 
 plt.tight_layout()
 plt.savefig('convolution-1.png')
-

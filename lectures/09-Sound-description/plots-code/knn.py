@@ -4,7 +4,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import os, sys
+import os
 from numpy import random
 from scipy.stats import mode
 
@@ -56,4 +56,3 @@ plt.scatter(query[indC2,0],query[indC2,1], c='r', alpha=1, s=50)
 
 plt.tight_layout()
 plt.savefig('knn.png')
-

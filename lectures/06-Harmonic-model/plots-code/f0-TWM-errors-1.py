@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackman
 import math
-import sys, os, functools, time
+import os, functools, time
 
 import smst.models.dftModel as DFT
 import smst.utils as utils
@@ -90,4 +90,3 @@ plt.title('TWM Errors')
 
 plt.tight_layout()
 plt.savefig('f0-TWM-errors-1.png')
-

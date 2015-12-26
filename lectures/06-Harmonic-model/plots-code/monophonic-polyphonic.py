@@ -4,7 +4,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
-import sys, os, functools, time
+import os, functools, time
+
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.utils as utils

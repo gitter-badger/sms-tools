@@ -4,8 +4,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
-import sys
-import os
 
 import smst.utils as utils
 

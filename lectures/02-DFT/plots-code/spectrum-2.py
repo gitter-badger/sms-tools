@@ -3,7 +3,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
 import math
 
 import smst.utils as utils

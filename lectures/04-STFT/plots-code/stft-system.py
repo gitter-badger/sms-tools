@@ -1,5 +1,5 @@
 import numpy as np
-import time, os, sys
+import time
 
 import smst.models.stft as STFT
 import smst.utils as utils
@@ -8,7 +8,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming
-
 
 (fs, x) = utils.wavread('../../../sounds/piano.wav')
 w = np.hamming(1024)

@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, resample
 from scipy.fftpack import fft, ifft
 import time
-import sys, os
+import os
+
 
 
 import smst.utils as utils

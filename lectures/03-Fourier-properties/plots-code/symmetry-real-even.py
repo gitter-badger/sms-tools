@@ -3,11 +3,9 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
 import math
 from scipy.signal import triang
 from scipy.fftpack import fft, fftshift
-
 
 M = 127
 N = 128
@@ -49,4 +47,3 @@ plt.axis([-N/2, N/2, -1, 1])
 
 plt.tight_layout()
 plt.savefig('symmetry-real-even.png')
-

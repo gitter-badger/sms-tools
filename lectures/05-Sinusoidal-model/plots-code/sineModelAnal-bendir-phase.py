@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import sys, os, time
+import time
 
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
@@ -38,4 +38,3 @@ plt.title('pX + sinusoidal tracks (bendir.wav)')
 
 plt.tight_layout()
 plt.savefig('sineModelAnal-bendir-phase.png')
-

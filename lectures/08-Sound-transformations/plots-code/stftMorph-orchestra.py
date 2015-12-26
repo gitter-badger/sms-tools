@@ -1,5 +1,5 @@
 import numpy as np
-import time, os, sys
+import time
 from scipy.signal import hamming, resample
 # matplotlib without any blocking GUI
 import matplotlib as mpl

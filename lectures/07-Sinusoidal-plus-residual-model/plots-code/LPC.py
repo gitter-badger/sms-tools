@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
-import sys, os, time
+import os, time
 from scipy.fftpack import fft, ifft
 import essentia.standard as ess
 

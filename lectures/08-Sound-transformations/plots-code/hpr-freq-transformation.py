@@ -6,7 +6,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
-import sys, os
+import os
+
 import smst.models.hprModel as HPR
 import smst.models.stft as STFT
 import smst.transformations.harmonicTransformations as HT

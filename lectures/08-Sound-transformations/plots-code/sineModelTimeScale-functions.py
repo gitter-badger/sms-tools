@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 from scipy.fftpack import fft, ifft, fftshift
-import sys, os, functools, time, math
+import os, functools, time, math
 from scipy.interpolate import interp1d
 
 import smst.models.sineModel as SM

@@ -4,7 +4,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import os, sys
+import os
 from scipy.cluster.vq import vq, kmeans, whiten
 from numpy import random
 import pickle
@@ -53,4 +53,3 @@ plt.scatter(centroids[:,0],centroids[:,1], c=color[:nClusters], alpha=1, s=80)
 
 plt.tight_layout()
 plt.savefig('k-means.png')
-

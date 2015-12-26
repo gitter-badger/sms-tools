@@ -4,11 +4,10 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time, os, sys
+import time
 
 import smst.models.dftModel as DF
 import smst.utils as utils
-
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 N = 128

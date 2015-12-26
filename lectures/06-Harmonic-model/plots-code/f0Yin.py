@@ -4,7 +4,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming
-import sys, os
+import os
 import essentia.standard as ess
 
 

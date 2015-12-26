@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import sys, os, time
+import os, time
 
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
@@ -36,4 +36,3 @@ plt.title('mX + sinusoidal tracks (flute-A4.wav)')
 
 plt.tight_layout()
 plt.savefig('sineModelAnal-flute.png')
-

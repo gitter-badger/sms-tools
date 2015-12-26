@@ -4,7 +4,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-import time, os, sys
+import time
 import essentia.standard as ess
 
 
