@@ -121,11 +121,14 @@ setup(
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
-    # entry_points={
-    #     'console_scripts': [
-    #         'smst=smst:main',
-    #     ],
-    # },
+    entry_points={
+        'console_scripts': [
+            'smst-ui-models=smst.ui:main_ui_models',
+            'smst-ui-transformations=smst.ui:main_ui_transformations',
+            'smst-model=smst.ui:main_model',
+            'smst-transformation=smst.ui:main_transformation',
+        ],
+    },
 
     # Cython extensions
     cmdclass = {'build_ext': build_ext},

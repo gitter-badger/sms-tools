@@ -105,10 +105,10 @@ the project directory. The sound paths are relative to it.
 
 ### Models GUI
 
-The basic sound analysis/synthesis functions, or models, are in the directory `smst/models` and there is a graphical interface and individual example functions in `smst/ui/models`. To execute the models GUI type:
+The basic sound analysis/synthesis functions, or models, are in the directory `smst/models` and there is a graphical interface and individual example functions in `smst/ui/models`. To execute the models GUI type the following command. Note that is has been installed via pip.
 
 ```
-sms-tools$ python models_gui.py
+sms-tools$ smst-ui-models
 ```
 
 ### Transformations GUI
@@ -116,7 +116,7 @@ sms-tools$ python models_gui.py
 To execute the transformations GUI that calls various sound transformation functions type:
 
 ```
-sms-tools$ python transformations_gui.py
+sms-tools$ smst-ui-transformations
 ```
 
 ### Coding projects/assignments
