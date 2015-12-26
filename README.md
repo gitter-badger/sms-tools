@@ -51,6 +51,15 @@ At present, SMS tools are not available as a Python package, eg. via PyPI.
 
 The easiest and free way to install a working Python environment is [Anaconda](https://www.continuum.io/downloads). It has most of the required dependendies already bundled. However, you can also try the packages provided by you platform's native package system (apt, brew, etc.).
 
+```
+# make sure Anaconda is installed
+# create a virtual environment (eg. named 'smstools')
+# make sure to install matplotlib via conda before installing it via pip!
+$ conda env create -n smstools python=2.7 matplotlib
+$ source activate smstools
+$ pip install smst
+```
+
 #### Ubuntu
 
 In Ubuntu (which we strongly recommend) in order to install all these modules it is as simple as typing in the Terminal:
