@@ -2,7 +2,7 @@ from Tkinter import *
 from ..notebook import *   # window with tabs
 
 from dftModel_GUI_frame import *
-from stft_GUI_frame import *
+from stftModel_GUI_frame import *
 from sineModel_GUI_frame import *
 from harmonicModel_GUI_frame import *
 from stochasticModel_GUI_frame import *
@@ -20,7 +20,7 @@ f1 = Frame(nb( ))
 dft = DftModel_frame(f1)
 
 f2 = Frame(nb( ))
-stft = Stft_frame(f2)
+stft = StftModel_frame(f2)
 
 f3 = Frame(nb( ))
 sine = SineModel_frame(f3)

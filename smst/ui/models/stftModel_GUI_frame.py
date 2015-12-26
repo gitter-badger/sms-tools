@@ -7,7 +7,7 @@ from scipy.io.wavfile import read
 import stftModel_function
 import smst.utils as utils
 
-class Stft_frame:
+class StftModel_frame:
 	def __init__(self, parent):
 		self.parent = parent
 		self.initUI()
