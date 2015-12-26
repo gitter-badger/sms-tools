@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.dftModel as DFT
 import smst.utils as utils

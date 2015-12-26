@@ -5,7 +5,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.hpsModel as HPS
 import smst.transformations.hpsTransformations as HPST
 import smst.transformations.harmonicTransformations as HT

@@ -10,8 +10,7 @@ other resources (eg. sounds) used in the slides.
 
 ## Hot to generate the resources?
 
-The code uses sms-tools from the same git repository (in the `software/`
-directory).
+The code uses sms-tools installed as a Python package `smst`.
 
 Additional requirements (for lecture 09):
 

@@ -7,7 +7,6 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
 import sys, os, functools, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 
 import smst.models.sineModel as SM
 import smst.models.stft as STFT

@@ -7,7 +7,7 @@ from scipy.signal import hamming
 import sys, os
 import essentia.standard as ess
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+
 
 import smst.utils as utils
 import smst.models.stft as STFT

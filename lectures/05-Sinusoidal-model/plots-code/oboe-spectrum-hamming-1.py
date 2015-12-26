@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time, os, sys
 import math
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+
 import smst.utils as utils
 import smst.models.dftModel as DF
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')

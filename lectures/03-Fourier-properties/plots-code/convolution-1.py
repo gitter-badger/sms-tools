@@ -7,8 +7,6 @@ import time, os, sys
 from scipy.fftpack import fft, ifft, fftshift
 import math
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-
 import smst.utils as utils
 import smst.models.dftModel as DF
 (fs, x) = utils.wavread('../../../sounds/ocean.wav')

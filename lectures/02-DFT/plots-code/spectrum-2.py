@@ -6,7 +6,6 @@ import numpy as np
 import sys
 import math
 
-sys.path.append('../../../')
 import smst.utils as utils
 import smst.models.dftModel as DFT
 

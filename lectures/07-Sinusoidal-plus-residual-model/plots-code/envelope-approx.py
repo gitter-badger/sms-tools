@@ -8,7 +8,7 @@ import math
 import sys, os, time
 from scipy.fftpack import fft, ifft
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+
 import smst.utils as utils
 import smst.models.dftModel as DFT
 

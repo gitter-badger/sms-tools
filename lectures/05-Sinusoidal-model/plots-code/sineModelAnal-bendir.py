@@ -5,8 +5,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import sys, os, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-
 import smst.models.stft as STFT
 import smst.models.sineModel as SM
 import smst.utils as utils

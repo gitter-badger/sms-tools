@@ -8,7 +8,6 @@ import math
 from scipy.fftpack import fft, ifft, fftshift
 import sys, os, functools, time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DFT
 import smst.utils as utils
 import smst.models.harmonicModel as HM

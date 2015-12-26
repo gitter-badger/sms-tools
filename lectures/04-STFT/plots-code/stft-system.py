@@ -1,8 +1,6 @@
 import numpy as np
 import time, os, sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
-
 import smst.models.stft as STFT
 import smst.utils as utils
 # matplotlib without any blocking GUI

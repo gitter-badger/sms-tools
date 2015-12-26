@@ -7,7 +7,7 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 from scipy.fftpack import fft, ifft, fftshift
 import sys, os, functools, time, math
 from scipy.interpolate import interp1d
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.models.sineModel as SM

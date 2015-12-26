@@ -7,7 +7,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.hprModel as HPR
 import smst.models.stft as STFT
 import smst.transformations.harmonicTransformations as HT

@@ -6,7 +6,6 @@ import numpy as np
 import sys
 import os
 from scipy.signal import sawtooth
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
 import smst.models.dftModel as DF
 
 N = 128

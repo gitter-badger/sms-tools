@@ -9,7 +9,7 @@ import sys, os, time
 from scipy.fftpack import fft, ifft
 import essentia.standard as ess
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../'))
+
 import smst.utils as utils
 
 
