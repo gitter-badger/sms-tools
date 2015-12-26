@@ -30,7 +30,10 @@ Optional:
 
 ## How to install?
 
-## This repository
+### This repository
+
+This repository contains not only the sms-tools package but also the files
+for the ASPMA course.
 
 If you have `git` installed, just clone the repository:
 
@@ -42,11 +45,13 @@ Otherwise [download the current version as a ZIP](https://github.com/MTG/sms-too
 
 At present, SMS tools are not available as a Python package, eg. via PyPI.
 
-## Python & its packages
+### Python & its packages
+
+#### Anaconda
 
 The easiest and free way to install a working Python environment is [Anaconda](https://www.continuum.io/downloads). It has most of the required dependendies already bundled. However, you can also try the packages provided by you platform's native package system (apt, brew, etc.).
 
-### Ubuntu
+#### Ubuntu
 
 In Ubuntu (which we strongly recommend) in order to install all these modules it is as simple as typing in the Terminal:
 
@@ -54,7 +59,7 @@ In Ubuntu (which we strongly recommend) in order to install all these modules it
 $ sudo apt-get install python-dev ipython python-numpy python-matplotlib python-scipy cython
 ```
 
-### Mac OS X
+#### Mac OS X
 
 In OSX (which we do not support but that should work) you install these modules by typing in the Terminal:
 
@@ -62,7 +67,7 @@ In OSX (which we do not support but that should work) you install these modules 
 $ pip install ipython numpy matplotlib scipy cython
 ```
 
-### Building & installing
+#### Building & installing
 
 SMS tools are provided in the `smst` Python package.
 
@@ -70,17 +75,16 @@ It is needed to build the cython extensions and also it is convenient to have
 the library installed in the system, so that it can be easily imported without
 relying on some absolute location.
 
-#### Development mode
+##### Development mode
 
-In case you plan to modify the library code
-you can install the `smst` package in the development mode, ie. all code changes
-will
+In case you plan to modify the library code you can install the `smst` package in the development mode, ie. all code changes will come into effect without the
+need to reinstall the package.
 
 ```
 sms-tools$ pip install -e .
 ```
 
-#### Building the package
+##### Building the package
 
 In case you plan just to use the package and not modify its code often you can
 just build and install the package.
@@ -89,7 +93,7 @@ just build and install the package.
 sms-tools$ pip install .
 ```
 
-### Uninstalling
+#### Uninstalling
 
 ```
 sms-tools$ pip uninstall smst
