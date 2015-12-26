@@ -9,7 +9,7 @@ import smst.models.stft as STFT
 import smst.models.sineModel as SM
 import smst.utils as utils
 
-(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/bendir.wav'))
+(fs, x) = utils.wavread('../../../sounds/bendir.wav'))
 w = np.hamming(2001)
 N = 2048
 H = 200

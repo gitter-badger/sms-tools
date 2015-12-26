@@ -4,7 +4,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
-import sys, os, functools, time
+import os, functools, time
+
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.utils as utils
@@ -12,7 +13,7 @@ import smst.utils as utils
 plt.figure(1, figsize=(9, 7))
 
 plt.subplot(211)
-(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vibraphone-C6.wav'))
+(fs, x) = utils.wavread('../../../sounds/vibraphone-C6.wav'))
 w = np.blackman(401)
 N = 512
 H = 100
@@ -39,7 +40,7 @@ plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (vibraphone-C6.wav)')
 
 plt.subplot(212)
-(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/vignesh.wav'))
+(fs, x) = utils.wavread('../../../sounds/vignesh.wav'))
 w = np.blackman(1101)
 N = 2048
 H = 250

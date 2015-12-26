@@ -10,7 +10,7 @@ import smst.utils as utils
 import smst.models.hpsModel as HPS
 
 
-(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/sax-phrase-short.wav'))
+(fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav'))
 w = np.blackman(601)
 N = 1024
 t = -100

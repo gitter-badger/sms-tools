@@ -8,7 +8,7 @@ import sys, os, functools, time
 import smst.models.sineModel as SM
 import smst.utils as utils
 
-(fs, x) = utils.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/bendir.wav'))
+(fs, x) = utils.wavread('../../../sounds/bendir.wav'))
 x1 = x[0:50000]
 w = np.blackman(2001)
 N = 2048
