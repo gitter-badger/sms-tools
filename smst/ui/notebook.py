@@ -31,3 +31,19 @@ class Notebook(object):
         self.active_fr.forget()
         fr.pack(fill=BOTH, expand=1)
         self.active_fr = fr
+
+
+def create_notebook(root, frame_classes):
+    # make a few diverse frames (panels), each using the NB as 'master':
+    nb = Notebook(root, TOP)
+
+    frames = []
+    for title, frame_class in frame_classes:
+        frame = Frame(nb())
+        controller_frame = frame_class(frame)
+        frames.append(frame)
+        nb.add_screen(frame, title)
+
+    nb.display(frames[0])
+
+    return nb
