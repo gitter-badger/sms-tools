@@ -9,7 +9,7 @@ from . import stochasticModel_function
 from smst.utils import audio
 
 
-class StochasticModel_frame:
+class StochasticModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

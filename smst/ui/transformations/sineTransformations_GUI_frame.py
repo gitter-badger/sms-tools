@@ -11,7 +11,7 @@ from smst.utils import audio
 from . import sineTransformations_function as sT
 
 
-class SineTransformations_frame:
+class SineTransformationsFrame:
     def __init__(self, parent):
 
         self.parent = parent

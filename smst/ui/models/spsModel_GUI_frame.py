@@ -7,7 +7,7 @@ from . import spsModel_function
 from smst.utils import audio
 
 
-class SpsModel_frame:
+class SpsModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

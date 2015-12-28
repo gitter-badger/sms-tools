@@ -11,7 +11,7 @@ from smst.utils import audio
 from . import stochasticTransformations_function as sT
 
 
-class StochasticTransformations_frame:
+class StochasticTransformationsFrame:
     def __init__(self, parent):
 
         self.parent = parent

@@ -9,7 +9,7 @@ from . import hpsModel_function
 from smst.utils import audio
 
 
-class HpsModel_frame:
+class HpsModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

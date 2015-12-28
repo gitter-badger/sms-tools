@@ -1,37 +1,37 @@
 from Tkinter import *
 
-from ..notebook import notebook  # window with tabs
-from .stftMorph_GUI_frame import StftMorph_frame
-from .sineTransformations_GUI_frame import SineTransformations_frame
-from .harmonicTransformations_GUI_frame import HarmonicTransformations_frame
-from .stochasticTransformations_GUI_frame import StochasticTransformations_frame
-from .hpsTransformations_GUI_frame import HpsTransformations_frame
-from .hpsMorph_GUI_frame import HpsMorph_frame
+from ..notebook import Notebook  # window with tabs
+from .stftMorph_GUI_frame import StftMorphFrame
+from .sineTransformations_GUI_frame import SineTransformationsFrame
+from .harmonicTransformations_GUI_frame import HarmonicTransformationsFrame
+from .stochasticTransformations_GUI_frame import StochasticTransformationsFrame
+from .hpsTransformations_GUI_frame import HpsTransformationsFrame
+from .hpsMorph_GUI_frame import HpsMorphFrame
 
 
 def main():
     root = Tk()
     root.title('sms-tools transformations GUI')
-    nb = notebook(root, TOP)  # make a few diverse frames (panels), each using the NB as 'master':
+    nb = Notebook(root, TOP)  # make a few diverse frames (panels), each using the NB as 'master':
 
     # uses the notebook's frame
     f1 = Frame(nb())
-    stft = StftMorph_frame(f1)
+    stft = StftMorphFrame(f1)
 
     f2 = Frame(nb())
-    sine = SineTransformations_frame(f2)
+    sine = SineTransformationsFrame(f2)
 
     f3 = Frame(nb())
-    harmonic = HarmonicTransformations_frame(f3)
+    harmonic = HarmonicTransformationsFrame(f3)
 
     f4 = Frame(nb())
-    stochastic = StochasticTransformations_frame(f4)
+    stochastic = StochasticTransformationsFrame(f4)
 
     f5 = Frame(nb())
-    hps = HpsTransformations_frame(f5)
+    hps = HpsTransformationsFrame(f5)
 
     f6 = Frame(nb())
-    hpsmorph = HpsMorph_frame(f6)
+    hpsmorph = HpsMorphFrame(f6)
 
     nb.add_screen(f1, "STFT Morph")
     nb.add_screen(f2, "Sine")

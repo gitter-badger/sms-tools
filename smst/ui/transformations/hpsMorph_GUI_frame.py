@@ -11,7 +11,7 @@ from smst.utils import audio
 from . import hpsMorph_function as hM
 
 
-class HpsMorph_frame:
+class HpsMorphFrame:
     def __init__(self, parent):
 
         self.parent = parent

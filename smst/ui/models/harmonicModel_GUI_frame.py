@@ -9,7 +9,7 @@ from . import harmonicModel_function
 from smst.utils import audio
 
 
-class HarmonicModel_frame:
+class HarmonicModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

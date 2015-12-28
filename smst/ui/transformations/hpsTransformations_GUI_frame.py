@@ -11,7 +11,7 @@ from smst.utils import audio
 from . import hpsTransformations_function as hT
 
 
-class HpsTransformations_frame:
+class HpsTransformationsFrame:
     def __init__(self, parent):
 
         self.parent = parent

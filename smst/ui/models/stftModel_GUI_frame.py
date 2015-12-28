@@ -9,7 +9,7 @@ from . import stftModel_function
 from smst.utils import audio
 
 
-class StftModel_frame:
+class StftModelFrame:
     def __init__(self, parent):
         self.parent = parent
         self.initUI()

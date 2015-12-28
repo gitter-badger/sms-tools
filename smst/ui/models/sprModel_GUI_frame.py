@@ -9,7 +9,7 @@ from . import sprModel_function
 from smst.utils import audio
 
 
-class SprModel_frame:
+class SprModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

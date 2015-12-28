@@ -9,7 +9,7 @@ from . import sineModel_function
 from smst.utils import audio
 
 
-class SineModel_frame:
+class SineModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

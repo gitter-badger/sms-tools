@@ -8,7 +8,7 @@ from . import dftModel_function
 from smst.utils import audio
 
 
-class DftModel_frame:
+class DftModelFrame:
     def __init__(self, parent):
 
         self.parent = parent

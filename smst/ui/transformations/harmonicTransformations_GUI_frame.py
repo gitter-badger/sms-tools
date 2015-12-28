@@ -11,7 +11,7 @@ from smst.utils import audio
 from . import harmonicTransformations_function as hT
 
 
-class HarmonicTransformations_frame:
+class HarmonicTransformationsFrame:
     def __init__(self, parent):
 
         self.parent = parent

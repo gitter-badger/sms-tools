@@ -9,7 +9,7 @@ from smst.utils import audio
 from . import stftMorph_function as sT
 
 
-class StftMorph_frame:
+class StftMorphFrame:
     def __init__(self, parent):
 
         self.parent = parent

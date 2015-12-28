@@ -1,7 +1,7 @@
 from Tkinter import *
 
 
-class notebook(object):
+class Notebook(object):
     def __init__(self, master, side=LEFT):
         self.active_fr = None
         self.count = 0
