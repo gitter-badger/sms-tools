@@ -28,8 +28,9 @@ def genSpecSines_p(ipfreq, ipmag, ipphase, N, fs):
     hN = N / 2  # size of positive freq. spectrum
     for i in range(0, ipfreq.size):  # generate all sine spectral lobes
         loc = N * ipfreq[i] / fs  # it should be in range ]0,hN-1[
-        if loc == 0 or loc > hN - 1: continue
-        binremainder = round(loc) - loc;
+        if loc == 0 or loc > hN - 1:
+            continue
+        binremainder = round(loc) - loc
         lb = np.arange(binremainder - 4, binremainder + 5)  # main lobe (real value) bins to read
         lmag = genBhLobe(lb) * 10 ** (ipmag[i] / 20)  # lobe magnitudes of the complex exponential
         b = np.arange(round(loc) - 4, round(loc) + 5)
@@ -67,7 +68,7 @@ def sinewaveSynth(freqs, amp, H, fs):
             freq = np.ones(H) * freqs[l]
         elif (lastfreq > 0) & (freqs[l] > 0):  # if freqs in boundaries use both
             A = np.ones(H) * amp
-            if (lastfreq == freqs[l]):
+            if lastfreq == freqs[l]:
                 freq = np.ones(H) * lastfreq
             else:
                 freq = np.arange(lastfreq, freqs[l], (freqs[l] - lastfreq) / H)

@@ -50,7 +50,6 @@ def reconstruct(x, fs, w, N, t):
     returns y: output sound, ys: sinusoidal component, xr: residual component
     """
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     Ns = 512  # FFT size for synthesis (even)
@@ -58,7 +57,6 @@ def reconstruct(x, fs, w, N, t):
     hNs = Ns / 2
     pin = max(hNs, hM1)  # initialize sound pointer in middle of analysis window
     pend = x.size - max(hNs, hM1)  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     ysw = np.zeros(Ns)  # initialize output sound frame
     xrw = np.zeros(Ns)  # initialize output sound frame
     ys = np.zeros(x.size)  # initialize output array
@@ -87,11 +85,9 @@ def reconstruct(x, fs, w, N, t):
         # -----synthesis-----
         Ys = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)  # generate spec of sinusoidal component
         Xr = X2 - Ys;  # get the residual complex spectrum
-        fftbuffer = np.zeros(Ns)
         fftbuffer = np.real(ifft(Ys))  # inverse FFT of sinusoidal spectrum
         ysw[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         ysw[hNs - 1:] = fftbuffer[:hNs + 1]
-        fftbuffer = np.zeros(Ns)
         fftbuffer = np.real(ifft(Xr))  # inverse FFT of residual spectrum
         xrw[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         xrw[hNs - 1:] = fftbuffer[:hNs + 1]

@@ -19,13 +19,13 @@ def fromAudio(x, H, N, stocf):
 
     hN = N / 2 + 1  # positive size of fft
     No2 = N / 2  # half of N
-    if (hN * stocf < 3):  # raise exception if decimation factor too small
+    if hN * stocf < 3:  # raise exception if decimation factor too small
         raise ValueError("Stochastic decimation factor too small")
 
-    if (stocf > 1):  # raise exception if decimation factor too big
+    if stocf > 1:  # raise exception if decimation factor too big
         raise ValueError("Stochastic decimation factor above 1")
 
-    if (H <= 0):  # raise error if hop size 0 or negative
+    if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
     if not (isPower2(N)):  # raise error if N not a power of two
@@ -89,13 +89,13 @@ def reconstruct(x, H, N, stocf):
     """
     hN = N / 2 + 1  # positive size of fft
     No2 = N / 2  # half of N
-    if (hN * stocf < 3):  # raise exception if decimation factor too small
+    if hN * stocf < 3:  # raise exception if decimation factor too small
         raise ValueError("Stochastic decimation factor too small")
 
-    if (stocf > 1):  # raise exception if decimation factor too big
+    if stocf > 1:  # raise exception if decimation factor too big
         raise ValueError("Stochastic decimation factor above 1")
 
-    if (H <= 0):  # raise error if hop size 0 or negative
+    if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
     if not (isPower2(N)):  # raise error if N not a power of twou
@@ -136,7 +136,7 @@ def scaleTime(stocEnv, timeScaling):
     timeScaling: scaling factors, in time-value pairs
     returns ystocEnv: stochastic envelope
     """
-    if (timeScaling.size % 2 != 0):  # raise exception if array not even length
+    if timeScaling.size % 2 != 0:  # raise exception if array not even length
         raise ValueError("Time scaling array does not have an even size")
 
     L = stocEnv[:, 0].size  # number of input frames

@@ -54,7 +54,6 @@ def reconstruct(x, fs, w, N, t, stocf):
     returns y: output sound, ys: sinusoidal component, yst: stochastic component
     """
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     Ns = 512  # FFT size for synthesis (even)
@@ -62,7 +61,6 @@ def reconstruct(x, fs, w, N, t, stocf):
     hNs = Ns / 2
     pin = max(hNs, hM1)  # initialize sound pointer in middle of analysis window
     pend = x.size - max(hNs, hM1)  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     ysw = np.zeros(Ns)  # initialize output sound frame
     ystw = np.zeros(Ns)  # initialize output sound frame
     ys = np.zeros(x.size)  # initialize output array
@@ -93,7 +91,7 @@ def reconstruct(x, fs, w, N, t, stocf):
 
         # -----synthesis-----
         Ys = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)  # generate spec of sinusoidal component
-        Xr = X2 - Ys;  # get the residual complex spectrum
+        Xr = X2 - Ys  # get the residual complex spectrum
         mXr = 20 * np.log10(abs(Xr[:hNs]))  # magnitude spectrum of residual
         mXrenv = resample(np.maximum(-200, mXr), mXr.size * stocf)  # decimate the magnitude spectrum and avoid -Inf
         stocEnv = resample(mXrenv, hNs)  # interpolate to original size

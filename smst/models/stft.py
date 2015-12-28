@@ -16,7 +16,7 @@ def reconstruct(x, w, N, H):
     returns y: output sound
     """
 
-    if (H <= 0):  # raise error if hop size 0 or negative
+    if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
     M = w.size  # size of analysis window
@@ -37,7 +37,7 @@ def reconstruct(x, w, N, H):
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
-    y = np.delete(y, range(y.size - hM1, y.size))  # delete half of the last window which as added in stftModelAnal
+    y = np.delete(y, range(y.size - hM1, y.size))  # delete half of the last window
     return y
 
 
@@ -87,11 +87,13 @@ def toAudio(mY, pY, M, H):
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
-    y = np.delete(y, range(y.size - hM1, y.size))  # delete the end of the sound that was added in stftModelAnal
+    y = np.delete(y, range(y.size - hM1, y.size))  # delete the end of the sound
     return y
 
 
 # functions that implement transformations using the stft
+
+# NOTE: the following transformations work directly with audio input and output
 
 def filter(x, fs, w, N, H, filter):
     """
@@ -113,11 +115,11 @@ def filter(x, fs, w, N, H, filter):
     while pin <= pend:  # while sound pointer is smaller than last sample
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select one frame of input sound
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
+        mX, pX = dft.fromAudio(x1, w, N)  # compute DFT
         # ------transformation-----
         mY = mX + filter  # filter input magnitude spectrum
         # -----synthesis-----
-        y1 = dft.toAudio(mY, pX, M)  # compute idft
+        y1 = dft.toAudio(mY, pX, M)  # compute IDFT
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
@@ -130,21 +132,21 @@ def morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
     Morph of two sounds using the STFT
     x1, x2: input sounds, fs: sampling rate
     w1, w2: analysis windows, N1, N2: FFT sizes, H1: hop size
-    smoothf: smooth factor of sound 2, bigger than 0 to max of 1, where 1 is no smothing,
+    smoothf: smooth factor of sound 2, bigger than 0 to max of 1, where 1 is no smoothing,
     balancef: balance between the 2 sounds, from 0 to 1, where 0 is sound 1 and 1 is sound 2
     returns y: output sound
     """
 
-    if (N2 / 2 * smoothf < 3):  # raise exception if decimation factor too small
+    if N2 / 2 * smoothf < 3:  # raise exception if decimation factor too small
         raise ValueError("Smooth factor too small")
 
-    if (smoothf > 1):  # raise exception if decimation factor too big
+    if smoothf > 1:  # raise exception if decimation factor too big
         raise ValueError("Smooth factor above 1")
 
-    if (balancef > 1 or balancef < 0):  # raise exception if balancef outside 0-1
+    if balancef > 1 or balancef < 0:  # raise exception if balancef outside 0-1
         raise ValueError("Balance factor outside range")
 
-    if (H1 <= 0):  # raise error if hop size 0 or negative
+    if H1 <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H1) smaller or equal to 0")
 
     M1 = w1.size  # size of analysis window

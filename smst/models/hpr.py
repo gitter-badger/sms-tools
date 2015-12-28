@@ -53,7 +53,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     returns y: output sound, yh: harmonic component, xr: residual component
     """
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     Ns = 512  # FFT size for synthesis (even)
@@ -61,7 +60,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     hNs = Ns / 2
     pin = max(hNs, hM1)  # initialize sound pointer in middle of analysis window
     pend = x.size - max(hNs, hM1)  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     yhw = np.zeros(Ns)  # initialize output sound frame
     xrw = np.zeros(Ns)  # initialize output sound frame
     yh = np.zeros(x.size)  # initialize output array
@@ -75,7 +73,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     wr = bh  # window for residual
     sw[hNs - H:hNs + H] = sw[hNs - H:hNs + H] / bh[hNs - H:hNs + H]
     hfreqp = []
-    f0t = 0
     f0stable = 0
     while pin < pend:
         # -----analysis-----
@@ -101,11 +98,9 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
         # -----synthesis-----
         Yh = synth.genSpecSines(hfreq, hmag, hphase, Ns, fs)  # generate sines
         Xr = X2 - Yh  # get the residual complex spectrum
-        fftbuffer = np.zeros(Ns)
         fftbuffer = np.real(ifft(Yh))  # inverse FFT of harmonic spectrum
         yhw[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         yhw[hNs - 1:] = fftbuffer[:hNs + 1]
-        fftbuffer = np.zeros(Ns)
         fftbuffer = np.real(ifft(Xr))  # inverse FFT of residual spectrum
         xrw[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         xrw[hNs - 1:] = fftbuffer[:hNs + 1]

@@ -21,26 +21,24 @@ def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
     f0et: error threshold in the f0 detection (ex: 5),
     returns f0: fundamental frequency
     """
-    if (minf0 < 0):  # raise exception if minf0 is smaller than 0
+    if minf0 < 0:  # raise exception if minf0 is smaller than 0
         raise ValueError("Minumum fundamental frequency (minf0) smaller than 0")
 
-    if (maxf0 >= 10000):  # raise exception if maxf0 is bigger than fs/2
+    # TODO: use fs/2 instead a constant
+    if maxf0 >= 10000:  # raise exception if maxf0 is bigger than fs/2
         raise ValueError("Maximum fundamental frequency (maxf0) bigger than 10000Hz")
 
-    if (H <= 0):  # raise error if hop size 0 or negative
+    if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     x = np.append(np.zeros(hM2), x)  # add zeros at beginning to center first window at sample 0
     x = np.append(x, np.zeros(hM1))  # add zeros at the end to analyze last sample
     pin = hM1  # init sound pointer in middle of anal window
     pend = x.size - hM1  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     w = w / sum(w)  # normalize analysis window
     f0 = []  # initialize f0 output
-    f0t = 0  # initialize f0 track
     f0stable = 0  # initialize f0 stable
     while pin < pend:
         x1 = x[pin - hM1:pin + hM2]  # select frame
@@ -70,21 +68,21 @@ def findHarmonics(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
     returns hfreq, hmag, hphase: harmonic frequencies, magnitudes, phases
     """
 
-    if (f0 <= 0):  # if no f0 return no harmonics
+    if f0 <= 0:  # if no f0 return no harmonics
         return np.zeros(nH), np.zeros(nH), np.zeros(nH)
     hfreq = np.zeros(nH)  # initialize harmonic frequencies
     hmag = np.zeros(nH) - 100  # initialize harmonic magnitudes
     hphase = np.zeros(nH)  # initialize harmonic phases
     hf = f0 * np.arange(1, nH + 1)  # initialize harmonic frequencies
     hi = 0  # initialize harmonic index
-    if hfreqp == []:  # if no incomming harmonic tracks initialize to harmonic series
+    if hfreqp == []:  # if no incoming harmonic tracks initialize to harmonic series
         hfreqp = hf
     while (f0 > 0) and (hi < nH) and (hf[hi] < fs / 2):  # find harmonic peaks
         pei = np.argmin(abs(pfreq - hf[hi]))  # closest peak
         dev1 = abs(pfreq[pei] - hf[hi])  # deviation from perfect harmonic
         dev2 = (abs(pfreq[pei] - hfreqp[hi]) if hfreqp[hi] > 0 else fs)  # deviation from previous frame
         threshold = f0 / 3 + harmDevSlope * pfreq[pei]
-        if ((dev1 < threshold) or (dev2 < threshold)):  # accept peak if deviation is small
+        if (dev1 < threshold) or (dev2 < threshold):  # accept peak if deviation is small
             hfreq[hi] = pfreq[pei]  # harmonic frequencies
             hmag[hi] = pmag[pei]  # harmonic magnitudes
             hphase[hi] = pphase[pei]  # harmonic phases
@@ -103,7 +101,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     returns y: output array sound
     """
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     x = np.append(np.zeros(hM2), x)  # add zeros at beginning to center first window at sample 0
@@ -113,7 +110,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     hNs = Ns / 2
     pin = max(hNs, hM1)  # init sound pointer in middle of anal window
     pend = x.size - max(hNs, hM1)  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     yh = np.zeros(Ns)  # initialize output sound frame
     y = np.zeros(x.size)  # initialize output array
     w = w / sum(w)  # normalize analysis window
@@ -124,7 +120,6 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     bh = bh / sum(bh)  # normalize synthesis window
     sw[hNs - H:hNs + H] = sw[hNs - H:hNs + H] / bh[hNs - H:hNs + H]  # window for overlap-add
     hfreqp = []
-    f0t = 0
     f0stable = 0
     while pin < pend:
         # -----analysis-----
@@ -163,20 +158,17 @@ def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minS
     returns xhfreq, xhmag, xhphase: harmonic frequencies, magnitudes and phases
     """
 
-    if (minSineDur < 0):  # raise exception if minSineDur is smaller than 0
+    if minSineDur < 0:  # raise exception if minSineDur is smaller than 0
         raise ValueError("Minimum duration of sine tracks smaller than 0")
 
-    hN = N / 2  # size of positive spectrum
     hM1 = int(math.floor((w.size + 1) / 2))  # half analysis window size by rounding
     hM2 = int(math.floor(w.size / 2))  # half analysis window size by floor
     x = np.append(np.zeros(hM2), x)  # add zeros at beginning to center first window at sample 0
     x = np.append(x, np.zeros(hM2))  # add zeros at the end to analyze last sample
     pin = hM1  # init sound pointer in middle of anal window
     pend = x.size - hM1  # last sample to start a frame
-    fftbuffer = np.zeros(N)  # initialize buffer for FFT
     w = w / sum(w)  # normalize analysis window
     hfreqp = []  # initialize harmonic frequencies of previous frame
-    f0t = 0  # initialize f0 track
     f0stable = 0  # initialize f0 stable
     while pin <= pend:
         x1 = x[pin - hM1:pin + hM2]  # select frame
@@ -217,14 +209,13 @@ def scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservatio
     fs: sampling rate of input sound
     returns yhfreq, yhmag: frequencies and magnitudes of output harmonics
     """
-    if (freqScaling.size % 2 != 0):  # raise exception if array not even length
+    if freqScaling.size % 2 != 0:  # raise exception if array not even length
         raise ValueError("Frequency scaling array does not have an even size")
 
-    if (freqStretching.size % 2 != 0):  # raise exception if array not even length
+    if freqStretching.size % 2 != 0:  # raise exception if array not even length
         raise ValueError("Frequency stretching array does not have an even size")
 
     L = hfreq.shape[0]  # number of frames
-    nHarms = hfreq.shape[1]  # number of harmonics
     # create interpolation object with the scaling values
     freqScalingEnv = np.interp(np.arange(L), L * freqScaling[::2] / freqScaling[-2], freqScaling[1::2])
     # create interpolation object with the stretching values

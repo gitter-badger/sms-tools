@@ -30,15 +30,15 @@ def wavread(filename):
     returns fs: sampling rate of file, x: floating point array
     """
 
-    if (os.path.isfile(filename) == False):  # raise error if wrong input file
+    if not os.path.isfile(filename):  # raise error if wrong input file
         raise ValueError("Input file is wrong")
 
     fs, x = read(filename)
 
-    if (len(x.shape) != 1):  # raise error if more than one channel
+    if len(x.shape) != 1:  # raise error if more than one channel
         raise ValueError("Audio file should be mono")
 
-    if (fs != 44100):  # raise error if more than one channel
+    if fs != 44100:  # raise error if more than one channel
         raise ValueError("Sampling rate of input sound should be 44100")
 
     # scale down and convert audio into floating point number in range of -1 to 1
@@ -51,7 +51,7 @@ def wavplay(filename):
     Play a wav audio file from system using OS calls
     filename: name of file to read
     """
-    if (os.path.isfile(filename) == False):  # raise error if wrong input file
+    if not os.path.isfile(filename):  # raise error if wrong input file
         print("Input file does not exist. Make sure you computed the analysis/synthesis")
     else:
         if sys.platform == "linux" or sys.platform == "linux2":

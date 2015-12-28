@@ -10,7 +10,7 @@ def peakDetection(mX, t):
     returns ploc: peak locations
     """
 
-    thresh = np.where(mX[1:-1] > t, mX[1:-1], 0);  # locations above threshold
+    thresh = np.where(mX[1:-1] > t, mX[1:-1], 0)  # locations above threshold
     next_minor = np.where(mX[1:-1] > mX[2:], mX[1:-1], 0)  # locations higher than the next one
     prev_minor = np.where(mX[1:-1] > mX[:-2], mX[1:-1], 0)  # locations higher than the previous one
     ploc = thresh * next_minor * prev_minor  # locations fulfilling the three criteria
@@ -43,17 +43,17 @@ def f0Twm(pfreq, pmag, ef0max, minf0, maxf0, f0t=0):
     f0t: f0 of previous frame if stable
     returns f0: fundamental frequency in Hz
     """
-    if (minf0 < 0):  # raise exception if minf0 is smaller than 0
+    if minf0 < 0:  # raise exception if minf0 is smaller than 0
         raise ValueError("Minumum fundamental frequency (minf0) smaller than 0")
 
-    if (maxf0 >= 10000):  # raise exception if maxf0 is bigger than 10000Hz
+    if maxf0 >= 10000:  # raise exception if maxf0 is bigger than 10000Hz
         raise ValueError("Maximum fundamental frequency (maxf0) bigger than 10000Hz")
 
     if (pfreq.size < 3) & (f0t == 0):  # return 0 if less than 3 peaks and not previous f0
         return 0
 
     f0c = np.argwhere((pfreq > minf0) & (pfreq < maxf0))[:, 0]  # use only peaks within given range
-    if (f0c.size == 0):  # return 0 if no peaks within range
+    if f0c.size == 0:  # return 0 if no peaks within range
         return 0
     f0cf = pfreq[f0c]  # frequencies of peak candidates
     f0cm = pmag[f0c]  # magnitude of peak candidates
@@ -106,7 +106,7 @@ def TWM_p(pfreq, pmag, f0c):
         PeakMag = pmag[peakloc]
         MagFactor = 10 ** ((PeakMag - Amax) / 20)
         ErrorPM = ErrorPM + (Ponddif + MagFactor * (q * Ponddif - r)).T
-        harmonic = harmonic + f0c
+        harmonic += f0c
 
     ErrorMP = np.zeros(harmonic.size)  # initialize MP errors
     MaxNMP = min(maxnpeaks, pfreq.size)
