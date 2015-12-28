@@ -143,7 +143,7 @@ def reconstruct(x, fs, w, N, t):
 
 # functions that implement transformations using the sineModel
 
-def sineTimeScaling(sfreq, smag, timeScaling):
+def scaleTime(sfreq, smag, timeScaling):
     """
     Time scaling of sinusoidal tracks
     sfreq, smag: frequencies and magnitudes of input sinusoidal tracks

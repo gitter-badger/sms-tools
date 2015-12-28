@@ -122,7 +122,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling=np.array([0
     yhfreq, yhmag = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
     # time scale the sound
-    yhfreq, yhmag = sine.sineTimeScaling(yhfreq, yhmag, timeScaling)
+    yhfreq, yhmag = sine.scaleTime(yhfreq, yhmag, timeScaling)
 
     # synthesis
     y = sine.toAudio(yhfreq, yhmag, np.array([]), Ns, H, fs)

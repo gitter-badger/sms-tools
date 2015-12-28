@@ -116,7 +116,7 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling=np.array([0
     ytfreq = sine.scaleFrequencies(tfreq, freqScaling)
 
     # time scale the sinusoidal tracks
-    ytfreq, ytmag = sine.sineTimeScaling(ytfreq, tmag, timeScaling)
+    ytfreq, ytmag = sine.scaleTime(ytfreq, tmag, timeScaling)
 
     # synthesis
     y = sine.toAudio(ytfreq, ytmag, np.array([]), Ns, H, fs)

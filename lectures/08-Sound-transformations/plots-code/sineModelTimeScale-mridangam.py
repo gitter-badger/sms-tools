@@ -23,7 +23,7 @@ tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, f
 timeScale = np.array(
     [.01, .0, .03, .03, .335, .4, .355, .42, .671, .8, .691, .82, .858, 1.2, .878, 1.22, 1.185, 1.6, 1.205, 1.62, 1.497,
      2.0, 1.517, 2.02, 1.686, 2.4, 1.706, 2.42, 1.978, 2.8])
-ytfreq, ytmag = sine.sineTimeScaling(tfreq, tmag, timeScale)
+ytfreq, ytmag = sine.scaleTime(tfreq, tmag, timeScale)
 y = sine.toAudio(ytfreq, ytmag, np.array([]), Ns, H, fs)
 mY, pY = stft.fromAudio(y, w, N, H)
 
