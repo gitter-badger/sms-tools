@@ -1,14 +1,13 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
-import os, functools, time
+import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
+from scipy.signal import hamming, triang, blackmanharris
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 M = 601
@@ -69,4 +68,3 @@ plt.title("yw = y * triangular / Blackman Harris; size = Ns/2 = 256")
 
 plt.tight_layout()
 plt.savefig('synthesis-window-2.png')
-

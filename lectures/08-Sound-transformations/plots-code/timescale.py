@@ -1,10 +1,8 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.interpolate import interp1d
-
+import numpy as np
 
 timeScale = np.array([.01, .0, .03, .03, .335, .4, .355, .42, .671, .8, .691, .82, .858, 1.2, .878, 1.22, 1.185, 1.6, 1.205, 1.62, 1.497, 2.0, 1.517, 2.02, 1.686, 2.4, 1.706, 2.42, 1.978, 2.8])
 
@@ -18,4 +16,3 @@ plt.xlabel('input time')
 plt.ylabel('output time')
 plt.autoscale(tight=True)
 plt.savefig('timescale.png')
-

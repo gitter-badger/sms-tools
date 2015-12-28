@@ -1,14 +1,13 @@
-import numpy as np
-import time
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, resample
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
-import math
 
 (fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
 (fs, x2) = utils.wavread('../../../sounds/speech-male.wav')
@@ -77,4 +76,3 @@ plt.title('pY')
 plt.tight_layout()
 
 plt.savefig('stftMorph-frame.png')
-

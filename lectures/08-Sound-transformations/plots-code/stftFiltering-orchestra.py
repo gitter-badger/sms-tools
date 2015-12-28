@@ -1,11 +1,10 @@
-import numpy as np
-import time
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 
-import smst.utils as utils
+from smst import utils
 from smst.models import stft
 
 (fs, x) = utils.wavread('../../../sounds/orchestra.wav')

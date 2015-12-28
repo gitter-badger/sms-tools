@@ -1,12 +1,12 @@
 # function to call the main analysis/synthesis functions in software/models/hprModel.py
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import os
 from scipy.signal import get_window
-import smst.utils as utils
-from smst.models import hpr
-from smst.models import stft
+
+from smst import utils
+from smst.models import hpr, stft
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M=601, N=1024, t=-100,

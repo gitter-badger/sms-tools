@@ -1,10 +1,11 @@
 # function to call the main analysis/synthesis functions in software/models/sineModel.py
 
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import get_window
+import numpy as np
 import os
-import smst.utils as utils
+from scipy.signal import get_window
+
+from smst import utils
 from smst.models import sine
 from .. import demo_sound_path
 

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
 
-import smst.utils as utils
+from smst import utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 N = 512

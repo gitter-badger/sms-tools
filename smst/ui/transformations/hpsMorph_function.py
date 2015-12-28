@@ -1,11 +1,12 @@
 # function for doing a morph between two sounds using the hpsModel
 
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import get_window
+import numpy as np
 import os
+from scipy.signal import get_window
+
+from smst import utils
 from smst.models import hps
-import smst.utils as utils
 from .. import demo_sound_path
 
 def analysis(inputFile1=demo_sound_path('violin-B3.wav'), window1='blackman', M1=1001, N1=1024, t1=-100,

@@ -1,9 +1,9 @@
-import numpy as np
+import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import essentia.standard as ess
+import numpy as np
 
 M = 1024
 N = 1024
@@ -40,4 +40,3 @@ plt.title('HPCP')
 plt.autoscale(tight=True)
 plt.tight_layout()
 plt.savefig('hpcp.png')
-

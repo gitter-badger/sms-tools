@@ -1,17 +1,13 @@
-import numpy as np
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackman
-import math
-import os, functools, time
 
-from smst.models import dft
-import smst.utils as utils
-from smst.models import stft
-from smst.models import sine
-from smst.models import harmonic
+from smst import utils
+from smst.models import dft, stft, sine, harmonic
 
 (fs, x) = utils.wavread('../../../sounds/piano.wav')
 w = np.blackman(1501)

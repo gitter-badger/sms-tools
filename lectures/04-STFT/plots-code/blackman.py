@@ -3,8 +3,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft
 from scipy import signal
+from scipy.fftpack import fft
 
 M = 64
 N = 512
@@ -31,4 +31,3 @@ plt.axis([-hN,hN,-80,0])
 
 plt.tight_layout()
 plt.savefig('blackman.png')
-

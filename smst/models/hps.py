@@ -1,15 +1,13 @@
 # functions that implement analysis and synthesis of sounds using the Harmonic plus Stochastic Model
 # (for example usage check the examples models_interface)
 
+import math
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.signal import resample, blackmanharris, triang, hanning
 from scipy.fftpack import fft, ifft, fftshift
-import math
-import harmonic
-import sine
-import dft
-import stochastic
+
+from . import dft, harmonic, sine, stochastic
 from .. import utils
 
 def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):

@@ -1,15 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import os, functools, time
 
-from smst.models import harmonic
-from smst.models import sine
-import smst.utils as utils
-
+from smst import utils
+from smst.models import harmonic, sine
 
 (fs, x) = utils.wavread('../../../sounds/vignesh.wav')
 w = np.blackman(1201)
@@ -51,4 +48,3 @@ plt.title('yh')
 plt.tight_layout()
 utils.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
 plt.savefig('harmonicModel-analysis-synthesis.png')
-

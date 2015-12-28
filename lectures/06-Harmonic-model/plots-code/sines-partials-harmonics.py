@@ -1,15 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import os, functools, time
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
-
-
 
 (fs, x) = utils.wavread('../../../sounds/sine-440-490.wav')
 w = np.hamming(3529)
@@ -68,4 +65,3 @@ plt.title('mX + peaks (oboe-A4.wav)')
 
 plt.tight_layout()
 plt.savefig('sines-partials-harmonics.png')
-

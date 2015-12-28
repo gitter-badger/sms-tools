@@ -1,15 +1,12 @@
-import numpy as np
-import time
-from scipy.signal import hamming, resample
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import math
+import numpy as np
+from scipy.signal import hamming, resample
 
-import smst.utils as utils
-from smst.models import stochastic
-from smst.models import stft
+from smst import utils
+from smst.models import stft, stochastic
 
 (fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
 (fs, x2) = utils.wavread('../../../sounds/speech-male.wav')

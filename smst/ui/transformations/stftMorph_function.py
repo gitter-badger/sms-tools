@@ -1,11 +1,12 @@
 # function for doing a morph between two sounds using the stft
 
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import get_window
+import numpy as np
 import os
+from scipy.signal import get_window
+
+from smst import utils
 from smst.models import stft
-import smst.utils as utils
 from .. import demo_sound_path
 
 def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('speech-male.wav'), window1='hamming',  window2='hamming',

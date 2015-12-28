@@ -1,13 +1,11 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import os, time
+import numpy as np
 
-from smst.models import stft
-from smst.models import sine
-import smst.utils as utils
+from smst import utils
+from smst.models import sine, stft
 
 (fs, x) = utils.wavread('../../../sounds/flute-A4.wav'))
 w = np.blackman(601)

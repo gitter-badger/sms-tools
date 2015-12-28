@@ -1,11 +1,11 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
-import smst.utils as utils
+from smst import utils
 from smst.models import dft
 
 (fs, x) = utils.wavread('../../../sounds/violin-B3.wav')

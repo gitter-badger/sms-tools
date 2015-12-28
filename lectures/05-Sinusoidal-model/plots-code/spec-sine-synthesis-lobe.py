@@ -1,18 +1,13 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
+import numpy as np
 from scipy.fftpack import fft, ifft
-import math
-import os, functools, time
+from scipy.signal import hamming, triang, blackmanharris
 
-
-
-from smst.models import stft
-from smst.models import sine
-import smst.utils as utils
+from smst import utils
+from smst.models import sine, stft
 
 M = 256
 N = 256
@@ -109,4 +104,3 @@ plt.title ("error function: x-y; SNR = ${%d}$ dB" %(SNR2))
 
 plt.tight_layout()
 plt.savefig('spec-sine-synthesis-lobe.png')
-

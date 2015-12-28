@@ -1,13 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import get_window
-import os
 
+from smst import utils
 from smst.models import hps
-import smst.utils as utils
 
 inputFile1='../../../sounds/violin-B3.wav'
 window1='blackman'

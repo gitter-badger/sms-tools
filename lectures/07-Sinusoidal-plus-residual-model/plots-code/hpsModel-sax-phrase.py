@@ -1,15 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import os, time
 
-import smst.utils as utils
+from smst import utils
 from smst.models import hps
-
 
 (fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav'))
 w = np.blackman(601)
@@ -60,4 +57,3 @@ plt.savefig('hpsModel-sax-phrase.png')
 utils.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
 utils.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
 utils.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
-

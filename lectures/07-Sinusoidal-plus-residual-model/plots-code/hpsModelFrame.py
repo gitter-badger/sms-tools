@@ -1,17 +1,14 @@
-import numpy as np
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris, resample
-import math
+import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
-import os, functools, time
+from scipy.signal import hamming, triang, blackmanharris, resample
 
-
-from smst.models import dft
-import smst.utils as utils
-from smst.models import harmonic
+from smst import utils
+from smst.models import dft, harmonic
 
 (fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
 pos = .8*fs
@@ -70,4 +67,3 @@ plt.title('mYh + mXr + mYst')
 
 plt.tight_layout()
 plt.savefig('hpsModelFrame.png')
-

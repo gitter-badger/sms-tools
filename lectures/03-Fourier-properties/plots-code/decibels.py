@@ -1,10 +1,10 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
+import numpy as np
 from scipy.fftpack import fft, fftshift
+from scipy.signal import hamming
 
 plt.figure(1, figsize=(9.5, 6))
 M= 64
@@ -31,4 +31,3 @@ plt.title('20*log10(abs(X))')
 
 plt.tight_layout()
 plt.savefig('decibels.png')
-

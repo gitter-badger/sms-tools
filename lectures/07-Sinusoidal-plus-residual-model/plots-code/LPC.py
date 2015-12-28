@@ -1,17 +1,13 @@
-import numpy as np
+import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import os, time
-from scipy.fftpack import fft, ifft
-import essentia.standard as ess
+import numpy as np
+from scipy.fftpack import fft
+from scipy.signal import hamming
 
-
-import smst.utils as utils
-
+from smst import utils
 
 lpc = ess.LPC(order=14)
 N= 512
@@ -42,4 +38,3 @@ plt.title('mX + mY (LPC approximation)')
 
 plt.tight_layout()
 plt.savefig('LPC.png')
-

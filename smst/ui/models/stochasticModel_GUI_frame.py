@@ -1,11 +1,12 @@
 # GUI frame for the stochasticModel_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
-import stochasticModel_function
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from . import stochasticModel_function
+from smst import utils
 
 class StochasticModel_frame:
 

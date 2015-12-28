@@ -1,8 +1,9 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
+
 tol = 1e-5
 
 plt.figure(1, figsize=(9.5, 7))
@@ -35,4 +36,3 @@ plt.axis([0,N-1,-np.pi,np.pi])
 
 plt.tight_layout()
 plt.savefig('dft-complex-sine-2.png')
-

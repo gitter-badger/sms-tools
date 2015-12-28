@@ -1,8 +1,8 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import get_window
 
 f = 10000.0 * np.arange(0,100)/100.0
@@ -18,4 +18,3 @@ plt.ylabel('Mel scale')
 
 plt.tight_layout()
 plt.savefig('mel-scale.png')
-

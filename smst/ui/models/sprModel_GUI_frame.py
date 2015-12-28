@@ -1,11 +1,12 @@
 # GUI frame for the sineModel_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
-import sprModel_function
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from . import sprModel_function
+from smst import utils
 
 class SprModel_frame:
 

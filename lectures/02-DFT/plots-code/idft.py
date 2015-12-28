@@ -1,3 +1,4 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -6,7 +7,6 @@ import numpy as np
 import sys
 
 from smst.models import dft
-import math
 
 k0 = 8.5
 N = 64

@@ -1,14 +1,14 @@
 # functions that implement analysis and synthesis of sounds using the Harmonic Model
 # (for example usage check the models_interface directory)
 
+import math
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.signal import blackmanharris, triang, resample
 from scipy.fftpack import ifft
-import math
-import dft
+
+from . import dft, sine
 from .. import utils
-import sine
 
 def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""

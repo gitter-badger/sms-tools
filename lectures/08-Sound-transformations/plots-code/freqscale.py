@@ -1,10 +1,8 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.interpolate import interp1d
-
+import numpy as np
 
 freqScaling = np.array([0, .8, 1, 1.2])
 plt.figure(1, figsize=(9, 6))
@@ -17,4 +15,3 @@ plt.xlabel('time')
 plt.ylabel('scaling factor')
 plt.autoscale(tight=True)
 plt.savefig('freqscale.png')
-

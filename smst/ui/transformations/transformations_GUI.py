@@ -1,12 +1,12 @@
 from Tkinter import *
-from ..notebook import *   # window with tabs
+from ..notebook import notebook   # window with tabs
 
-from stftMorph_GUI_frame import *
-from sineTransformations_GUI_frame import *
-from harmonicTransformations_GUI_frame import *
-from stochasticTransformations_GUI_frame import *
-from hpsTransformations_GUI_frame import *
-from hpsMorph_GUI_frame import *
+from .stftMorph_GUI_frame import StftMorph_frame
+from .sineTransformations_GUI_frame import SineTransformations_frame
+from .harmonicTransformations_GUI_frame import HarmonicTransformations_frame
+from .stochasticTransformations_GUI_frame import StochasticTransformations_frame
+from .hpsTransformations_GUI_frame import HpsTransformations_frame
+from .hpsMorph_GUI_frame import HpsMorph_frame
 
 def main():
     root = Tk( )

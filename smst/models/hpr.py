@@ -1,14 +1,13 @@
 # functions that implement analysis and synthesis of sounds using the Harmonic plus Residual Model
 # (for example usage check the models_interface directory)
 
-import numpy as np
 import math
+import numpy as np
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft, fftshift
-import harmonic
-import dft
+
+from . import dft, harmonic, sine
 from .. import utils
-import sine
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope):
 	"""Analysis of a sound using the harmonic plus residual model

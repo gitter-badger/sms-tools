@@ -1,10 +1,10 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
+import numpy as np
 from scipy.fftpack import fft, fftshift
+from scipy.signal import hamming
 
 plt.figure(1, figsize=(6, 5))
 M= 64
@@ -30,4 +30,3 @@ print powerX
 
 plt.tight_layout()
 plt.savefig('power.png')
-

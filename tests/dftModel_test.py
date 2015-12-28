@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.signal import get_window
+
 from smst.models import dft
 
 def test_simple_sinusoid():

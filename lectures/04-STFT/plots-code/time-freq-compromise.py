@@ -1,15 +1,15 @@
-import numpy as np
-import time
-
-from smst.models import stft
-import smst.utils as utils
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
+import numpy as np
 from scipy.fftpack import fft
-import math
+from scipy.signal import hamming
+
+
+from smst import utils
+from smst.models import stft
 
 (fs, x) = utils.wavread('../../../sounds/piano.wav')
 

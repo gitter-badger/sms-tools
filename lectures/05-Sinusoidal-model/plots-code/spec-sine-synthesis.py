@@ -1,13 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import os, functools, time
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
 
 M = 255
 N = 4096
@@ -61,4 +60,3 @@ plt.title ('y2')
 
 plt.tight_layout()
 plt.savefig('spec-sine-synthesis.png')
-

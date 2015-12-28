@@ -1,13 +1,14 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time
-import math
 
-import smst.utils as utils
+
+from smst import utils
 from smst.models import dft
+
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 w = np.hamming(801)
 N = 2048
@@ -33,4 +34,3 @@ plt.title ('pX; Hamming window, N=2048')
 
 plt.tight_layout()
 plt.savefig('oboe-spectrum-hamming-2.png')
-

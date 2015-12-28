@@ -1,17 +1,13 @@
-import numpy as np
+import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming
-import os
-import essentia.standard as ess
 
-
-
-import smst.utils as utils
+from smst import utils
 from smst.models import stft
-
 
 def f0Yin(x, N, H, minf0, maxf0):
   # fundamental frequency detection using the Yin algorithm
@@ -60,4 +56,3 @@ if __name__ == '__main__':
   plt.tight_layout()
   plt.savefig('f0Yin.png')
   utils.wavwrite(yf0, fs, 'f0Yin.wav')
-  

@@ -1,12 +1,13 @@
 # GUI frame for the hpsTransformations_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
+import numpy as np
 import os
 from scipy.io.wavfile import read
-import numpy as np
-import hpsTransformations_function as hT
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from smst import utils
+from . import hpsTransformations_function as hT
 
 class HpsTransformations_frame:
 

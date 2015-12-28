@@ -1,15 +1,14 @@
+import essentia.standard as ess
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
-import time
-import essentia.standard as ess
 
 
+from smst import utils
 
-import smst.utils as utils
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 
 M = 500
@@ -37,4 +36,3 @@ plt.ylabel('correlation')
 
 plt.tight_layout()
 plt.savefig('oboe-autocorrelation.png')
-

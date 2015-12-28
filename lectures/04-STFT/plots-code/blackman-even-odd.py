@@ -3,8 +3,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, fftshift
 from scipy import signal
+from scipy.fftpack import fft, fftshift
 
 M = 32
 N = 128
@@ -66,4 +66,3 @@ plt.title('pW2')
 
 plt.tight_layout()
 plt.savefig('blackman-even-odd.png')
-

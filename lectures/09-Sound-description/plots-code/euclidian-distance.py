@@ -1,11 +1,8 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-import os, sys
-
+import numpy as np
 
 def eucDist(vec1, vec2):
   return np.sqrt(np.sum(np.power(np.array(vec1) - np.array(vec2), 2)))
@@ -24,4 +21,3 @@ plt.xlabel('second dimension', fontsize =16)
 
 plt.tight_layout()
 plt.savefig('euclidian-distance.png')
-

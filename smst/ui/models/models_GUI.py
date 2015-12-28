@@ -1,15 +1,15 @@
 from Tkinter import *
-from ..notebook import *   # window with tabs
 
-from dftModel_GUI_frame import *
-from stftModel_GUI_frame import *
-from sineModel_GUI_frame import *
-from harmonicModel_GUI_frame import *
-from stochasticModel_GUI_frame import *
-from sprModel_GUI_frame import *
-from spsModel_GUI_frame import *
-from hprModel_GUI_frame import *
-from hpsModel_GUI_frame import *
+from ..notebook import notebook   # window with tabs
+from .dftModel_GUI_frame import DftModel_frame
+from .stftModel_GUI_frame import StftModel_frame
+from .sineModel_GUI_frame import SineModel_frame
+from .harmonicModel_GUI_frame import HarmonicModel_frame
+from .stochasticModel_GUI_frame import StochasticModel_frame
+from .sprModel_GUI_frame import SprModel_frame
+from .spsModel_GUI_frame import SpsModel_frame
+from .hprModel_GUI_frame import HprModel_frame
+from .hpsModel_GUI_frame import HpsModel_frame
 
 def main():
     root = Tk( )

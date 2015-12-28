@@ -1,14 +1,13 @@
-import numpy as np
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import math
-import os, functools, time
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/carnatic.wav')
 pin = 1.4*fs
@@ -37,4 +36,3 @@ plt.title ('pX')
 
 plt.tight_layout()
 plt.savefig('carnatic-spectrum.png')
-

@@ -43,23 +43,25 @@ smst.ui.demo_sound_path = lambda file_name: os.path.join('../sounds', file_name)
 
 # TODO: try to make the module handing a bit less verbose
 
-from smst.ui.models import \
-    dftModel_function, \
-    stftModel_function, \
-    harmonicModel_function, \
-    hprModel_function, \
-    hpsModel_function, \
-    sineModel_function, \
-    sprModel_function, \
-    spsModel_function, \
+from smst.ui.models import (
+    dftModel_function,
+    stftModel_function,
+    harmonicModel_function,
+    hprModel_function,
+    hpsModel_function,
+    sineModel_function,
+    sprModel_function,
+    spsModel_function,
     stochasticModel_function
+)
 
-from smst.ui.transformations import \
-    harmonicTransformations_function, \
-    hpsMorph_function, \
-    sineTransformations_function, \
-    stftMorph_function, \
+from smst.ui.transformations import (
+    harmonicTransformations_function,
+    hpsMorph_function,
+    sineTransformations_function,
+    stftMorph_function,
     stochasticTransformations_function
+)
 
 modules = {
     'dftModel_function': dftModel_function,

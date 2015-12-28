@@ -1,9 +1,9 @@
-import numpy as np
-from scipy import signal
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy import signal
 
 plt.figure(1, figsize=(9.5, 6))
 

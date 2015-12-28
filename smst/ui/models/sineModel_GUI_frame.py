@@ -1,11 +1,12 @@
 # GUI frame for the sineModel_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
-import sineModel_function
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from . import sineModel_function
+from smst import utils
 
 class SineModel_frame:
 

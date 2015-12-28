@@ -1,9 +1,10 @@
-from Tkinter import *
-import tkFileDialog, tkMessageBox
 import os
 from scipy.io.wavfile import read
-import spsModel_function
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from . import spsModel_function
+from smst import utils
 
 class SpsModel_frame:
 

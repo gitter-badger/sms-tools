@@ -1,12 +1,12 @@
 # function to call the main analysis/synthesis functions in software/models/sprModel.py
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import os
 from scipy.signal import get_window
-import smst.utils as utils
-from smst.models import spr
-from smst.models import stft
+
+from smst import utils
+from smst.models import spr, stft
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=2048, t=-80,

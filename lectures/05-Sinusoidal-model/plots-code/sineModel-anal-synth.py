@@ -1,13 +1,14 @@
-import numpy as np
+
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import functools, time
 
+
+from smst import utils
 from smst.models import sine
-import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/bendir.wav'))
 x1 = x[0:50000]

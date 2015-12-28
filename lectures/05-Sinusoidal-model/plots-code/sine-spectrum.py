@@ -1,14 +1,13 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time
-import math
 
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/sine-440.wav')
 M = 400
@@ -40,4 +39,3 @@ plt.title ('pX')
 
 plt.tight_layout()
 plt.savefig('sine-spectrum.png')
-

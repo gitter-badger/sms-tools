@@ -1,18 +1,13 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, resample
+import numpy as np
 from scipy.fftpack import fft, ifft
-import time
-import os
+from scipy.signal import hamming, hanning, resample
 
-
-
-import smst.utils as utils
-from smst.models import stochastic
-from smst.models import stft
+from smst import utils
+from smst.models import stft, stochastic
 
 (fs, x) = utils.wavread('../../../sounds/ocean.wav')
 w = np.hamming(512)
@@ -53,4 +48,3 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.tight_layout()
 plt.savefig('stochasticModelAnalSynth.png')
 utils.wavwrite(y, fs, 'ocean-synthesis.wav')
-

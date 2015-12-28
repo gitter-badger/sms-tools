@@ -1,14 +1,12 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
-import os, functools, time
 
-from smst.models import sine
-from smst.models import stft
-import smst.utils as utils
+from smst import utils
+from smst.models import sine, stft
 
 plt.figure(1, figsize=(9, 6))
 plt.subplot(211)
@@ -68,4 +66,3 @@ plt.title('mX + sine frequencies (vignesh.wav)')
 
 plt.tight_layout()
 plt.savefig('monophonic-polyphonic.png')
-

@@ -1,17 +1,14 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
+import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
-import os, functools, time, math
 from scipy.interpolate import interp1d
+from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst.models import sine
-from smst.models import stft
-from smst.models import sine
-import smst.utils as utils
+from smst import utils
+from smst.models import sine, stft
 
 (fs, x) = utils.wavread('../../../sounds/mridangam.wav')
 x1 = x[:int(1.49*fs)]
@@ -68,4 +65,3 @@ plt.title('output magnitude sines')
 
 plt.tight_layout()
 plt.savefig('sineModelTimeScale-functions.png')
-

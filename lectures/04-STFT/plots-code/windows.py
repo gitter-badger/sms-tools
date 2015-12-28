@@ -1,14 +1,14 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time
-
-from smst.models import dft
-import smst.utils as utils
 from scipy.fftpack import fft, ifft
-import math
+
+
+from smst import utils
+from smst.models import dft
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 N = 512

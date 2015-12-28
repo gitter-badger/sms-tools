@@ -1,16 +1,11 @@
-import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time
 
-
-
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
-
 
 (fs, x) = utils.wavread('../../../sounds/orchestra.wav')
 N = 2048
@@ -62,4 +57,3 @@ plt.title('pY')
 
 plt.tight_layout()
 plt.savefig('FFT-filtering.png')
-

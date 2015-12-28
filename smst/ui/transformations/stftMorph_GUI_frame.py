@@ -1,12 +1,13 @@
 # GUI frame for the stftMorph_function.py
 
-from Tkinter import *
-import tkFileDialog, tkMessageBox
+import numpy as np
 import os
 from scipy.io.wavfile import read
-import numpy as np
-import stftMorph_function as sT
-import smst.utils as utils
+from Tkinter import *
+import tkFileDialog, tkMessageBox
+
+from smst import utils
+from . import stftMorph_function as sT
 
 class StftMorph_frame:
 

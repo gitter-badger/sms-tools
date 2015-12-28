@@ -1,10 +1,11 @@
 # function to call the main analysis/synthesis functions in software/models/stochasticModel.py
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import os
 from scipy.signal import get_window
-import smst.utils as utils
+
+from smst import utils
 from smst.models import stochastic
 from .. import demo_sound_path
 

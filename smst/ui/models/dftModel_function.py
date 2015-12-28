@@ -3,7 +3,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
-import smst.utils as utils
+
+from smst import utils
 from smst.models import dft
 from .. import demo_sound_path
 

@@ -1,13 +1,12 @@
-import numpy as np
+import json
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import numpy as np
 import os
-import json
 from scipy.cluster.vq import vq, kmeans, whiten
-
 
 def fetchDataDetails(inputDir, descExt = '.json'):
   dataDetails = {}

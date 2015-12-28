@@ -1,9 +1,9 @@
-import numpy as np
-from scipy.fftpack import fft
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.fftpack import fft
 import time
 
 timeDFT = np.array([])
@@ -42,4 +42,3 @@ plt.xticks(np.arange(len(Ns)), Ns)
 
 plt.tight_layout()
 plt.savefig('dft-fft.png')
-

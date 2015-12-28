@@ -1,11 +1,11 @@
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
-from scipy.signal import triang
 from scipy.fftpack import fft, fftshift
+from scipy.signal import triang
 
 M = 127
 N = 128

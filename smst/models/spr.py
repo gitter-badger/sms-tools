@@ -1,14 +1,14 @@
 # functions that implement analysis and synthesis of sounds using the Sinusoidal plus Residual Model
 # (for example usage check the examples models_interface)
 
+import math
 import numpy as np
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft
-import math
-import dft
-import sine
+
+from . import dft, sine
 from .. import utils
-  
+
 def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
 	"""
 	Analysis of a sound using the sinusoidal plus residual model

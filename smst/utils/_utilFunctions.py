@@ -1,10 +1,14 @@
+import copy
+import math
 import numpy as np
-from scipy.signal import resample, blackmanharris, triang
+import os
 from scipy.fftpack import fft, ifft, fftshift
-import math, copy, sys, os
+from scipy.signal import resample, blackmanharris, triang
 from scipy.io.wavfile import write, read
-from sys import platform
 import subprocess
+import sys
+from sys import platform
+
 try:
 	import utilFunctions_C.utilFunctions_C as UF_C
 except ImportError:

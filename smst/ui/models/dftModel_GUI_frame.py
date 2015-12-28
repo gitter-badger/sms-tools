@@ -1,10 +1,11 @@
 # GUI frame for the dftModel_function.py
 
+from scipy.io.wavfile import read
 from Tkinter import *
 import tkFileDialog, tkMessageBox
-from scipy.io.wavfile import read
-import dftModel_function
-import smst.utils as utils
+
+from . import dftModel_function
+from smst import utils
 
 class DftModel_frame:
 

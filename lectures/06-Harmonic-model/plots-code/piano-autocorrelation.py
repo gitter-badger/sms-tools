@@ -4,12 +4,12 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-import time
+
 import essentia.standard as ess
 
 
 
-import smst.utils as utils
+from smst import utils
 (fs, x) = utils.wavread('../../../sounds/piano.wav')
 start = 13860
 M = 800

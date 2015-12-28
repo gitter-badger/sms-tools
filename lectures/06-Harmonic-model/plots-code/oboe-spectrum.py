@@ -1,14 +1,13 @@
+import math
 import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
-import math
-import os, functools, time
 
+from smst import utils
 from smst.models import dft
-import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 w = np.blackman(651)
@@ -37,4 +36,3 @@ plt.title ('pX')
 
 plt.tight_layout()
 plt.savefig('oboe-spectrum.png')
-

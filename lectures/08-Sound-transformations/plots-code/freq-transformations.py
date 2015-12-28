@@ -1,12 +1,8 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import os
-
-from smst.models import dft
-import smst.utils as utils
+import numpy as np
 
 f0 = 1.0
 harms = np.arange(1,6)*f0

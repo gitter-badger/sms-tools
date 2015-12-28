@@ -1,4 +1,3 @@
-import csv, os
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -7,8 +6,8 @@ from essentia.standard import *
 from pylab import *
 from numpy import *
 
+from smst import utils
 from smst.models import stft
-import smst.utils as utils
 
 filename = '../../../sounds/carnatic.wav'
 hopSize = 128

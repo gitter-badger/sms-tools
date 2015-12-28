@@ -1,14 +1,13 @@
 # functions that implement analysis and synthesis of sounds using the Sinusoidal plus Stochastic Model
 # (for example usage check the models_interface directory)
 
+import math
 import numpy as np
 from scipy.signal import resample, blackmanharris, triang, hanning
 from scipy.fftpack import fft, ifft, fftshift
-import math
+
+from . import dft, sine, stochastic
 from .. import utils
-import dft
-import sine
-import stochastic
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
 	"""

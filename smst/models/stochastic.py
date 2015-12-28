@@ -5,6 +5,7 @@ import numpy as np
 from scipy.interpolate import interp1d
 from scipy.signal import hanning, resample
 from scipy.fftpack import fft, ifft
+
 from .. import utils
 
 def fromAudio(x, H, N, stocf):

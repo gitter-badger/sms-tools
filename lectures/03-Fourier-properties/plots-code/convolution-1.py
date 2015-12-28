@@ -3,12 +3,11 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import time, os
 from scipy.fftpack import fft, ifft, fftshift
-import math
 
-import smst.utils as utils
+from smst import utils
 from smst.models import dft
+
 (fs, x) = utils.wavread('../../../sounds/ocean.wav')
 (fs, x2) = utils.wavread('../../../sounds/impulse-response.wav')
 x1 = x[40000:44096]

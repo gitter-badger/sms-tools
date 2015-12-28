@@ -1,13 +1,10 @@
-import numpy as np
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-import os
-from scipy.cluster.vq import vq, kmeans, whiten
+import numpy as np
 from numpy import random
-import pickle
+from scipy.cluster.vq import vq, kmeans, whiten
 
 n = 30
 features = np.hstack((np.array([np.random.normal(-2,1.1,n), np.random.normal(-2,1.1,n)]), np.array([np.random.normal(2,1.5,n), np.random.normal(2,1.5,n)])))
