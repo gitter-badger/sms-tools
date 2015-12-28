@@ -22,8 +22,8 @@ smoothf = .2
 balancef = 0.5
 y = stft.morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
 mX2 = stochastic.fromAudio(x2,H1,H1*2, smoothf)
-mX,pX = stft.stftAnal(x1, w1, N1, H1)
-mY,pY = stft.stftAnal(y, w1, N1, H1)
+mX,pX = stft.fromAudio(x1, w1, N1, H1)
+mY,pY = stft.fromAudio(y, w1, N1, H1)
 maxplotfreq = 10000.0
 
 plt.figure(1, figsize=(12, 9))

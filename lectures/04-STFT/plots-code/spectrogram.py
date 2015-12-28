@@ -16,7 +16,7 @@ import math
 w = np.hamming(1001)
 N = 1024
 H = 256
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 
 plt.figure(1, figsize=(9.5, 6))
 

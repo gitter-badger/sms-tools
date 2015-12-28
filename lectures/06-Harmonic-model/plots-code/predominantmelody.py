@@ -54,7 +54,7 @@ pitch, confidence = run_pitch_contours_melody(contours_bins,
 
 figure(1, figsize=(9, 6))
 
-mX, pX = stft.stftAnal(audio, hamming(frameSize), frameSize, hopSize)
+mX, pX = stft.fromAudio(audio, hamming(frameSize), frameSize, hopSize)
 maxplotfreq = 3000.0
 numFrames = int(mX[:,0].size)
 frmTime = hopSize*arange(numFrames)/float(sampleRate)

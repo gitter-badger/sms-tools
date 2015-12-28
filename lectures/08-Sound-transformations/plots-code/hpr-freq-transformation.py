@@ -30,7 +30,7 @@ H = 128
 w = get_window(window, M)
 hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
-mXr, pXr = stft.stftAnal(xr, w, N, H)
+mXr, pXr = stft.fromAudio(xr, w, N, H)
 
 freqScaling = np.array([0, 1.5, 1, 1.5])
 freqStretching = np.array([0, 1.1, 1, 1.1])

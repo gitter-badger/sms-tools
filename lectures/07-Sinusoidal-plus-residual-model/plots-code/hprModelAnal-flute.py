@@ -27,10 +27,10 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns/4
 
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
-mXr, pXr = stft.stftAnal(xr, hamming(Ns), Ns, H)
+mXr, pXr = stft.fromAudio(xr, hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
 plt.figure(1, figsize=(9, 7))

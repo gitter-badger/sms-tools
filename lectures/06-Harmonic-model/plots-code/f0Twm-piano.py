@@ -25,7 +25,7 @@ H = 128
 x1 = x[1.5*fs:1.8*fs]
 
 plt.figure(1, figsize=(9, 7))
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 f0 = harmonic.findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et)
 f0 = utils.cleaningTrack(f0, 5)
 yf0 = utils.sinewaveSynth(f0, .8, H, fs)

@@ -18,7 +18,7 @@ plt.figure(1, figsize=(9.5, 6))
 w = np.hamming(256)
 N = 256
 H = 128
-mX1, pX1 = stft.stftAnal(x, w, N, H)
+mX1, pX1 = stft.fromAudio(x, w, N, H)
 plt.subplot(211)
 numFrames = int(mX1[:,0].size)
 frmTime = H*np.arange(numFrames)/float(fs)
@@ -30,7 +30,7 @@ plt.autoscale(tight=True)
 w = np.hamming(1024)
 N = 1024
 H = 128
-mX2, pX2 = stft.stftAnal(x, w, N, H)
+mX2, pX2 = stft.fromAudio(x, w, N, H)
 
 plt.subplot(212)
 numFrames = int(mX2[:,0].size)

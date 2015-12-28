@@ -22,7 +22,7 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
@@ -49,7 +49,7 @@ minSineDur = .1
 maxnSines = 200
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0

@@ -13,7 +13,7 @@ from scipy.signal import hamming
 w = np.hamming(1024)
 N = 1024
 H = 512
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 y = stft.stftSynth(mX, pX, w.size, H)
 
 plt.figure(1, figsize=(9.5, 7))

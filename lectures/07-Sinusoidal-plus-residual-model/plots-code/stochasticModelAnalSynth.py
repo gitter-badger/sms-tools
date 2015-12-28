@@ -21,7 +21,7 @@ H = 256
 stocf = .1
 mYst = stochastic.fromAudio(x, H, N, stocf)
 y = stochastic.toAudio(mYst, H, N)
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(411)

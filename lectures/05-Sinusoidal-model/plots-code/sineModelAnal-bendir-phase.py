@@ -18,7 +18,7 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 10
 freqDevSlope = 0.001
-mX, pX = stft.stftAnal(x, w, N, H)
+mX, pX = stft.fromAudio(x, w, N, H)
 tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 plt.figure(1, figsize=(9.5, 7))
