@@ -1,10 +1,11 @@
 import math
+
 import numpy as np
+
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
 
 from smst.utils import audio
 from smst.models import dft

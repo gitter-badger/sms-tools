@@ -8,6 +8,7 @@ from scipy.fftpack import fft, ifft
 
 from ..utils.math import isPower2
 
+
 def fromAudio(x, H, N, stocf):
 	"""
 	Stochastic analysis of a sound

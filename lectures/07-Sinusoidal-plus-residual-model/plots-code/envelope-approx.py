@@ -4,7 +4,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, ifft
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
+from scipy.signal import resample
 
 from smst.models import dft
 from smst.utils import audio

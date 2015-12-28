@@ -3,9 +3,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, ifft, fftshift
-from scipy.interpolate import interp1d
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
 from smst.utils import audio
 from smst.models import sine, stft

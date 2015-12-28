@@ -1,13 +1,14 @@
 # function to call the main analysis/synthesis functions in software/models/stochasticModel.py
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import stochastic
 from .. import demo_sound_path
+
 
 def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
 	interactive=True, plotFile=False):

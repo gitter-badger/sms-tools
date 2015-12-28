@@ -2,12 +2,14 @@
 # (for example usage check the examples models_interface)
 
 import math
+
 import numpy as np
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft
 
 from . import dft, sine
 from ..utils import peaks, residual, synth
+
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
 	"""

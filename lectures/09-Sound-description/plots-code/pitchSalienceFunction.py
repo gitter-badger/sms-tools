@@ -1,5 +1,5 @@
-from essentia import *
-from essentia.standard import *
+import essentia
+import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -13,18 +13,18 @@ M = 2048
 N = 2*M
 guessUnvoiced = True
 
-window = Windowing(type='hann', zeroPadding=N-M)
-spectrum = Spectrum(size=N)
-spectralPeaks = SpectralPeaks(minFrequency=50, maxFrequency=10000, maxPeaks=100, sampleRate=fs,
+window = ess.Windowing(type='hann', zeroPadding=N-M)
+spectrum = ess.Spectrum(size=N)
+spectralPeaks = ess.SpectralPeaks(minFrequency=50, maxFrequency=10000, maxPeaks=100, sampleRate=fs,
 				magnitudeThreshold=0, orderBy="magnitude")
-pitchSalienceFunction = PitchSalienceFunction()
-pitchSalienceFunctionPeaks = PitchSalienceFunctionPeaks(minFrequency=100, maxFrequency=300)
+pitchSalienceFunction = ess.PitchSalienceFunction()
+pitchSalienceFunctionPeaks = ess.PitchSalienceFunctionPeaks(minFrequency=100, maxFrequency=300)
 
-x = MonoLoader(filename = filename, sampleRate = fs)()
-x = EqualLoudness()(x)
+x = ess.MonoLoader(filename = filename, sampleRate = fs)()
+x = ess.EqualLoudness()(x)
 totalSaliences = []
 
-for frame in FrameGenerator(x, frameSize=M, hopSize=H):
+for frame in ess.FrameGenerator(x, frameSize=M, hopSize=H):
     frame = window(frame)
     mX = spectrum(frame)
     peak_frequencies, peak_magnitudes = spectralPeaks(mX)

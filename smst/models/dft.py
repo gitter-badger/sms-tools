@@ -2,6 +2,7 @@
 # (for example usage check dftModel_function.py in the models_interface directory)
 
 import math
+
 import numpy as np
 from scipy.fftpack import fft, ifft
 

@@ -8,6 +8,7 @@ from smst.utils import audio, files
 from smst.models import dft
 from .. import demo_sound_path
 
+
 def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511, N = 1024, time = .2,
 	interactive=True, plotFile=False):
 	"""

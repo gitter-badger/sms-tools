@@ -4,7 +4,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
-from scipy.signal import hamming
 
 plt.figure(1, figsize=(9.5, 6))
 M= 64

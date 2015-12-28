@@ -2,12 +2,14 @@
 # (for example usage check the models_interface directory)
 
 import math
+
 import numpy as np
 from scipy.signal import blackmanharris, triang
-from scipy.fftpack import fft, ifft, fftshift
+from scipy.fftpack import fft, ifft
 
 from . import dft, harmonic, sine
 from ..utils import residual
+
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope):
 	"""Analysis of a sound using the harmonic plus residual model

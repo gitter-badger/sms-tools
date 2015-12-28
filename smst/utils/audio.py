@@ -1,8 +1,9 @@
 import copy
-import numpy as np
 import os
 import subprocess
 import sys
+
+import numpy as np
 from scipy.io.wavfile import write, read
 
 from .files import ensureDirectory

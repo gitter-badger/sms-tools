@@ -1,5 +1,6 @@
-import os, re, json
-from collections import namedtuple
+import os
+import re
+import json
 
 try: #python 3
     from urllib.request import urlopen, FancyUrlOpener, Request

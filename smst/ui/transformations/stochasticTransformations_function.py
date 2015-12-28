@@ -1,13 +1,14 @@
 # function call to the transformation function of relevance to the stochasticModel
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import stochastic
 from .. import demo_sound_path
+
 
 def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.array([0, 0, 1, 2]),
 	interactive=True, plotFile=False):

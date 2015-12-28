@@ -1,12 +1,13 @@
 # GUI frame for the stftModel_function.py
 
 import os
-from scipy.io.wavfile import read
 from Tkinter import *
-import tkFileDialog, tkMessageBox
+import tkFileDialog
+import tkMessageBox
 
 from . import stftModel_function
 from smst.utils import audio
+
 
 class StftModel_frame:
 	def __init__(self, parent):

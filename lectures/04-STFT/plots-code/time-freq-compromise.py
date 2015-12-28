@@ -1,11 +1,8 @@
-import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft
-from scipy.signal import hamming
 
 from smst.utils import audio
 from smst.models import stft

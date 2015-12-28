@@ -4,8 +4,8 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, ifft, fftshift
-from scipy.signal import hamming, triang, blackmanharris, resample
+from scipy.fftpack import fft, fftshift
+from scipy.signal import blackmanharris, resample
 
 from smst.utils import audio, peaks, synth
 from smst.models import dft, harmonic

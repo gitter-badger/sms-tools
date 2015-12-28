@@ -1,13 +1,15 @@
 # function to call the main analysis/synthesis functions in software/models/stft.py
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import stft
 from .. import demo_sound_path
+
 
 def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024, N = 1024, H = 512,
 	interactive=True, plotFile=False):

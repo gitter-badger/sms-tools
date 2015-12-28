@@ -1,13 +1,13 @@
 # GUI frame for the stftMorph_function.py
 
-import numpy as np
 import os
-from scipy.io.wavfile import read
 from Tkinter import *
-import tkFileDialog, tkMessageBox
+import tkFileDialog
+import tkMessageBox
 
 from smst.utils import audio
 from . import stftMorph_function as sT
+
 
 class StftMorph_frame:
 

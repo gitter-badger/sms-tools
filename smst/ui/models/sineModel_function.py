@@ -1,13 +1,15 @@
 # function to call the main analysis/synthesis functions in software/models/sineModel.py
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import sine
 from .. import demo_sound_path
+
 
 def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02,
 	maxnSines=150, freqDevOffset=10, freqDevSlope=0.001,

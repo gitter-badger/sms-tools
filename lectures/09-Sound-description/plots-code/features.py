@@ -4,7 +4,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
-import numpy as np
 import os
 
 def fetchDataDetails(inputDir, descExt = '.json'):

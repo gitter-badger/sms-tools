@@ -1,13 +1,15 @@
 # function call to the transformation functions of relevance for the sineModel
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import sine
 from .. import demo_sound_path
+
 
 def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801, N=2048, t=-90,
 	minSineDur=0.01, maxnSines=150, freqDevOffset=20, freqDevSlope=0.02,

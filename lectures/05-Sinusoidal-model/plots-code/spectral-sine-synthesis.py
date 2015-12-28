@@ -3,11 +3,10 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, ifft, fftshift
-from scipy.signal import hamming, triang, blackmanharris
+from scipy.fftpack import ifft, fftshift
+from scipy.signal import blackmanharris
 
-from smst.utils import audio, synth
-from smst.models import sine, stft
+from smst.utils import synth
 
 Ns = 256
 hNs = Ns/2

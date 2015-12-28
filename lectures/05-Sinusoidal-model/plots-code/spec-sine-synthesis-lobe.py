@@ -4,10 +4,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, ifft
-from scipy.signal import hamming, triang, blackmanharris
-
-from smst.utils import audio
-from smst.models import sine, stft
+from scipy.signal import hamming, blackmanharris
 
 M = 256
 N = 256

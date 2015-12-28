@@ -3,7 +3,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import hamming, triang, blackmanharris
+from scipy.signal import triang
 
 triangle = np.zeros (70)
 triangle[1:32] = triang (31)

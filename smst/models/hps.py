@@ -2,13 +2,15 @@
 # (for example usage check the examples models_interface)
 
 import math
+
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.signal import resample, blackmanharris, triang, hanning
-from scipy.fftpack import fft, ifft, fftshift
+from scipy.fftpack import fft, ifft
 
 from . import dft, harmonic, sine, stochastic
 from ..utils import peaks, residual, synth
+
 
 def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
 	"""

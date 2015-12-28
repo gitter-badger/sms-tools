@@ -1,13 +1,15 @@
 # GUI frame for the hpsMorph_function.py
 
-import numpy as np
 import os
-from scipy.io.wavfile import read
 from Tkinter import *
-import tkFileDialog, tkMessageBox
+import tkFileDialog
+import tkMessageBox
+
+import numpy as np
 
 from smst.utils import audio
 from . import hpsMorph_function as hM
+
 
 class HpsMorph_frame:
 

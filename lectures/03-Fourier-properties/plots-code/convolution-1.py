@@ -3,7 +3,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, ifft, fftshift
+from scipy.fftpack import fft
 
 from smst.utils import audio
 from smst.models import dft

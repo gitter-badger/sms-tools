@@ -1,13 +1,15 @@
 # function call to the transformation functions of relevance for the hpsModel
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 from scipy.signal import get_window
 
 from smst.utils import audio, files
 from smst.models import sine, harmonic
 from .. import demo_sound_path
+
 
 def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=2048, t=-90,
 	minSineDur=0.1, nH=100, minf0=130, maxf0=300, f0et=7, harmDevSlope=0.01,

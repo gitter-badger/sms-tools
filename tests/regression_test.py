@@ -26,10 +26,11 @@ from __future__ import print_function
 import argparse
 import glob
 from hashlib import md5
-import numpy as np
 import os
 import shutil
-import sys
+
+import numpy as np
+
 
 # matplotlib without a GUI
 import matplotlib as mpl

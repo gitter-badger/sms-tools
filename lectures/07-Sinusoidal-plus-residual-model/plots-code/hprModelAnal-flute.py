@@ -3,7 +3,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
+from scipy.signal import hamming
 
 from smst.models import harmonic, stft
 from smst.utils import audio, residual

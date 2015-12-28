@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
-from scipy.signal import hamming, triang, blackmanharris
+from scipy.signal import blackmanharris
 
 from smst.models import dft, harmonic
 from smst.utils import audio, peaks, synth

@@ -2,10 +2,12 @@
 # (for example usage check stft_function.py in the models_interface directory)
 
 import math
+
 import numpy as np
 from scipy.signal import resample
 
 from . import dft
+
 
 def reconstruct(x, w, N, H):
 	"""

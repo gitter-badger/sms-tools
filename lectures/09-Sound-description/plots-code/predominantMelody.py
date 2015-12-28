@@ -1,5 +1,4 @@
-from essentia import *
-from essentia.standard import *
+import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
@@ -12,8 +11,8 @@ H = 128
 M = 2048
 
 
-predominantMelody = PredominantPitchMelodia(frameSize=M, hopSize=H)
-x = MonoLoader(filename = filename, sampleRate = fs)()
+predominantMelody = ess.PredominantPitchMelodia(frameSize=M, hopSize=H)
+x = ess.MonoLoader(filename = filename, sampleRate = fs)()
 
 pitch, pitchConfidence = predominantMelody(x)
 

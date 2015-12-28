@@ -2,6 +2,7 @@
 # (for example usage check the examples models_interface)
 
 import math
+
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.signal import blackmanharris, triang
@@ -9,6 +10,7 @@ from scipy.fftpack import ifft, fftshift
 
 from . import dft
 from ..utils import peaks, synth
+
 
 def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
 	"""

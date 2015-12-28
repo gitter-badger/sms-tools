@@ -1,5 +1,4 @@
 import essentia.standard as ess
-import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')

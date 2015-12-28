@@ -3,7 +3,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import get_window
 
 f = 10000.0 * np.arange(0,100)/100.0
 m = 2595 * np.log10(1 + f/700.0)

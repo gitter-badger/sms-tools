@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
 import os
-from scipy.cluster.vq import vq, kmeans, whiten
+from scipy.cluster.vq import kmeans, whiten
 
 def fetchDataDetails(inputDir, descExt = '.json'):
   dataDetails = {}

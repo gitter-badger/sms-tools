@@ -2,13 +2,15 @@
 # (for example usage check the models_interface directory)
 
 import math
+
 import numpy as np
 from scipy.interpolate import interp1d
-from scipy.signal import blackmanharris, triang, resample
+from scipy.signal import blackmanharris, triang
 from scipy.fftpack import ifft
 
 from . import dft, sine
 from ..utils import peaks, synth
+
 
 def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""

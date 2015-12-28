@@ -3,8 +3,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft, ifft
-from scipy.signal import hamming, hanning, resample
 
 from smst.utils import audio
 from smst.models import stft, stochastic

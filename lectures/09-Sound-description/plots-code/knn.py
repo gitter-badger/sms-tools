@@ -2,10 +2,7 @@
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
 import numpy as np
-from numpy import random
-import os
 from scipy.stats import mode
 
 def eucDist(vec1, vec2):

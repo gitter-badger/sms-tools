@@ -3,8 +3,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from numpy import random
-from scipy.cluster.vq import vq, kmeans, whiten
+from scipy.cluster.vq import kmeans
 
 n = 30
 features = np.hstack((np.array([np.random.normal(-2,1.1,n), np.random.normal(-2,1.1,n)]), np.array([np.random.normal(2,1.5,n), np.random.normal(2,1.5,n)])))

@@ -1,8 +1,8 @@
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
-from essentia import *
-from essentia.standard import *
+import essentia
+import essentia.standard as ess
 from pylab import *
 from numpy import *
 
@@ -14,26 +14,26 @@ frameSize = 2048
 sampleRate = 44100
 guessUnvoiced = True
 
-run_windowing = Windowing(type='hann', zeroPadding=3*frameSize) # Hann window with x4 zero padding
-run_spectrum = Spectrum(size=frameSize * 4)
-run_spectral_peaks = SpectralPeaks(minFrequency=50,
+run_windowing = ess.Windowing(type='hann', zeroPadding=3*frameSize) # Hann window with x4 zero padding
+run_spectrum = ess.Spectrum(size=frameSize * 4)
+run_spectral_peaks = ess.SpectralPeaks(minFrequency=50,
                                    maxFrequency=10000,
                                    maxPeaks=100,
                                    sampleRate=sampleRate,
                                    magnitudeThreshold=0,
                                    orderBy="magnitude")
-run_pitch_salience_function = PitchSalienceFunction(magnitudeThreshold=60)
-run_pitch_salience_function_peaks = PitchSalienceFunctionPeaks(minFrequency=90, maxFrequency=800)
-run_pitch_contours = PitchContours(hopSize=hopSize, peakFrameThreshold=0.7)
-run_pitch_contours_melody = PitchContoursMelody(guessUnvoiced=guessUnvoiced,
+run_pitch_salience_function = ess.PitchSalienceFunction(magnitudeThreshold=60)
+run_pitch_salience_function_peaks = ess.PitchSalienceFunctionPeaks(minFrequency=90, maxFrequency=800)
+run_pitch_contours = ess.PitchContours(hopSize=hopSize, peakFrameThreshold=0.7)
+run_pitch_contours_melody = ess.PitchContoursMelody(guessUnvoiced=guessUnvoiced,
                                                 hopSize=hopSize)
 
-pool = Pool();
+pool = essentia.Pool();
 
-audio = MonoLoader(filename = filename)()
-audio = EqualLoudness()(audio)
+audio = ess.MonoLoader(filename = filename)()
+audio = ess.EqualLoudness()(audio)
 
-for frame in FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize):
+for frame in ess.FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize):
     frame = run_windowing(frame)
     spectrum = run_spectrum(frame)
     peak_frequencies, peak_magnitudes = run_spectral_peaks(spectrum)

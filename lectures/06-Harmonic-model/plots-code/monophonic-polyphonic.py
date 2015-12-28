@@ -3,7 +3,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import hamming, triang, blackmanharris
 
 from smst.utils import audio
 from smst.models import sine, stft

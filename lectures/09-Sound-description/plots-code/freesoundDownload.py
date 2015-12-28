@@ -1,7 +1,8 @@
-import freesound as fs
 import json
 import os
 import sys
+
+import freesound as fs
 
 descriptors = [ 'lowlevel.spectral_centroid.mean',
                 'lowlevel.spectral_centroid.var',

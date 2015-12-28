@@ -1,12 +1,13 @@
 # GUI frame for the harmonicModel_function.py
 
 import os
-from scipy.io.wavfile import read
 from Tkinter import *
-import tkFileDialog, tkMessageBox
+import tkFileDialog
+import tkMessageBox
 
 from . import harmonicModel_function
 from smst.utils import audio
+
 
 class HarmonicModel_frame:
 

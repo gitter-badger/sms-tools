@@ -4,6 +4,7 @@ from scipy.signal import resample, blackmanharris, triang
 
 import utilFunctions_C.utilFunctions_C as UF_C
 
+
 def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
 	"""
 	Subtract sinusoids from a sound

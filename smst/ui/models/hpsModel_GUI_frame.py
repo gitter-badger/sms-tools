@@ -1,12 +1,13 @@
 # GUI frame for the hprModel_function.py
 
 import os
-from scipy.io.wavfile import read
 from Tkinter import *
-import tkFileDialog, tkMessageBox
+import tkFileDialog
+import tkMessageBox
 
 from . import hpsModel_function
 from smst.utils import audio
+
 
 class HpsModel_frame:
 
