@@ -26,10 +26,10 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'hamming', M = 1024,
 	w = get_window(window, M)
 
 	# compute the magnitude and phase spectrogram
-	mX, pX = stft.stftModelAnal(x, w, N, H)
+	mX, pX = stft.fromAudio(x, w, N, H)
 
 	# perform the inverse stft
-	y = stft.stftModelSynth(mX, pX, M, H)
+	y = stft.toAudio(mX, pX, M, H)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stft.wav'

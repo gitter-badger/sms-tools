@@ -10,7 +10,7 @@ import dft
 import sine
 import stochastic
 
-def spsModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
+def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
 	"""
 	Analysis of a sound using the sinusoidal plus stochastic model
 	x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
@@ -23,13 +23,13 @@ def spsModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDe
 	"""
 
 	# perform sinusoidal analysis
-	tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 	Ns = 512
 	xr = utils.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
-	stocEnv = stochastic.stochasticModelAnal(xr, H, H*2, stocf)            # compute stochastic model of residual
+	stocEnv = stochastic.fromAudio(xr, H, H*2, stocf)            # compute stochastic model of residual
 	return tfreq, tmag, tphase, stocEnv
 
-def spsModelSynth(tfreq, tmag, tphase, stocEnv, N, H, fs):
+def toAudio(tfreq, tmag, tphase, stocEnv, N, H, fs):
 	"""
 	Synthesis of a sound using the sinusoidal plus stochastic model
 	tfreq, tmag, tphase: sinusoidal frequencies, amplitudes and phases; stocEnv: stochastic envelope
@@ -37,13 +37,13 @@ def spsModelSynth(tfreq, tmag, tphase, stocEnv, N, H, fs):
 	returns y: output sound, ys: sinusoidal component, yst: stochastic component
 	"""
 
-	ys = sine.sineModelSynth(tfreq, tmag, tphase, N, H, fs)          # synthesize sinusoids
-	yst = stochastic.stochasticModelSynth(stocEnv, H, H*2)                # synthesize stochastic residual
+	ys = sine.toAudio(tfreq, tmag, tphase, N, H, fs)          # synthesize sinusoids
+	yst = stochastic.toAudio(stocEnv, H, H*2)                # synthesize stochastic residual
 	y = ys[:min(ys.size, yst.size)]+yst[:min(ys.size, yst.size)]   # sum sinusoids and stochastic components
 	return y, ys, yst
 
 
-def spsModel(x, fs, w, N, t, stocf):
+def reconstruct(x, fs, w, N, t, stocf):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal plus stochastic model
 	x: input sound, fs: sampling rate, w: analysis window,
@@ -78,7 +78,7 @@ def spsModel(x, fs, w, N, t, stocf):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                              # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                              # compute dft
 		ploc = utils.peakDetection(mX, t)                              # find peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)          # refine peak values
 		ipfreq = fs*iploc/float(N)                                  # convert peak locations to Hertz

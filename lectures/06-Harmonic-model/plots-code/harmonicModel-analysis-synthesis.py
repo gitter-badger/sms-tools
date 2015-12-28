@@ -23,8 +23,8 @@ Ns = 512
 H = Ns/4
 minSineDur = .1
 harmDevSlope = 0.01
-hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-y = sine.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
+hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+y = sine.toAudio(hfreq, hmag, hphase, Ns, H, fs)
 
 numFrames = int(hfreq[:,0].size)
 frmTime = H*np.arange(numFrames)/float(fs)

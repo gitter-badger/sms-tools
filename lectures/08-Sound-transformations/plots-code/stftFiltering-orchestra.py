@@ -18,7 +18,7 @@ nBins = int(N*2000.0/fs)
 bandpass = (np.hanning(nBins) * 65.0) - 60
 filt = np.zeros(N/2+1)-60
 filt[startBin:startBin+nBins] = bandpass
-y = stft.stftFiltering(x, fs, w, N, H, filt)
+y = stft.filter(x, fs, w, N, H, filt)
 mX,pX = stft.stftAnal(x, w, N, H)
 mY,pY = stft.stftAnal(y, w, N, H)
 

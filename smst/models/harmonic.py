@@ -10,7 +10,7 @@ import dft
 from .. import utils
 import sine
 
-def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
+def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""
 	Fundamental frequency detection of a sound using twm algorithm
 	x: input sound; fs: sampling rate; w: analysis window;
@@ -42,7 +42,7 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	f0stable = 0                                               # initialize f0 stable
 	while pin<pend:
 		x1 = x[pin-hM1:pin+hM2]                                  # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                           # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                           # compute dft
 		ploc = utils.peakDetection(mX, t)                           # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)      # refine peak values
 		ipfreq = fs * iploc/N                                    # convert locations to Hez
@@ -57,7 +57,7 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	return f0
 
 
-def harmonicDetection(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
+def findHarmonics(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
 	"""
 	Detection of the harmonics of a frame from a set of spectral peaks using f0
 	to the ideal harmonic series built on top of a fundamental frequency
@@ -90,7 +90,7 @@ def harmonicDetection(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01
 	return hfreq, hmag, hphase
 
 
-def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
+def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal harmonic model
 	x: input sound, fs: sampling rate, w: analysis window,
@@ -127,7 +127,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N
@@ -137,7 +137,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 			f0stable = f0t                                     # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
+		hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 	#-----synthesis-----
 		Yh = utils.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines
@@ -150,7 +150,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	y = np.delete(y, range(y.size-hM1, y.size))             # add zeros at the end to analyze last sample
 	return y
 
-def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
+def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
 	"""
 	Analysis of a sound using the sinusoidal harmonic model
 	x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512); t: threshold in negative dB,
@@ -177,7 +177,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 	f0stable = 0                                            # initialize f0 stable
 	while pin<=pend:
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N                                 # convert locations to Hz
@@ -187,7 +187,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 			f0stable = f0t                                      # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope) # find harmonics
+		hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope) # find harmonics
 		hfreqp = hfreq
 		if pin == hM1:                                        # first frame
 			xhfreq = np.array([hfreq])
@@ -203,7 +203,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 
 # transformations applied to the harmonics of a sound
 
-def harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs):
+def scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs):
 	"""
 	Frequency scaling of the harmonics of a sound
 	hfreq, hmag: frequencies and magnitudes of input harmonics

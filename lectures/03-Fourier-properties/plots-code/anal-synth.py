@@ -18,8 +18,8 @@ pin = 5000
 hM1 = int(math.floor((w.size+1)/2))
 hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
-mX, pX = dft.dftAnal(x1, w, N)
-y = dft.dftSynth(mX, pX, w.size)*sum(w)
+mX, pX = dft.fromAudio(x1, w, N)
+y = dft.toAudio(mX, pX, w.size)*sum(w)
 
 plt.figure(1, figsize=(9.5, 5.5))
 plt.subplot(4,1,1)

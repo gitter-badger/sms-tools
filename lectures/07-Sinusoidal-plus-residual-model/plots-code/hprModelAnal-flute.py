@@ -28,7 +28,7 @@ Ns = 512
 H = Ns/4
 
 mX, pX = stft.stftAnal(x, w, N, H)
-hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
 mXr, pXr = stft.stftAnal(xr, hamming(Ns), Ns, H)
 

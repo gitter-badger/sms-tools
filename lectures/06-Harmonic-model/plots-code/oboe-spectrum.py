@@ -17,7 +17,7 @@ pin = 5000
 hM1 = int(math.floor((w.size+1)/2))
 hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(311)

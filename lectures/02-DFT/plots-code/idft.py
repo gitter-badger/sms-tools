@@ -12,8 +12,8 @@ k0 = 8.5
 N = 64
 w = np.ones(N)
 x = np.cos(2*np.pi*k0/N*np.arange(-N/2,N/2))
-mX, pX = dft.dftAnal(x, w, N)
-y = dft.dftSynth(mX, pX, N)
+mX, pX = dft.fromAudio(x, w, N)
+y = dft.toAudio(mX, pX, N)
 
 plt.figure(1, figsize=(9.5, 5))
 plt.subplot(311)

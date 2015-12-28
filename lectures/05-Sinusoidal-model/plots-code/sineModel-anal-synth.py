@@ -21,8 +21,8 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns/4
-tfreq, tmag, tphase = sine.sineModelAnal(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
-y = sine.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
+tfreq, tmag, tphase = sine.fromAudio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+y = sine.toAudio(tfreq, tmag, tphase, Ns, H, fs)
 
 numFrames = int(tfreq[:,0].size)
 frmTime = H*np.arange(numFrames)/float(fs)

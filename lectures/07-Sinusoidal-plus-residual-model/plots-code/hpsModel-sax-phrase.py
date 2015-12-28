@@ -24,8 +24,8 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns/4
 stocf = .2
-hfreq, hmag, hphase, mYst = hps.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
-y, yh, yst = hps.hpsModelSynth(hfreq, hmag, hphase, mYst, Ns, H, fs)
+hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
+y, yh, yst = hps.toAudio(hfreq, hmag, hphase, mYst, Ns, H, fs)
 
 maxplotfreq = 10000.0
 plt.figure(1, figsize=(9, 7))

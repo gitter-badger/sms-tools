@@ -42,10 +42,10 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
 	w = get_window(window, M)
 
 	# compute the harmonic model of the whole sound
-	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
 	# synthesize the sines without original phases
-	y = sine.sineModelSynth(hfreq, hmag, np.array([]), Ns, H, fs)
+	y = sine.toAudio(hfreq, hmag, np.array([]), Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'
@@ -117,13 +117,13 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the harmonics
-	yhfreq, yhmag = harmonic.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+	yhfreq, yhmag = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scale the sound
 	yhfreq, yhmag = sine.sineTimeScaling(yhfreq, yhmag, timeScaling)
 
 	# synthesis
-	y = sine.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)
+	y = sine.toAudio(yhfreq, yhmag, np.array([]), Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModelTransformation.wav'

@@ -16,7 +16,7 @@ x1 = x[2000:2000+M]
 N = 2048
 hM = int(M/2.0)
 w = np.hamming(M)
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 freqaxis = fs*np.arange(0,mX.size)/float(N)
 taxis = np.arange(N)/float(fs)
 

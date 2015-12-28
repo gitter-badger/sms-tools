@@ -95,7 +95,7 @@ def cleaningSineTracks(tfreq, minTrackLength=3):
 	return tfreq
 
 
-def sineModel(x, fs, w, N, t):
+def reconstruct(x, fs, w, N, t):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal model, without sine tracking
 	x: input array sound, w: analysis window, N: size of complex spectrum, t: threshold in negative dB
@@ -122,7 +122,7 @@ def sineModel(x, fs, w, N, t):
 	while pin<pend:                                         # while input sound pointer is within sound
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
@@ -135,7 +135,7 @@ def sineModel(x, fs, w, N, t):
 		pin += H                                              # advance sound pointer
 	return y
 
-def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
+def fromAudio(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
 	"""
 	Analysis of a sound using the sinusoidal model with sine tracking
 	x: input array sound, w: analysis window, N: size of complex spectrum, H: hop-size, t: threshold in negative dB
@@ -157,7 +157,7 @@ def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOff
 	tfreq = np.array([])
 	while pin<pend:                                         # while input sound pointer is within sound
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
@@ -185,7 +185,7 @@ def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOff
 	xtfreq = cleaningSineTracks(xtfreq, round(fs*minSineDur/H))
 	return xtfreq, xtmag, xtphase
 
-def sineModelSynth(tfreq, tmag, tphase, N, H, fs):
+def toAudio(tfreq, tmag, tphase, N, H, fs):
 	"""
 	Synthesis of a sound using the sinusoidal model
 	tfreq,tmag,tphase: frequencies, magnitudes and phases of sinusoids
@@ -248,7 +248,7 @@ def sineTimeScaling(sfreq, smag, timeScaling):
 		ysmag = np.vstack((ysmag, smag[round(l),:]))       # get closest frame to scaling value
 	return ysfreq, ysmag
 
-def sineFreqScaling(sfreq, freqScaling):
+def scaleFrequencies(sfreq, freqScaling):
 	"""
 	Frequency scaling of sinusoidal tracks
 	sfreq: frequencies of input sinusoidal tracks

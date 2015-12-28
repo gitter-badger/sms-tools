@@ -19,8 +19,8 @@ w = np.hamming(512)
 N = 512
 H = 256
 stocf = .1
-mYst = stochastic.stochasticModelAnal(x, H, N, stocf)
-y = stochastic.stochasticModelSynth(mYst, H, N)
+mYst = stochastic.fromAudio(x, H, N, stocf)
+y = stochastic.toAudio(mYst, H, N)
 mX, pX = stft.stftAnal(x, w, N, H)
 
 plt.figure(1, figsize=(9, 7))

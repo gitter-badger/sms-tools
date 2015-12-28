@@ -12,7 +12,7 @@ import dft
 import stochastic
 from .. import utils
 
-def hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
+def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
 	"""
 	Analysis of a sound using the harmonic plus stochastic model
 	x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
@@ -23,14 +23,14 @@ def hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSin
 	"""
 
 	# perform harmonic analysis
-	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 	# subtract sinusoids from original sound
 	xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
 	# perform stochastic analysis of residual
-	stocEnv = stochastic.stochasticModelAnal(xr, H, H*2, stocf)
+	stocEnv = stochastic.fromAudio(xr, H, H*2, stocf)
 	return hfreq, hmag, hphase, stocEnv
 
-def hpsModelSynth(hfreq, hmag, hphase, stocEnv, N, H, fs):
+def toAudio(hfreq, hmag, hphase, stocEnv, N, H, fs):
 	"""
 	Synthesis of a sound using the harmonic plus stochastic model
 	hfreq, hmag: harmonic frequencies and amplitudes; stocEnv: stochastic envelope
@@ -38,13 +38,13 @@ def hpsModelSynth(hfreq, hmag, hphase, stocEnv, N, H, fs):
 	returns y: output sound, yh: harmonic component, yst: stochastic component
 	"""
 
-	yh = sine.sineModelSynth(hfreq, hmag, hphase, N, H, fs)          # synthesize harmonics
-	yst = stochastic.stochasticModelSynth(stocEnv, H, H*2)                # synthesize stochastic residual
+	yh = sine.toAudio(hfreq, hmag, hphase, N, H, fs)          # synthesize harmonics
+	yst = stochastic.toAudio(stocEnv, H, H*2)                # synthesize stochastic residual
 	y = yh[:min(yh.size, yst.size)]+yst[:min(yh.size, yst.size)]   # sum harmonic and stochastic components
 	return y, yh, yst
 
 
-def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
+def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 	"""
 	Analysis/synthesis of a sound using the harmonic plus stochastic model, one frame at a time, no harmonic tracking
 	x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512), t: threshold in negative dB,
@@ -81,7 +81,7 @@ def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                              # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                       # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                       # compute dft
 		ploc = utils.peakDetection(mX, t)                       # find peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)  # refine peak values
 		ipfreq = fs * iploc/N                                # convert peak locations to Hz
@@ -91,7 +91,7 @@ def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 			f0stable = f0t                                     # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = harmonic.harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
+		hfreq, hmag, hphase = harmonic.findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 		ri = pin-hNs-1                                       # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                 # window the input sound
@@ -129,7 +129,7 @@ def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 
 # functions that implement transformations using the hpsModel
 
-def hpsTimeScale(hfreq, hmag, stocEnv, timeScaling):
+def scaleTime(hfreq, hmag, stocEnv, timeScaling):
 	"""
 	Time scaling of the harmonic plus stochastic representation
 	hfreq, hmag: harmonic frequencies and magnitudes, stocEnv: residual envelope
@@ -158,7 +158,7 @@ def hpsTimeScale(hfreq, hmag, stocEnv, timeScaling):
 	return yhfreq, yhmag, ystocEnv
 
 
-def hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp):
+def morph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp):
 	"""
 	Morph between two sounds using the harmonic plus stochastic model
 	hfreq1, hmag1, stocEnv1: hps representation of sound 1

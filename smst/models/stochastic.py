@@ -7,7 +7,7 @@ from scipy.signal import hanning, resample
 from scipy.fftpack import fft, ifft
 from .. import utils
 
-def stochasticModelAnal(x, H, N, stocf):
+def fromAudio(x, H, N, stocf):
 	"""
 	Stochastic analysis of a sound
 	x: input array sound, H: hop size, N: fftsize
@@ -46,7 +46,7 @@ def stochasticModelAnal(x, H, N, stocf):
 		pin += H                                              # advance sound pointer
 	return stocEnv
 
-def stochasticModelSynth(stocEnv, H, N):
+def toAudio(stocEnv, H, N):
 	"""
 	Stochastic synthesis of a sound
 	stocEnv: stochastic envelope; H: hop size; N: fft size
@@ -77,7 +77,7 @@ def stochasticModelSynth(stocEnv, H, N):
 	return y
 
 
-def stochasticModel(x, H, N, stocf):
+def reconstruct(x, H, N, stocf):
 	"""
 	Stochastic analysis/synthesis of a sound, one frame at a time
 	x: input array sound, H: hop size, N: fft size
@@ -125,7 +125,7 @@ def stochasticModel(x, H, N, stocf):
 
 # functions that implement transformations using the hpsModel
 
-def stochasticTimeScale(stocEnv, timeScaling):
+def scaleTime(stocEnv, timeScaling):
 	"""
 	Time scaling of the stochastic representation of a sound
 	stocEnv: stochastic envelope

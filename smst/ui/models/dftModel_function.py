@@ -30,10 +30,10 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511,
 	x1 = x[sample:sample+M]
 
 	# compute the dft of the sound fragment
-	mX, pX = dft.dftAnal(x1, w, N)
+	mX, pX = dft.fromAudio(x1, w, N)
 
 	# compute the inverse dft of the spectrum
-	y = dft.dftSynth(mX, pX, w.size)*sum(w)
+	y = dft.toAudio(mX, pX, w.size)*sum(w)
 
 	# create figure
 	plt.figure(figsize=(12, 9))

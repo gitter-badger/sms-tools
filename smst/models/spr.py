@@ -9,7 +9,7 @@ import dft
 import sine
 from .. import utils
   
-def sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
+def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
 	"""
 	Analysis of a sound using the sinusoidal plus residual model
 	x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
@@ -21,12 +21,12 @@ def sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDe
 	"""
 
 	# perform sinusoidal analysis
-	tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 	Ns = 512
 	xr = utils.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
 	return tfreq, tmag, tphase, xr
 
-def sprModelSynth(tfreq, tmag, tphase, xr, N, H, fs):
+def toAudio(tfreq, tmag, tphase, xr, N, H, fs):
 	"""
 	Synthesis of a sound using the sinusoidal plus residual model
 	tfreq, tmag, tphase: sinusoidal frequencies, amplitudes and phases; stocEnv: stochastic envelope
@@ -34,11 +34,11 @@ def sprModelSynth(tfreq, tmag, tphase, xr, N, H, fs):
 	returns y: output sound, y: sinusoidal component
 	"""
 
-	ys = sine.sineModelSynth(tfreq, tmag, tphase, N, H, fs)          # synthesize sinusoids
+	ys = sine.toAudio(tfreq, tmag, tphase, N, H, fs)          # synthesize sinusoids
 	y = ys[:min(ys.size, xr.size)]+xr[:min(ys.size, xr.size)]   # sum sinusoids and residual components
 	return y, ys
 
-def sprModel(x, fs, w, N, t):
+def reconstruct(x, fs, w, N, t):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal plus residual model, one frame at a time
 	x: input sound, fs: sampling rate, w: analysis window,
@@ -70,7 +70,7 @@ def sprModel(x, fs, w, N, t):
 	while pin<pend:
   #-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
-		mX, pX = dft.dftAnal(x1, w, N)                              # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                              # compute dft
 		ploc = utils.peakDetection(mX, t)                              # find peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)          # refine peak values
 		ipfreq = fs*iploc/float(N)                                  # convert peak locations to Hertz

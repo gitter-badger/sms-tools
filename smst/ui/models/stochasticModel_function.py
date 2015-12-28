@@ -20,10 +20,10 @@ def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
 	(fs, x) = utils.wavread(inputFile)
 
 	# compute stochastic model
-	stocEnv = stochastic.stochasticModelAnal(x, H, N, stocf)
+	stocEnv = stochastic.fromAudio(x, H, N, stocf)
 
 	# synthesize sound from stochastic model
-	y = stochastic.stochasticModelSynth(stocEnv, H, N)
+	y = stochastic.toAudio(stocEnv, H, N)
 
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModel.wav'
 

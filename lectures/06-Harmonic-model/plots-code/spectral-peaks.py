@@ -21,7 +21,7 @@ hN = N/2
 hM = (M+1)/2
 
 x1 = x[start:start+M]
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 ploc = utils.peakDetection(mX, t)
 iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
 pmag = mX[ploc]

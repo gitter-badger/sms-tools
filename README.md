@@ -163,19 +163,18 @@ A model provides a different representation of audio than the time-domain sample
 Audio can be transformed by modifying its model. Each transformation belongs to a model. Thus also transformations can be found in the `smst` package.
 
 - `stft` - [STFT transformations](smst/models/stft.py)
-  - `stftFiltering()`
-  - `stftMorph()`
+  - `filter()`
+  - `morph()`
 - `sine` - [Sinusoidal transformations](smst/models/sine.py)
-  - `sineTimeScaling()`
-  - `sineFreqScaling()`
+  - `scaleTime()`
+  - `scaleFrequencies()`
 - `harmonic` - [Harmonic transformations](smst/models/harmonic.py)
-  - `harmonicFreqScaling()`
+  - `scaleFrequencies()`
 - `stochastic` - [Stochastic transformations](smst/models/stochastic.py)
-  - `stochasticTimeScale()`
-  -
+  - `scaleTime()`
 - `hps` - [Harmonic + stochastic transformations](smst/models/hps.py)
-  - `hpsTimeScale()`
-  - `hpsMorph()`
+  - `scaleTime()`
+  - `morph()`
 
 ## Authors
 

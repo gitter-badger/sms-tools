@@ -6,7 +6,7 @@ import math
 import dft
 from scipy.signal import resample
 
-def stftModel(x, w, N, H):
+def reconstruct(x, w, N, H):
 	"""
 	Analysis/synthesis of a sound using the short-time Fourier transform
 	x: input sound, w: analysis window, N: FFT size, H: hop size
@@ -28,16 +28,16 @@ def stftModel(x, w, N, H):
 	while pin<=pend:                               # while sound pointer is smaller than last sample
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                      # select one frame of input sound
-		mX, pX = dft.dftAnal(x1, w, N)               # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)               # compute dft
 	#-----synthesis-----
-		y1 = dft.dftSynth(mX, pX, M)                 # compute idft
+		y1 = dft.toAudio(mX, pX, M)                 # compute idft
 		y[pin-hM1:pin+hM2] += H*y1                   # overlap-add to generate output sound
 		pin += H                                     # advance sound pointer
 	y = np.delete(y, range(hM2))                   # delete half of first window
 	y = np.delete(y, range(y.size-hM1, y.size))    # delete half of the last window which as added in stftModelAnal
 	return y
 
-def stftModelAnal(x, w, N, H) :
+def fromAudio(x, w, N, H) :
 	"""
 	Analysis of a sound using the short-time Fourier transform
 	x: input array sound, w: analysis window, N: FFT size, H: hop size
@@ -56,7 +56,7 @@ def stftModelAnal(x, w, N, H) :
 	w = w / sum(w)                                  # normalize analysis window
 	while pin<=pend:                                # while sound pointer is smaller than last sample
 		x1 = x[pin-hM1:pin+hM2]                       # select one frame of input sound
-		mX, pX = dft.dftAnal(x1, w, N)                # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                # compute dft
 		if pin == hM1:                                # if first frame create output arrays
 			xmX = np.array([mX])
 			xpX = np.array([pX])
@@ -66,7 +66,7 @@ def stftModelAnal(x, w, N, H) :
 		pin += H                                      # advance sound pointer
 	return xmX, xpX
 
-def stftModelSynth(mY, pY, M, H) :
+def toAudio(mY, pY, M, H) :
 	"""
 	Synthesis of a sound using the short-time Fourier transform
 	mY: magnitude spectra, pY: phase spectra, M: window size, H: hop-size
@@ -78,7 +78,7 @@ def stftModelSynth(mY, pY, M, H) :
 	y = np.zeros(nFrames*H + hM1 + hM2)              # initialize output array
 	pin = hM1
 	for i in range(nFrames):                         # iterate over all frames
-		y1 = dft.dftSynth(mY[i,:], pY[i,:], M)         # compute idft
+		y1 = dft.toAudio(mY[i,:], pY[i,:], M)         # compute idft
 		y[pin-hM1:pin+hM2] += H*y1                     # overlap-add to generate output sound
 		pin += H                                       # advance sound pointer
 	y = np.delete(y, range(hM2))                     # delete half of first window
@@ -87,7 +87,7 @@ def stftModelSynth(mY, pY, M, H) :
 
 # functions that implement transformations using the stft
 
-def stftFiltering(x, fs, w, N, H, filter):
+def filter(x, fs, w, N, H, filter):
 	"""
 	Apply a filter to a sound by using the STFT
 	x: input sound, w: analysis window, N: FFT size, H: hop size
@@ -107,11 +107,11 @@ def stftFiltering(x, fs, w, N, H, filter):
 	while pin<=pend:                               # while sound pointer is smaller than last sample
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                    # select one frame of input sound
-		mX, pX = dft.dftAnal(x1, w, N)             # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)             # compute dft
 	#------transformation-----
 		mY = mX + filter                           # filter input magnitude spectrum
 	#-----synthesis-----
-		y1 = dft.dftSynth(mY, pX, M)               # compute idft
+		y1 = dft.toAudio(mY, pX, M)               # compute idft
 		y[pin-hM1:pin+hM2] += H*y1                 # overlap-add to generate output sound
 		pin += H                                   # advance sound pointer
 	y = np.delete(y, range(hM2))                   # delete half of first window
@@ -119,7 +119,7 @@ def stftFiltering(x, fs, w, N, H, filter):
 	return y
 
 
-def stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
+def morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
 	"""
 	Morph of two sounds using the STFT
 	x1, x2: input sounds, fs: sampling rate
@@ -159,14 +159,14 @@ def stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
 	y = np.zeros(x1.size)                            # initialize output array
 	for l in range(L):
 	#-----analysis-----
-		mX1, pX1 = dft.dftAnal(x1[pin1-hM1_1:pin1+hM1_2], w1, N1)           # compute dft
-		mX2, pX2 = dft.dftAnal(x2[pin2-hM2_1:pin2+hM2_2], w2, N2)           # compute dft
+		mX1, pX1 = dft.fromAudio(x1[pin1-hM1_1:pin1+hM1_2], w1, N1)           # compute dft
+		mX2, pX2 = dft.fromAudio(x2[pin2-hM2_1:pin2+hM2_2], w2, N2)           # compute dft
 	#-----transformation-----
 		mX2smooth = resample(np.maximum(-200, mX2), mX2.size*smoothf)       # smooth spectrum of second sound
 		mX2 = resample(mX2smooth, mX1.size)                                 # generate back the same size spectrum
 		mY = balancef * mX2 + (1-balancef) * mX1                            # generate output spectrum
 	#-----synthesis-----
-		y[pin1-hM1_1:pin1+hM1_2] += H1*dft.dftSynth(mY, pX1, M1)  # overlap-add to generate output sound
+		y[pin1-hM1_1:pin1+hM1_2] += H1*dft.toAudio(mY, pX1, M1)  # overlap-add to generate output sound
 		pin1 += H1                                     # advance sound pointer
 		pin2 += H2                                     # advance sound pointer
 	y = np.delete(y, range(hM1_2))                   # delete half of first window

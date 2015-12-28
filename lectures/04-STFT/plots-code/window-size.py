@@ -19,7 +19,7 @@ plt.plot(np.arange(start, (start+N), 1.0)/fs, x1*np.hamming(N), 'b', lw=1.5)
 plt.axis([start/fs, (start+N)/fs, min(x1*np.hamming(N)), max(x1*np.hamming(N))])
 plt.title('x1, M = 128')
 
-mX, pX = dft.dftAnal(x1, np.hamming(N), N)
+mX, pX = dft.fromAudio(x1, np.hamming(N), N)
 plt.subplot(323)
 plt.plot((fs/2.0)*np.arange(mX.size)/float(mX.size), mX, 'r', lw=1.5)
 plt.axis([0,fs/2.0,-90,max(mX)])
@@ -33,7 +33,7 @@ plt.title('pX1')
 N = 1024
 start = .81*fs
 x2 = x[start:start+N]
-mX, pX = dft.dftAnal(x2, np.hamming(N), N)
+mX, pX = dft.fromAudio(x2, np.hamming(N), N)
 
 plt.subplot(322)
 plt.plot(np.arange(start, (start+N), 1.0)/fs, x2*np.hamming(N), 'b', lw=1.5)

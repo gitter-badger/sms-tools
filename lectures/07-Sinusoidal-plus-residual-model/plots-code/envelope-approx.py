@@ -49,7 +49,7 @@ if __name__ == '__main__':
   lastbin = N*maxFreq/fs
   first = 4000
   last = first+w.size
-  mX, pX = dft.dftAnal(x[first:last], w, N)
+  mX, pX = dft.fromAudio(x[first:last], w, N)
   mXenv = resample(np.maximum(-200, mX), envSize)
   mY = resample(mXenv, N/2)
 

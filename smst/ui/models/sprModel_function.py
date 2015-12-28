@@ -37,13 +37,13 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# perform sinusoidal plus residual analysis
-	tfreq, tmag, tphase, xr = spr.sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase, xr = spr.fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
 	# compute spectrogram of residual
-	mXr, pXr = stft.stftModelAnal(xr, w, N, H)
+	mXr, pXr = stft.fromAudio(xr, w, N, H)
 
 	# sum sinusoids and residual
-	y, ys = spr.sprModelSynth(tfreq, tmag, tphase, xr, Ns, H, fs)
+	y, ys = spr.toAudio(tfreq, tmag, tphase, xr, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sprModel_sines.wav'

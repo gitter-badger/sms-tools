@@ -24,7 +24,7 @@ plt.plot(np.arange(-hM1, hM2), x1, lw=1.5)
 plt.axis([-hM1, hM2, min(x1), max(x1)])
 plt.title('x (violin-B3.wav)')
 
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(3,1,2)
@@ -34,7 +34,7 @@ plt.title ('mX (rectangular window)')
 
 
 w = np.blackman(801)
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(3,1,3)

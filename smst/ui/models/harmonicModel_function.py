@@ -36,10 +36,10 @@ def main(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=
 	w = get_window(window, M)
 
 	# detect harmonics of input sound
-	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
 	# synthesize the harmonics
-	y = sine.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
+	y = sine.toAudio(hfreq, hmag, hphase, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'

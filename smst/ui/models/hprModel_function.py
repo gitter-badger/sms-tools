@@ -36,13 +36,13 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	w = get_window(window, M)
 
 	# find harmonics and residual
-	hfreq, hmag, hphase, xr = hpr.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+	hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
 	# compute spectrogram of residual
-	mXr, pXr = stft.stftModelAnal(xr, w, N, H)
+	mXr, pXr = stft.fromAudio(xr, w, N, H)
 
 	# synthesize hpr model
-	y, yh = hpr.hprModelSynth(hfreq, hmag, hphase, xr, Ns, H, fs)
+	y, yh = hpr.toAudio(hfreq, hmag, hphase, xr, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hprModel_sines.wav'

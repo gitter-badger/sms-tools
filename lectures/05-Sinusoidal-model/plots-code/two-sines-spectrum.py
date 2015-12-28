@@ -15,7 +15,7 @@ w = np.hamming(3501)
 N = 4096
 pin = 5000
 x1 = x[pin:pin+w.size]
-mX, pX = dft.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(311)

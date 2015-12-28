@@ -35,10 +35,10 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# analyze the sound with the sinusoidal model
-	tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 	# synthesize the output sound from the sinusoidal representation
-	y = sine.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
+	y = sine.toAudio(tfreq, tmag, tphase, Ns, H, fs)
 
 	# output sound file name
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'

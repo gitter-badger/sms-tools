@@ -37,10 +37,10 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
 	w = get_window(window, M)
 
 	# compute the sine model of the whole sound
-	tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 	# synthesize the sines without original phases
-	y = sine.sineModelSynth(tfreq, tmag, np.array([]), Ns, H, fs)
+	y = sine.toAudio(tfreq, tmag, np.array([]), Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
@@ -110,13 +110,13 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the sinusoidal tracks
-	ytfreq = sine.sineFreqScaling(tfreq, freqScaling)
+	ytfreq = sine.scaleFrequencies(tfreq, freqScaling)
 
 	# time scale the sinusoidal tracks
 	ytfreq, ytmag = sine.sineTimeScaling(ytfreq, tmag, timeScaling)
 
 	# synthesis
-	y = sine.sineModelSynth(ytfreq, ytmag, np.array([]), Ns, H, fs)
+	y = sine.toAudio(ytfreq, ytmag, np.array([]), Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModelTransformation.wav'

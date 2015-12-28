@@ -35,10 +35,10 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# perform sinusoidal+sotchastic analysis
-	tfreq, tmag, tphase, stocEnv = sps.spsModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
+	tfreq, tmag, tphase, stocEnv = sps.fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
 
 	# synthesize sinusoidal+stochastic model
-	y, ys, yst = sps.spsModelSynth(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
+	y, ys, yst = sps.toAudio(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_spsModel_sines.wav'
