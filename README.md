@@ -142,7 +142,9 @@ The code can be imported as python modules.
 
 ### Models
 
-```audio -> [analysis] -> model -> [synthesis] -> reconstructed audio```
+```
+audio -> [analysis] -> model -> [synthesis] -> reconstructed audio
+```
 
 A model provides a different representation of audio than the time-domain samples. The models live as modules in the `smst` package.
 
@@ -160,7 +162,9 @@ Each model typically has a `fromAudio()` method which performs analysis and a `t
 
 ### Transformations
 
-```model -> [transformation] -> transformed model```
+```
+model -> [transformation] -> transformed model
+```
 
 Audio can be transformed by modifying its model. Each transformation belongs to a model. Thus also transformations can be found in the `smst` package.
 
@@ -177,6 +181,17 @@ Audio can be transformed by modifying its model. Each transformation belongs to 
 - `hps` - [Harmonic + stochastic transformations](smst/models/hps.py)
   - `scaleTime()`
   - `morph()`
+
+## How to generate documentation?
+
+API documentation can be generated via Sphinx. It is not integrated yet, so this is a very crude way how to get documentation in HTML.
+
+```
+sms-tools$ sphinx-apidoc -F -o docs smst
+sms-tools$ cd docs/
+docs$ make html
+docs$ open _build/html/index.html
+```
 
 ## Authors
 
