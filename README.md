@@ -146,6 +146,8 @@ The code can be imported as python modules.
 
 A model provides a different representation of audio than the time-domain samples. The models live as modules in the `smst` package.
 
+Each model typically has a `fromAudio()` method which performs analysis and a `toAudio()` method which performs synthesis.
+
 - `dft` - [Discrete Fourier Transform](smst/models/dft.py) - spectrum of a single frame
 - `stft` - [Short-time Fourier Transform](smst/models/stft.py) - spectrogram
 - `sine` - [Sinusoidal model](smst/models/sine.py) - for plain tones
