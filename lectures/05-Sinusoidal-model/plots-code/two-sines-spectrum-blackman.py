@@ -8,12 +8,12 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/sine-440-490.wav')
+(fs, x) = audio.read_wav('../../../sounds/sine-440-490.wav')
 w = np.blackman(5291)
 N = 16384
 pin = .11 * fs
 x1 = x[pin:pin + w.size]
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 
 plt.figure(1, figsize=(9.5, 5))
 plt.subplot(311)

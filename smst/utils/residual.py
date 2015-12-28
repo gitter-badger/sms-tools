@@ -5,7 +5,7 @@ from scipy.signal import resample, blackmanharris, triang
 import utilFunctions_C.utilFunctions_C as UF_C
 
 
-def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
+def subtract_sinusoids(x, N, H, sfreq, smag, sphase, fs):
     """
     Subtract sinusoids from a sound
     x: input sound, N: fft-size, H: hop-size
@@ -37,7 +37,7 @@ def sineSubtraction(x, N, H, sfreq, smag, sphase, fs):
 
 
 # TODO: unused code
-def stochasticResidualAnal(x, N, H, sfreq, smag, sphase, fs, stocf):
+def subtract_sinusoids_with_stochastic_residual(x, N, H, sfreq, smag, sphase, fs, stocf):
     """
     Subtract sinusoids from a sound and approximate the residual with an envelope
     x: input sound, N: fft size, H: hop-size

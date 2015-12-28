@@ -11,14 +11,14 @@ import matplotlib.pyplot as plt
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 w = np.blackman(651)
 N = 1024
 pin = 5000
 hM1 = int(math.floor((w.size + 1) / 2))
 hM2 = int(math.floor(w.size / 2))
 x1 = x[pin - hM1:pin + hM2]
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(311)

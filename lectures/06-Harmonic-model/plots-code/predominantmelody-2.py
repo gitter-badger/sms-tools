@@ -54,11 +54,11 @@ pitch, confidence = run_pitch_contours_melody(contours_bins,
                                               contours_start_times,
                                               duration)
 
-yf0 = synth.sinewaveSynth(pitch, .6, hopSize, sampleRate)
+yf0 = synth.synthesize_sinusoid(pitch, .6, hopSize, sampleRate)
 
 figure(1, figsize=(9, 6))
 
-mX, pX = stft.fromAudio(audio, hamming(frameSize), frameSize, hopSize)
+mX, pX = stft.from_audio(audio, hamming(frameSize), frameSize, hopSize)
 maxplotfreq = 3000.0
 numFrames = int(mX[:, 0].size)
 frmTime = hopSize * arange(numFrames) / float(sampleRate)
@@ -74,4 +74,4 @@ plot(time, pitch, color='k', linewidth=2)
 plt.title('mX + prominent melody (carnatic.wav)')
 tight_layout()
 savefig('predominantmelody-2.png')
-audio.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')
+audio.write_wav(yf0, sampleRate, 'predominantmelody-2.wav')

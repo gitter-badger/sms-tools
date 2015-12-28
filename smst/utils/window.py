@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def genBhLobe(x):
+def blackman_harris_lobe(x):
     """
     Generate the main lobe of a Blackman-Harris window
     x: bin positions to compute (real values)

@@ -27,16 +27,16 @@ stocf = 0.1
 Ns = 512
 H = 128
 
-(fs, x) = audio.wavread(inputFile)
+(fs, x) = audio.read_wav(inputFile)
 w = get_window(window, M)
-hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
+hfreq, hmag, hphase, mYst = hps.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
                                           stocf)
 timeScaling = np.array([0, 0, 2.138, 2.138 - 1.5, 3.146, 3.146])
-yhfreq, yhmag, ystocEnv = hps.scaleTime(hfreq, hmag, mYst, timeScaling)
+yhfreq, yhmag, ystocEnv = hps.scale_time(hfreq, hmag, mYst, timeScaling)
 
-y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
+y, yh, yst = hps.to_audio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
-audio.wavwrite(y, fs, 'hps-transformation.wav')
+audio.write_wav(y, fs, 'hps-transformation.wav')
 
 plt.figure(figsize=(12, 9))
 

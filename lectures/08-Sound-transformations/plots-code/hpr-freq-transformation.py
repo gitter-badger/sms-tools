@@ -25,21 +25,21 @@ harmDevSlope = 0.1
 Ns = 512
 H = 128
 
-(fs, x) = audio.wavread(inputFile)
+(fs, x) = audio.read_wav(inputFile)
 w = get_window(window, M)
-hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+hfreq, hmag, hphase, xr = hpr.from_audio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
-mXr, pXr = stft.fromAudio(xr, w, N, H)
+mXr, pXr = stft.from_audio(xr, w, N, H)
 
 freqScaling = np.array([0, 1.5, 1, 1.5])
 freqStretching = np.array([0, 1.1, 1, 1.1])
 timbrePreservation = 1
 
-hfreqt, hmagt = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+hfreqt, hmagt = harmonic.scale_frequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
-y, yh = hpr.toAudio(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
+y, yh = hpr.to_audio(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
 
-audio.wavwrite(y, fs, 'hpr-freq-transformation.wav')
+audio.write_wav(y, fs, 'hpr-freq-transformation.wav')
 
 plt.figure(figsize=(12, 9))
 

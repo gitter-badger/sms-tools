@@ -10,8 +10,8 @@ from scipy.signal import resample
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x1) = audio.wavread('../../../sounds/orchestra.wav')
-(fs, x2) = audio.wavread('../../../sounds/speech-male.wav')
+(fs, x1) = audio.read_wav('../../../sounds/orchestra.wav')
+(fs, x2) = audio.read_wav('../../../sounds/speech-male.wav')
 w1 = np.hamming(1024)
 N1 = 1024
 H1 = 256
@@ -31,15 +31,15 @@ loc2 = 9294
 
 x1 = x1[loc1 - hM1_1:loc1 + hM1_2]
 x2 = x2[loc2 - hM2_1:loc2 + hM2_2]
-mX1, pX1 = dft.fromAudio(x1, w1, N1)  # compute dft
-mX2, pX2 = dft.fromAudio(x2, w2, N2)  # compute dft
+mX1, pX1 = dft.from_audio(x1, w1, N1)  # compute dft
+mX2, pX2 = dft.from_audio(x2, w2, N2)  # compute dft
 # morph
 mX2smooth = resample(np.maximum(-200, mX2), mX2.size * smoothf)  # smooth spectrum of second sound
 mX2 = resample(mX2smooth, mX2.size)
 mY = balancef * mX2 + (1 - balancef) * mX1  # generate output spectrum
 # -----synthesis-----
-y = dft.toAudio(mY, pX1, M1) * sum(w1)  # overlap-add to generate output sound
-mY1, pY1 = dft.fromAudio(y, w1, M1)  # overlap-add to generate output sound
+y = dft.to_audio(mY, pX1, M1) * sum(w1)  # overlap-add to generate output sound
+mY1, pY1 = dft.from_audio(y, w1, M1)  # overlap-add to generate output sound
 
 plt.figure(1, figsize=(12, 9))
 plt.subplot(321)

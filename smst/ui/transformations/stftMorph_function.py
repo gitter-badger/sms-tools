@@ -28,8 +28,8 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
     """
 
     # read input sounds
-    (fs, x1) = audio.wavread(inputFile1)
-    (fs, x2) = audio.wavread(inputFile2)
+    (fs, x1) = audio.read_wav(inputFile1)
+    (fs, x2) = audio.read_wav(inputFile2)
 
     # compute analysis windows
     w1 = get_window(window1, M1)
@@ -39,14 +39,14 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
     y = stft.morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
 
     # compute the magnitude and phase spectrogram of input sound (for plotting)
-    mX1, pX1 = stft.fromAudio(x1, w1, N1, H1)
+    mX1, pX1 = stft.from_audio(x1, w1, N1, H1)
 
     # compute the magnitude and phase spectrogram of output sound (for plotting)
-    mY, pY = stft.fromAudio(y, w1, N1, H1)
+    mY, pY = stft.from_audio(y, w1, N1, H1)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_stftMorph.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -98,8 +98,8 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
         plt.show()
     if plotFile:
         plt.savefig('output_plots/%s_%s_stft_morph.png' % (
-            files.stripFile(inputFile1),
-            files.stripFile(inputFile2)
+            files.strip_file(inputFile1),
+            files.strip_file(inputFile2)
         ))
 
 

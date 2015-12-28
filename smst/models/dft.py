@@ -6,19 +6,19 @@ import math
 import numpy as np
 from scipy.fftpack import fft, ifft
 
-from ..utils.math import isPower2
+from ..utils.math import is_power_of_two
 
 tol = 1e-14  # threshold used to compute phase
 
 
-def fromAudio(x, w, N):
+def from_audio(x, w, N):
     """
     Analysis of a signal using the discrete Fourier transform
     x: input signal, w: analysis window, N: FFT size
     returns mX, pX: magnitude and phase spectrum
     """
 
-    if not (isPower2(N)):  # raise error if N not a power of two
+    if not (is_power_of_two(N)):  # raise error if N not a power of two
         raise ValueError("FFT size (N) is not a power of 2")
 
     if w.size > N:  # raise error if window size bigger than fft size
@@ -42,7 +42,7 @@ def fromAudio(x, w, N):
     return mX, pX
 
 
-def toAudio(mX, pX, M):
+def to_audio(mX, pX, M):
     """
     Synthesis of a signal using the discrete Fourier transform
     mX: magnitude spectrum, pX: phase spectrum, M: window size
@@ -51,7 +51,7 @@ def toAudio(mX, pX, M):
 
     hN = mX.size  # size of positive spectrum, it includes sample 0
     N = (hN - 1) * 2  # FFT size
-    if not (isPower2(N)):  # raise error if N not a power of two, thus mX is wrong
+    if not (is_power_of_two(N)):  # raise error if N not a power of two, thus mX is wrong
         raise ValueError("size of mX is not (N/2)+1")
 
     hM1 = int(math.floor((M + 1) / 2))  # half analysis window size by rounding
@@ -73,7 +73,7 @@ def reconstruct(x, w, N):
     returns y: output signal
     """
 
-    if not isPower2(N):  # raise error if N not a power of two
+    if not is_power_of_two(N):  # raise error if N not a power of two
         raise ValueError("FFT size (N) is not a power of 2")
 
     if w.size > N:  # raise error if window size bigger than fft size

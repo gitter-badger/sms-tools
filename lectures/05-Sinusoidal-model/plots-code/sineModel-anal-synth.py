@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import sine
 
-(fs, x) = audio.wavread('../../../sounds/bendir.wav')
+(fs, x) = audio.read_wav('../../../sounds/bendir.wav')
 x1 = x[0:50000]
 w = np.blackman(2001)
 N = 2048
@@ -20,8 +20,8 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns / 4
-tfreq, tmag, tphase = sine.fromAudio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
-y = sine.toAudio(tfreq, tmag, tphase, Ns, H, fs)
+tfreq, tmag, tphase = sine.from_audio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+y = sine.to_audio(tfreq, tmag, tphase, Ns, H, fs)
 
 numFrames = int(tfreq[:, 0].size)
 frmTime = H * np.arange(numFrames) / float(fs)
@@ -47,5 +47,5 @@ plt.axis([0, y.size / float(fs), min(y), max(y)])
 plt.title('y')
 
 plt.tight_layout()
-audio.wavwrite(y, fs, 'bendir-sine-synthesis.wav')
+audio.write_wav(y, fs, 'bendir-sine-synthesis.wav')
 plt.savefig('sineModel-anal-synth.png')

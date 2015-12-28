@@ -39,21 +39,21 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # compute the harmonic plus stochastic model of the whole sound
-    hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
+    hfreq, hmag, hphase, mYst = hps.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
                                               stocf)
 
     # synthesize the harmonic plus stochastic model without original phases
-    y, yh, yst = hps.toAudio(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
+    y, yh, yst = hps.to_audio(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -103,7 +103,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
     if interactive:
         plt.show(block=False)
     if plotFile:
-        plt.savefig('output_plots/%s_hps_transformation_analysis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_hps_transformation_analysis.png' % files.strip_file(inputFile))
 
     return inputFile, fs, hfreq, hmag, mYst
 
@@ -132,17 +132,17 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst,
     H = 128
 
     # frequency scaling of the harmonics
-    hfreqt, hmagt = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+    hfreqt, hmagt = harmonic.scale_frequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
     # time scaling the sound
-    yhfreq, yhmag, ystocEnv = hps.scaleTime(hfreqt, hmagt, mYst, timeScaling)
+    yhfreq, yhmag, ystocEnv = hps.scale_time(hfreqt, hmagt, mYst, timeScaling)
 
     # synthesis from the trasformed hps representation
-    y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
+    y, yh, yst = hps.to_audio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModelTransformation.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 6))
@@ -184,7 +184,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst,
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % files.strip_file(inputFile))
 
 
 def main(interactive=True, plotFile=False):

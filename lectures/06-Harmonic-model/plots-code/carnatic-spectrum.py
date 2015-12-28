@@ -9,14 +9,14 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/carnatic.wav')
+(fs, x) = audio.read_wav('../../../sounds/carnatic.wav')
 pin = 1.4 * fs
 w = np.blackman(1601)
 N = 4096
 hM1 = int(math.floor((w.size + 1) / 2))
 hM2 = int(math.floor(w.size / 2))
 x1 = x[pin - hM1:pin + hM2]
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(311)

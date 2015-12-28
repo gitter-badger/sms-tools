@@ -32,17 +32,17 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # compute the harmonic plus stochastic model of the whole sound
-    hfreq, hmag, hphase, stocEnv = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur,
+    hfreq, hmag, hphase, stocEnv = hps.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur,
                                                  Ns, stocf)
 
     # synthesize a sound from the harmonic plus stochastic representation
-    y, yh, yst = hps.toAudio(hfreq, hmag, hphase, stocEnv, Ns, H, fs)
+    y, yh, yst = hps.to_audio(hfreq, hmag, hphase, stocEnv, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel_sines.wav'
@@ -50,9 +50,9 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel.wav'
 
     # write sounds files for harmonics, stochastic, and the sum
-    audio.wavwrite(yh, fs, outputFileSines)
-    audio.wavwrite(yst, fs, outputFileStochastic)
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(yh, fs, outputFileSines)
+    audio.write_wav(yst, fs, outputFileStochastic)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -102,7 +102,7 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_hps_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_hps_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

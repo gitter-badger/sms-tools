@@ -10,7 +10,7 @@ from scipy.signal import triang, blackmanharris
 from smst.utils import audio, peaks, synth
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 M = 601
 w = np.blackman(M)
 N = 1024
@@ -21,11 +21,11 @@ H = Ns / 4
 pin = 5000
 t = -70
 x1 = x[pin:pin + w.size]
-mX, pX = dft.fromAudio(x1, w, N)
-ploc = peaks.peakDetection(mX, t)
-iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
+mX, pX = dft.from_audio(x1, w, N)
+ploc = peaks.find_peaks(mX, t)
+iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)
 freqs = iploc * fs / N
-Y = synth.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
+Y = synth.spectrum_for_sinusoids(freqs, ipmag, ipphase, Ns, fs)
 mY = 20 * np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y = fftshift(ifft(Y)) * sum(blackmanharris(Ns))

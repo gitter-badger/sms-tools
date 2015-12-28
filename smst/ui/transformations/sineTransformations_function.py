@@ -34,22 +34,22 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # compute the sine model of the whole sound
-    tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+    tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
     # synthesize the sines without original phases
-    y = sine.toAudio(tfreq, tmag, np.array([]), Ns, H, fs)
+    y = sine.to_audio(tfreq, tmag, np.array([]), Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
 
     # write the sound resulting from the inverse stft
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to show plots
     plt.figure(figsize=(12, 9))
@@ -90,7 +90,7 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
     if interactive:
         plt.show(block=False)
     if plotFile:
-        plt.savefig('output_plots/%s_sine_transformation_analysis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_sine_transformation_analysis.png' % files.strip_file(inputFile))
 
     return inputFile, fs, tfreq, tmag
 
@@ -113,17 +113,17 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling=np.array([0
     H = 128
 
     # frequency scaling of the sinusoidal tracks
-    ytfreq = sine.scaleFrequencies(tfreq, freqScaling)
+    ytfreq = sine.scale_frequencies(tfreq, freqScaling)
 
     # time scale the sinusoidal tracks
-    ytfreq, ytmag = sine.scaleTime(ytfreq, tmag, timeScaling)
+    ytfreq, ytmag = sine.scale_time(ytfreq, tmag, timeScaling)
 
     # synthesis
-    y = sine.toAudio(ytfreq, ytmag, np.array([]), Ns, H, fs)
+    y = sine.to_audio(ytfreq, ytmag, np.array([]), Ns, H, fs)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModelTransformation.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 6))
@@ -156,7 +156,7 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling=np.array([0
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_sine_transformation_synthesis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_sine_transformation_synthesis.png' % files.strip_file(inputFile))
 
 
 def main(interactive=True, plotFile=False):

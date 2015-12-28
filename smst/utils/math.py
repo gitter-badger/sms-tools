@@ -1,4 +1,4 @@
-def isPower2(num):
+def is_power_of_two(num):
     """
     Check if num is power of two
     """

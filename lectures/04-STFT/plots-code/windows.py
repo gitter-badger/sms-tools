@@ -9,7 +9,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 N = 512
 pin = 5000
 w = np.ones(501)
@@ -23,7 +23,7 @@ plt.plot(np.arange(-hM1, hM2), x1, lw=1.5)
 plt.axis([-hM1, hM2, min(x1), max(x1)])
 plt.title('x (oboe-A4.wav)')
 
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4, 1, 2)
@@ -32,7 +32,7 @@ plt.axis([0, N / 4, -70, 0])
 plt.title('mX (rectangular window)')
 
 w = np.hamming(501)
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4, 1, 3)
@@ -41,7 +41,7 @@ plt.axis([0, N / 4, -70, 0])
 plt.title('mX (hamming window)')
 
 w = np.blackman(501)
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4, 1, 4)

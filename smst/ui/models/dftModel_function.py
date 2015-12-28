@@ -20,7 +20,7 @@ def main(inputFile=demo_sound_path('piano.wav'), window='blackman', M=511, N=102
     """
 
     # read input sound (monophonic with sampling rate of 44100)
-    fs, x = audio.wavread(inputFile)
+    fs, x = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
@@ -32,10 +32,10 @@ def main(inputFile=demo_sound_path('piano.wav'), window='blackman', M=511, N=102
     x1 = x[sample:sample + M]
 
     # compute the dft of the sound fragment
-    mX, pX = dft.fromAudio(x1, w, N)
+    mX, pX = dft.from_audio(x1, w, N)
 
     # compute the inverse dft of the spectrum
-    y = dft.toAudio(mX, pX, w.size) * sum(w)
+    y = dft.to_audio(mX, pX, w.size) * sum(w)
 
     # create figure
     plt.figure(figsize=(12, 9))
@@ -77,7 +77,7 @@ def main(inputFile=demo_sound_path('piano.wav'), window='blackman', M=511, N=102
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_dft_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_dft_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

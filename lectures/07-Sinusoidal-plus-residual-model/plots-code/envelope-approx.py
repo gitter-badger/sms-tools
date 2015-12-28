@@ -38,7 +38,7 @@ def stochasticModelFrame(x, w, N, stocf):
 
 # example call of stochasticModel function
 if __name__ == '__main__':
-    (fs, x) = audio.wavread('../../../sounds/ocean.wav')
+    (fs, x) = audio.read_wav('../../../sounds/ocean.wav')
     w = np.hanning(1024)
     N = 1024
     stocf = .1
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     lastbin = N * maxFreq / fs
     first = 4000
     last = first + w.size
-    mX, pX = dft.fromAudio(x[first:last], w, N)
+    mX, pX = dft.from_audio(x[first:last], w, N)
     mXenv = resample(np.maximum(-200, mX), envSize)
     mY = resample(mXenv, N / 2)
 

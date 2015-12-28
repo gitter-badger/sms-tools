@@ -8,15 +8,15 @@ import numpy as np
 from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = audio.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/flute-A4.wav')
 w = np.blackman(601)
 N = 1024
 H = 150
 t = -80
 minSineDur = .1
 maxnSines = 150
-mX, pX = stft.fromAudio(x, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur)
+mX, pX = stft.from_audio(x, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur)
 
 plt.figure(1, figsize=(9.5, 5))
 maxplotfreq = 5000.0

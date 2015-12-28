@@ -32,19 +32,19 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # find harmonics and residual
-    hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+    hfreq, hmag, hphase, xr = hpr.from_audio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
     # compute spectrogram of residual
-    mXr, pXr = stft.fromAudio(xr, w, N, H)
+    mXr, pXr = stft.from_audio(xr, w, N, H)
 
     # synthesize hpr model
-    y, yh = hpr.toAudio(hfreq, hmag, hphase, xr, Ns, H, fs)
+    y, yh = hpr.to_audio(hfreq, hmag, hphase, xr, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hprModel_sines.wav'
@@ -52,9 +52,9 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hprModel.wav'
 
     # write sounds files for harmonics, residual, and the sum
-    audio.wavwrite(yh, fs, outputFileSines)
-    audio.wavwrite(xr, fs, outputFileResidual)
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(yh, fs, outputFileSines)
+    audio.write_wav(xr, fs, outputFileResidual)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -104,7 +104,7 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_hpr_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_hpr_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

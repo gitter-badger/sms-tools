@@ -38,22 +38,22 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
     H = 128
 
     # read input sound
-    fs, x = audio.wavread(inputFile)
+    fs, x = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # compute the harmonic model of the whole sound
-    hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+    hfreq, hmag, hphase = harmonic.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
     # synthesize the sines without original phases
-    y = sine.toAudio(hfreq, hmag, np.array([]), Ns, H, fs)
+    y = sine.to_audio(hfreq, hmag, np.array([]), Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'
 
     # write the sound resulting from the inverse stft
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to show plots
     plt.figure(figsize=(12, 9))
@@ -92,7 +92,7 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
     if interactive:
         plt.show(block=False)
     if plotFile:
-        plt.savefig('output_plots/%s_harmonic_transformation_analysis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_harmonic_transformation_analysis.png' % files.strip_file(inputFile))
 
     return inputFile, fs, hfreq, hmag
 
@@ -119,17 +119,17 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling=np.array([0
     H = 128
 
     # frequency scaling of the harmonics
-    yhfreq, yhmag = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+    yhfreq, yhmag = harmonic.scale_frequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
     # time scale the sound
-    yhfreq, yhmag = sine.scaleTime(yhfreq, yhmag, timeScaling)
+    yhfreq, yhmag = sine.scale_time(yhfreq, yhmag, timeScaling)
 
     # synthesis
-    y = sine.toAudio(yhfreq, yhmag, np.array([]), Ns, H, fs)
+    y = sine.to_audio(yhfreq, yhmag, np.array([]), Ns, H, fs)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModelTransformation.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 6))
@@ -162,7 +162,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling=np.array([0
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_harmonic_transformation_synthesis.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_harmonic_transformation_synthesis.png' % files.strip_file(inputFile))
 
 
 def main(interactive=True, plotFile=False):

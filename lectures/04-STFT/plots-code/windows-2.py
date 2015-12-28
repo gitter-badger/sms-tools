@@ -9,7 +9,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/violin-B3.wav')
+(fs, x) = audio.read_wav('../../../sounds/violin-B3.wav')
 N = 1024
 pin = 5000
 w = np.ones(801)
@@ -23,7 +23,7 @@ plt.plot(np.arange(-hM1, hM2), x1, lw=1.5)
 plt.axis([-hM1, hM2, min(x1), max(x1)])
 plt.title('x (violin-B3.wav)')
 
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(3, 1, 2)
@@ -32,7 +32,7 @@ plt.axis([0, N / 4, -70, 0])
 plt.title('mX (rectangular window)')
 
 w = np.blackman(801)
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(3, 1, 3)

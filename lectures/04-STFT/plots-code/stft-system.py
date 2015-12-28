@@ -8,12 +8,12 @@ import numpy as np
 from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = audio.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.read_wav('../../../sounds/piano.wav')
 w = np.hamming(1024)
 N = 1024
 H = 512
-mX, pX = stft.fromAudio(x, w, N, H)
-y = stft.toAudio(mX, pX, w.size, H)
+mX, pX = stft.from_audio(x, w, N, H)
+y = stft.to_audio(mX, pX, w.size, H)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(411)
@@ -44,4 +44,4 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('stft-system.png')
-audio.wavwrite(y, fs, 'piano-stft.wav')
+audio.write_wav(y, fs, 'piano-stft.wav')

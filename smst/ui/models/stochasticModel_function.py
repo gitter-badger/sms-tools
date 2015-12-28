@@ -19,18 +19,18 @@ def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
     """
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute stochastic model
-    stocEnv = stochastic.fromAudio(x, H, N, stocf)
+    stocEnv = stochastic.from_audio(x, H, N, stocf)
 
     # synthesize sound from stochastic model
-    y = stochastic.toAudio(stocEnv, H, N)
+    y = stochastic.to_audio(stocEnv, H, N)
 
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModel.wav'
 
     # write output sound
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -66,7 +66,7 @@ def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_stochastic_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_stochastic_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

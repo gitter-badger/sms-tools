@@ -11,8 +11,8 @@ from smst.models import dft
 N = 128
 x1 = sawtooth(2 * np.pi * np.arange(-N / 2, N / 2) / float(N))
 x2 = sawtooth(2 * np.pi * np.arange(-N / 2 - 2, N / 2 - 2) / float(N))
-mX1, pX1 = dft.fromAudio(x1, np.ones(N), N)
-mX2, pX2 = dft.fromAudio(x2, np.ones(N), N)
+mX1, pX1 = dft.from_audio(x1, np.ones(N), N)
+mX2, pX2 = dft.from_audio(x2, np.ones(N), N)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(321)

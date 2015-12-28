@@ -23,22 +23,22 @@ def main(inputFile=demo_sound_path('piano.wav'), window='hamming', M=1024, N=102
     """
 
     # read input sound (monophonic with sampling rate of 44100)
-    fs, x = audio.wavread(inputFile)
+    fs, x = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # compute the magnitude and phase spectrogram
-    mX, pX = stft.fromAudio(x, w, N, H)
+    mX, pX = stft.from_audio(x, w, N, H)
 
     # perform the inverse stft
-    y = stft.toAudio(mX, pX, M, H)
+    y = stft.to_audio(mX, pX, M, H)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stft.wav'
 
     # write the sound resulting from the inverse stft
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -89,7 +89,7 @@ def main(inputFile=demo_sound_path('piano.wav'), window='hamming', M=1024, N=102
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_stft_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_stft_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

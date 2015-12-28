@@ -32,22 +32,22 @@ def main(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # detect harmonics of input sound
-    hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+    hfreq, hmag, hphase = harmonic.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
     # synthesize the harmonics
-    y = sine.toAudio(hfreq, hmag, hphase, Ns, H, fs)
+    y = sine.to_audio(hfreq, hmag, hphase, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'
 
     # write the sound resulting from harmonic analysis
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to show plots
     plt.figure(figsize=(12, 9))
@@ -86,7 +86,7 @@ def main(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_harmonic_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_harmonic_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

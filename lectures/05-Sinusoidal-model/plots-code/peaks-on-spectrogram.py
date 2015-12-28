@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = audio.wavread('../../../sounds/speech-male.wav')
+(fs, x) = audio.read_wav('../../../sounds/speech-male.wav')
 start = 1.25
 end = 1.79
 x1 = x[start * fs:end * fs]
@@ -20,8 +20,8 @@ minSineDur = 0
 maxnSines = 150
 freqDevOffset = 10
 freqDevSlope = 0.001
-mX, pX = stft.fromAudio(x1, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.from_audio(x1, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 plt.figure(1, figsize=(9.5, 7))
 maxplotfreq = 800.0

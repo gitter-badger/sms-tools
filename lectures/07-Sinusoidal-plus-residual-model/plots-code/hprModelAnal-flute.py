@@ -9,7 +9,7 @@ from scipy.signal import hamming
 from smst.models import harmonic, stft
 from smst.utils import audio, residual
 
-(fs, x) = audio.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/flute-A4.wav')
 w = np.blackman(551)
 N = 1024
 t = -100
@@ -23,10 +23,10 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns / 4
 
-mX, pX = stft.fromAudio(x, w, N, H)
-hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-xr = residual.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
-mXr, pXr = stft.fromAudio(xr, hamming(Ns), Ns, H)
+mX, pX = stft.from_audio(x, w, N, H)
+hfreq, hmag, hphase = harmonic.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+xr = residual.subtract_sinusoids(x, Ns, H, hfreq, hmag, hphase, fs)
+mXr, pXr = stft.from_audio(xr, hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
 plt.figure(1, figsize=(9, 7))
@@ -79,4 +79,4 @@ plt.title('pXr')
 
 plt.tight_layout()
 plt.savefig('hprModelAnal-flute.png')
-audio.wavwrite(5 * xr, fs, 'flute-residual.wav')
+audio.write_wav(5 * xr, fs, 'flute-residual.wav')

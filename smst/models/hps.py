@@ -13,7 +13,7 @@ from . import dft, harmonic, sine, stochastic
 from ..utils import peaks, residual, synth
 
 
-def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
+def from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
     """
     Analysis of a sound using the harmonic plus stochastic model
     x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
@@ -24,15 +24,15 @@ def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDu
     """
 
     # perform harmonic analysis
-    hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+    hfreq, hmag, hphase = harmonic.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
     # subtract sinusoids from original sound
-    xr = residual.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
+    xr = residual.subtract_sinusoids(x, Ns, H, hfreq, hmag, hphase, fs)
     # perform stochastic analysis of residual
-    stocEnv = stochastic.fromAudio(xr, H, H * 2, stocf)
+    stocEnv = stochastic.from_audio(xr, H, H * 2, stocf)
     return hfreq, hmag, hphase, stocEnv
 
 
-def toAudio(hfreq, hmag, hphase, stocEnv, N, H, fs):
+def to_audio(hfreq, hmag, hphase, stocEnv, N, H, fs):
     """
     Synthesis of a sound using the harmonic plus stochastic model
     hfreq, hmag: harmonic frequencies and amplitudes; stocEnv: stochastic envelope
@@ -40,8 +40,8 @@ def toAudio(hfreq, hmag, hphase, stocEnv, N, H, fs):
     returns y: output sound, yh: harmonic component, yst: stochastic component
     """
 
-    yh = sine.toAudio(hfreq, hmag, hphase, N, H, fs)  # synthesize harmonics
-    yst = stochastic.toAudio(stocEnv, H, H * 2)  # synthesize stochastic residual
+    yh = sine.to_audio(hfreq, hmag, hphase, N, H, fs)  # synthesize harmonics
+    yst = stochastic.to_audio(stocEnv, H, H * 2)  # synthesize stochastic residual
     y = yh[:min(yh.size, yst.size)] + yst[:min(yh.size, yst.size)]  # sum harmonic and stochastic components
     return y, yh, yst
 
@@ -80,17 +80,17 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
     while pin < pend:
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # find peaks
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # find peaks
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values
         ipfreq = fs * iploc / N  # convert peak locations to Hz
-        f0t = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+        f0t = peaks.find_fundamental_twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
         if ((f0stable == 0) & (f0t > 0)) \
                 or ((f0stable > 0) & (np.abs(f0stable - f0t) < f0stable / 5.0)):
             f0stable = f0t  # consider a stable f0 if it is close to the previous one
         else:
             f0stable = 0
-        hfreq, hmag, hphase = harmonic.findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs)  # find harmonics
+        hfreq, hmag, hphase = harmonic.find_harmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs)  # find harmonics
         hfreqp = hfreq
         ri = pin - hNs - 1  # input sound pointer for residual analysis
         xw2 = x[ri:ri + Ns] * wr  # window the input sound
@@ -99,7 +99,7 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
         fftbuffer[hNs:] = xw2[:hNs]
         X2 = fft(fftbuffer)  # compute FFT for residual analysis
         # -----synthesis-----
-        Yh = synth.genSpecSines(hfreq, hmag, hphase, Ns, fs)  # generate spec sines of harmonic component
+        Yh = synth.spectrum_for_sinusoids(hfreq, hmag, hphase, Ns, fs)  # generate spec sines of harmonic component
         Xr = X2 - Yh  # get the residual complex spectrum
         mXr = 20 * np.log10(abs(Xr[:hNs]))  # magnitude spectrum of residual
         mXrenv = resample(np.maximum(-200, mXr), mXr.size * stocf)  # decimate the magnitude spectrum and avoid -Inf
@@ -127,7 +127,7 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 
 # functions that implement transformations using the hpsModel
 
-def scaleTime(hfreq, hmag, stocEnv, timeScaling):
+def scale_time(hfreq, hmag, stocEnv, timeScaling):
     """
     Time scaling of the harmonic plus stochastic representation
     hfreq, hmag: harmonic frequencies and magnitudes, stocEnv: residual envelope

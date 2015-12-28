@@ -54,7 +54,7 @@ def TWM(pfreq, pmag, maxnpeaks, f0c):
     return f0, ErrorPM, ErrorMP, Error
 
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 N = 1024
 hN = N / 2
 M = 801
@@ -64,9 +64,9 @@ minf0 = 100
 maxf0 = 1500
 w = blackman(M)
 x1 = x[start:start + M]
-mX, pX = dft.fromAudio(x1, w, N)
-ploc = peaks.peakDetection(mX, t)
-iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
+mX, pX = dft.from_audio(x1, w, N)
+ploc = peaks.find_peaks(mX, t)
+iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)
 ipfreq = fs * iploc / N
 f0cand = np.arange(minf0, maxf0, 1.0)
 maxnpeaks = 10

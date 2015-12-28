@@ -32,17 +32,17 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # perform sinusoidal+sotchastic analysis
-    tfreq, tmag, tphase, stocEnv = sps.fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope,
+    tfreq, tmag, tphase, stocEnv = sps.from_audio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope,
                                                  stocf)
 
     # synthesize sinusoidal+stochastic model
-    y, ys, yst = sps.toAudio(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
+    y, ys, yst = sps.to_audio(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_spsModel_sines.wav'
@@ -50,9 +50,9 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_spsModel.wav'
 
     # write sounds files for sinusoidal, residual, and the sum
-    audio.wavwrite(ys, fs, outputFileSines)
-    audio.wavwrite(yst, fs, outputFileStochastic)
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(ys, fs, outputFileSines)
+    audio.write_wav(yst, fs, outputFileStochastic)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -101,7 +101,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_sps_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_sps_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

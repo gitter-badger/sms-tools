@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = audio.wavread('../../../sounds/mridangam.wav')
+(fs, x) = audio.read_wav('../../../sounds/mridangam.wav')
 w = np.hamming(801)
 N = 2048
 t = -90
@@ -18,14 +18,14 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns / 4
-mX, pX = stft.fromAudio(x, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.from_audio(x, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 timeScale = np.array(
     [.01, .0, .03, .03, .335, .4, .355, .42, .671, .8, .691, .82, .858, 1.2, .878, 1.22, 1.185, 1.6, 1.205, 1.62, 1.497,
      2.0, 1.517, 2.02, 1.686, 2.4, 1.706, 2.42, 1.978, 2.8])
-ytfreq, ytmag = sine.scaleTime(tfreq, tmag, timeScale)
-y = sine.toAudio(ytfreq, ytmag, np.array([]), Ns, H, fs)
-mY, pY = stft.fromAudio(y, w, N, H)
+ytfreq, ytmag = sine.scale_time(tfreq, tmag, timeScale)
+y = sine.to_audio(ytfreq, ytmag, np.array([]), Ns, H, fs)
+mY, pY = stft.from_audio(y, w, N, H)
 
 plt.figure(1, figsize=(12, 9))
 maxplotfreq = 4000.0
@@ -72,5 +72,5 @@ plt.axis([0, y.size / float(fs), min(y), max(y)])
 plt.title('y')
 
 plt.tight_layout()
-audio.wavwrite(y, fs, 'mridangam-sineModelTimeScale.wav')
+audio.write_wav(y, fs, 'mridangam-sineModelTimeScale.wav')
 plt.savefig('sineModelTimeScale-mridangam.png')

@@ -3,7 +3,7 @@ import numpy as np
 import utilFunctions_C.utilFunctions_C as UF_C
 
 
-def peakDetection(mX, t):
+def find_peaks(mX, t):
     """
     Detect spectral peak locations
     mX: magnitude spectrum, t: threshold
@@ -18,7 +18,7 @@ def peakDetection(mX, t):
     return ploc
 
 
-def peakInterp(mX, pX, ploc):
+def interpolate_peaks(mX, pX, ploc):
     """
     Interpolate peak values using parabolic interpolation
     mX, pX: magnitude and phase spectrum, ploc: locations of peaks
@@ -34,7 +34,7 @@ def peakInterp(mX, pX, ploc):
     return iploc, ipmag, ipphase
 
 
-def f0Twm(pfreq, pmag, ef0max, minf0, maxf0, f0t=0):
+def find_fundamental_twm(pfreq, pmag, ef0max, minf0, maxf0, f0t=0):
     """
     Function that wraps the f0 detection function TWM, selecting the possible f0 candidates
     and calling the function TWM with them
@@ -79,7 +79,7 @@ def f0Twm(pfreq, pmag, ef0max, minf0, maxf0, f0t=0):
         return 0
 
 
-def TWM_p(pfreq, pmag, f0c):
+def find_fundamental_twm_py(pfreq, pmag, f0c):
     """
     Two-way mismatch algorithm for f0 detection (by Beauchamp&Maher)
     [better to use the C version of this function: UF_C.twm]
@@ -126,7 +126,7 @@ def TWM_p(pfreq, pmag, f0c):
     return f0, Error[f0index]
 
 
-def cleaningTrack(track, minTrackLength=3):
+def clean_sinusoid_track(track, minTrackLength=3):
     """
     Delete fragments of one single track smaller than minTrackLength
     track: array of values; minTrackLength: minimum duration of tracks in number of frames

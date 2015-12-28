@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import hps
 
-(fs, x) = audio.wavread('../../../sounds/sax-phrase-short.wav')
+(fs, x) = audio.read_wav('../../../sounds/sax-phrase-short.wav')
 w = np.blackman(601)
 N = 1024
 t = -100
@@ -21,9 +21,9 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns / 4
 stocf = .2
-hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
+hfreq, hmag, hphase, mYst = hps.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns,
                                           stocf)
-y, yh, yst = hps.toAudio(hfreq, hmag, hphase, mYst, Ns, H, fs)
+y, yh, yst = hps.to_audio(hfreq, hmag, hphase, mYst, Ns, H, fs)
 
 maxplotfreq = 10000.0
 plt.figure(1, figsize=(9, 7))
@@ -55,6 +55,6 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('hpsModel-sax-phrase.png')
-audio.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
-audio.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
-audio.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
+audio.write_wav(y, fs, 'sax-phrase-hps-synthesis.wav')
+audio.write_wav(yh, fs, 'sax-phrase-harmonic.wav')
+audio.write_wav(yst, fs, 'sax-phrase-stochastic.wav')

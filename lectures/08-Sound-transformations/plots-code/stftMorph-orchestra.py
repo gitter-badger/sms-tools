@@ -8,8 +8,8 @@ import numpy as np
 from smst.utils import audio
 from smst.models import stft, stochastic
 
-(fs, x1) = audio.wavread('../../../sounds/orchestra.wav')
-(fs, x2) = audio.wavread('../../../sounds/speech-male.wav')
+(fs, x1) = audio.read_wav('../../../sounds/orchestra.wav')
+(fs, x2) = audio.read_wav('../../../sounds/speech-male.wav')
 w1 = np.hamming(1024)
 N1 = 1024
 H1 = 256
@@ -18,9 +18,9 @@ N2 = 1024
 smoothf = .2
 balancef = 0.5
 y = stft.morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
-mX2 = stochastic.fromAudio(x2, H1, H1 * 2, smoothf)
-mX, pX = stft.fromAudio(x1, w1, N1, H1)
-mY, pY = stft.fromAudio(y, w1, N1, H1)
+mX2 = stochastic.from_audio(x2, H1, H1 * 2, smoothf)
+mX, pX = stft.from_audio(x1, w1, N1, H1)
+mY, pY = stft.from_audio(y, w1, N1, H1)
 maxplotfreq = 10000.0
 
 plt.figure(1, figsize=(12, 9))
@@ -51,5 +51,5 @@ plt.title('mY')
 plt.autoscale(tight=True)
 
 plt.tight_layout()
-audio.wavwrite(y, fs, 'orchestra-speech-stftMorph.wav')
+audio.write_wav(y, fs, 'orchestra-speech-stftMorph.wav')
 plt.savefig('stftMorph-orchestra.png')

@@ -9,7 +9,7 @@ from scipy.interpolate import interp1d
 from smst.utils import audio
 from smst.models import sine
 
-(fs, x) = audio.wavread('../../../sounds/mridangam.wav')
+(fs, x) = audio.read_wav('../../../sounds/mridangam.wav')
 x1 = x[:int(1.49 * fs)]
 w = np.hamming(801)
 N = 2048
@@ -20,7 +20,7 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns / 4
-sfreq, smag, sphase = sine.fromAudio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+sfreq, smag, sphase = sine.from_audio(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 timeScale = np.array(
     [.01, .0, .03, .03, .335, .8, .355, .82, .671, 1.0, .691, 1.02, .858, 1.1, .878, 1.12, 1.185, 1.8, 1.205, 1.82,
      1.49, 2.0])

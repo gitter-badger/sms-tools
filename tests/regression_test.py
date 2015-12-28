@@ -1,7 +1,7 @@
 """
 This regression test allows to fix the outputs once and then compare subsequent
 outputs to the previous ones. This allows to spot an error during refactoring
-quickly. Many examples of models and transfomations are ran in this test.
+quickly. Many examples of models and transformations are ran in this test.
 
 # save expected outputs once to the expected/ dir
 $ python regression_test.py --save-expected

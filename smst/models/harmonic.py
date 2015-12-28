@@ -12,7 +12,7 @@ from . import dft, sine
 from ..utils import peaks, synth
 
 
-def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
+def from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
     """
     Analysis of a sound using the sinusoidal harmonic model
     x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512); t: threshold in negative dB,
@@ -36,17 +36,17 @@ def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minS
     f0stable = 0  # initialize f0 stable
     while pin <= pend:
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # detect peak locations
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # detect peak locations
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values
         ipfreq = fs * iploc / N  # convert locations to Hz
-        f0t = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+        f0t = peaks.find_fundamental_twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
         if ((f0stable == 0) & (f0t > 0)) \
                 or ((f0stable > 0) & (np.abs(f0stable - f0t) < f0stable / 5.0)):
             f0stable = f0t  # consider a stable f0 if it is close to the previous one
         else:
             f0stable = 0
-        hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope)  # find harmonics
+        hfreq, hmag, hphase = find_harmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope)  # find harmonics
         hfreqp = hfreq
         if pin == hM1:  # first frame
             xhfreq = np.array([hfreq])
@@ -57,7 +57,7 @@ def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minS
             xhmag = np.vstack((xhmag, np.array([hmag])))
             xhphase = np.vstack((xhphase, np.array([hphase])))
         pin += H  # advance sound pointer
-    xhfreq = sine.cleaningSineTracks(xhfreq, round(fs * minSineDur / H))  # delete tracks shorter than minSineDur
+    xhfreq = sine.clean_sinusoid_tracks(xhfreq, round(fs * minSineDur / H))  # delete tracks shorter than minSineDur
     return xhfreq, xhmag, xhphase
 
 
@@ -95,20 +95,20 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
     while pin < pend:
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # detect peak locations
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # detect peak locations
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values
         ipfreq = fs * iploc / N
-        f0t = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+        f0t = peaks.find_fundamental_twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
         if ((f0stable == 0) & (f0t > 0)) \
                 or ((f0stable > 0) & (np.abs(f0stable - f0t) < f0stable / 5.0)):
             f0stable = f0t  # consider a stable f0 if it is close to the previous one
         else:
             f0stable = 0
-        hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs)  # find harmonics
+        hfreq, hmag, hphase = find_harmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs)  # find harmonics
         hfreqp = hfreq
         # -----synthesis-----
-        Yh = synth.genSpecSines(hfreq, hmag, hphase, Ns, fs)  # generate spec sines
+        Yh = synth.spectrum_for_sinusoids(hfreq, hmag, hphase, Ns, fs)  # generate spec sines
         fftbuffer = np.real(ifft(Yh))  # inverse FFT
         yh[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         yh[hNs - 1:] = fftbuffer[:hNs + 1]
@@ -121,7 +121,7 @@ def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 
 # transformations applied to the harmonics of a sound
 
-def scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs):
+def scale_frequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs):
     """
     Frequency scaling of the harmonics of a sound
     hfreq, hmag: frequencies and magnitudes of input harmonics
@@ -164,7 +164,7 @@ def scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservatio
 
 # -- supporting function --
 
-def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
+def find_fundamental_freq(x, fs, w, N, H, t, minf0, maxf0, f0et):
     """
     Fundamental frequency detection of a sound using twm algorithm
     x: input sound; fs: sampling rate; w: analysis window;
@@ -194,11 +194,11 @@ def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
     f0stable = 0  # initialize f0 stable
     while pin < pend:
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # detect peak locations
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # detect peak locations
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values
         ipfreq = fs * iploc / N  # convert locations to Hez
-        f0t = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
+        f0t = peaks.find_fundamental_twm(ipfreq, ipmag, f0et, minf0, maxf0, f0stable)  # find f0
         if ((f0stable == 0) & (f0t > 0)) \
                 or ((f0stable > 0) & (np.abs(f0stable - f0t) < f0stable / 5.0)):
             f0stable = f0t  # consider a stable f0 if it is close to the previous one
@@ -209,7 +209,7 @@ def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
     return f0
 
 
-def findHarmonics(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
+def find_harmonics(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
     """
     Detection of the harmonics of a frame from a set of spectral peaks using f0
     to the ideal harmonic series built on top of a fundamental frequency

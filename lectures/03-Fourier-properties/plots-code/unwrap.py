@@ -8,7 +8,7 @@ from scipy.fftpack import fft, fftshift
 
 from smst.utils import audio
 
-(fs, x) = audio.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = audio.read_wav('../../../sounds/soprano-E4.wav')
 N = 1024
 x1 = np.blackman(N) * x[40000:40000 + N]
 

@@ -12,7 +12,7 @@ from smst.utils import audio
 
 lpc = ess.LPC(order=14)
 N = 512
-(fs, x) = audio.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = audio.read_wav('../../../sounds/soprano-E4.wav')
 first = 20000
 last = first + N
 x1 = x[first:last]

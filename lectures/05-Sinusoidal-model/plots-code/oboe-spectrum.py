@@ -8,12 +8,12 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 w = np.hamming(1001)
 N = 2048
 pin = 5000
 x1 = x[pin:pin + w.size]
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(311)

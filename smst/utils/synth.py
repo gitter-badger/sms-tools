@@ -1,10 +1,10 @@
 import numpy as np
 
-from .window import genBhLobe
+from .window import blackman_harris_lobe
 import utilFunctions_C.utilFunctions_C as UF_C
 
 
-def genSpecSines(ipfreq, ipmag, ipphase, N, fs):
+def spectrum_for_sinusoids(ipfreq, ipmag, ipphase, N, fs):
     """
     Generate a spectrum from a series of sine values, calling a C function
     ipfreq, ipmag, ipphase: sine peaks frequencies, magnitudes and phases
@@ -16,7 +16,7 @@ def genSpecSines(ipfreq, ipmag, ipphase, N, fs):
     return Y
 
 
-def genSpecSines_p(ipfreq, ipmag, ipphase, N, fs):
+def spectrum_for_sinusoids_py(ipfreq, ipmag, ipphase, N, fs):
     """
     Generate a spectrum from a series of sine values
     iploc, ipmag, ipphase: sine peaks locations, magnitudes and phases
@@ -32,7 +32,7 @@ def genSpecSines_p(ipfreq, ipmag, ipphase, N, fs):
             continue
         binremainder = round(loc) - loc
         lb = np.arange(binremainder - 4, binremainder + 5)  # main lobe (real value) bins to read
-        lmag = genBhLobe(lb) * 10 ** (ipmag[i] / 20)  # lobe magnitudes of the complex exponential
+        lmag = blackman_harris_lobe(lb) * 10 ** (ipmag[i] / 20)  # lobe magnitudes of the complex exponential
         b = np.arange(round(loc) - 4, round(loc) + 5)
         for m in range(0, 9):
             if b[m] < 0:  # peak lobe crosses DC bin
@@ -47,7 +47,7 @@ def genSpecSines_p(ipfreq, ipmag, ipphase, N, fs):
     return Y
 
 
-def sinewaveSynth(freqs, amp, H, fs):
+def synthesize_sinusoid(freqs, amp, H, fs):
     """
     Synthesis of one sinusoid with time-varying frequency
     freqs, amps: array of frequencies and amplitudes of sinusoids

@@ -36,13 +36,13 @@ harmDevSlope2 = 0.01
 Ns = 512
 H = 128
 
-(fs1, x1) = audio.wavread(inputFile1)
-(fs2, x2) = audio.wavread(inputFile2)
+(fs1, x1) = audio.read_wav(inputFile1)
+(fs2, x2) = audio.read_wav(inputFile2)
 w1 = get_window(window1, M1)
 w2 = get_window(window2, M2)
-hfreq1, hmag1, hphase1, stocEnv1 = hps.fromAudio(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1,
+hfreq1, hmag1, hphase1, stocEnv1 = hps.from_audio(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1,
                                                  minSineDur1, Ns, stocf)
-hfreq2, hmag2, hphase2, stocEnv2 = hps.fromAudio(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2,
+hfreq2, hmag2, hphase2, stocEnv2 = hps.from_audio(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2,
                                                  minSineDur2, Ns, stocf)
 
 hfreqIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
@@ -50,9 +50,9 @@ hmagIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 stocIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 yhfreq, yhmag, ystocEnv = hps.morph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
-y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
+y, yh, yst = hps.to_audio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
 
-audio.wavwrite(y, fs1, 'hps-morph-total.wav')
+audio.write_wav(y, fs1, 'hps-morph-total.wav')
 
 plt.figure(figsize=(12, 9))
 

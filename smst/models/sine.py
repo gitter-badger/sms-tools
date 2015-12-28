@@ -12,7 +12,7 @@ from . import dft
 from ..utils import peaks, synth
 
 
-def fromAudio(x, fs, w, N, H, t, maxnSines=100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
+def from_audio(x, fs, w, N, H, t, maxnSines=100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
     """
     Analysis of a sound using the sinusoidal model with sine tracking
     x: input array sound, w: analysis window, N: size of complex spectrum, H: hop-size, t: threshold in negative dB
@@ -34,12 +34,12 @@ def fromAudio(x, fs, w, N, H, t, maxnSines=100, minSineDur=.01, freqDevOffset=20
     tfreq = np.array([])
     while pin < pend:  # while input sound pointer is within sound
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # detect locations of peaks
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values by interpolation
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # detect locations of peaks
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values by interpolation
         ipfreq = fs * iploc / float(N)  # convert peak locations to Hertz
         # perform sinusoidal tracking by adding peaks to trajectories
-        tfreq, tmag, tphase = sineTracking(ipfreq, ipmag, ipphase, tfreq, freqDevOffset, freqDevSlope)
+        tfreq, tmag, tphase = track_sinusoids(ipfreq, ipmag, ipphase, tfreq, freqDevOffset, freqDevSlope)
         tfreq = np.resize(tfreq, min(maxnSines, tfreq.size))  # limit number of tracks to maxnSines
         tmag = np.resize(tmag, min(maxnSines, tmag.size))  # limit number of tracks to maxnSines
         tphase = np.resize(tphase, min(maxnSines, tphase.size))  # limit number of tracks to maxnSines
@@ -59,11 +59,11 @@ def fromAudio(x, fs, w, N, H, t, maxnSines=100, minSineDur=.01, freqDevOffset=20
             xtphase = np.vstack((xtphase, jtphase))
         pin += H
     # delete sine tracks shorter than minSineDur
-    xtfreq = cleaningSineTracks(xtfreq, round(fs * minSineDur / H))
+    xtfreq = clean_sinusoid_tracks(xtfreq, round(fs * minSineDur / H))
     return xtfreq, xtmag, xtphase
 
 
-def toAudio(tfreq, tmag, tphase, N, H, fs):
+def to_audio(tfreq, tmag, tphase, N, H, fs):
     """
     Synthesis of a sound using the sinusoidal model
     tfreq,tmag,tphase: frequencies, magnitudes and phases of sinusoids
@@ -89,7 +89,7 @@ def toAudio(tfreq, tmag, tphase, N, H, fs):
             ytphase = tphase[l, :]
         else:
             ytphase += (np.pi * (lastytfreq + tfreq[l, :]) / fs) * H  # propagate phases
-        Y = synth.genSpecSines(tfreq[l, :], tmag[l, :], ytphase, N, fs)  # generate sines in the spectrum
+        Y = synth.spectrum_for_sinusoids(tfreq[l, :], tmag[l, :], ytphase, N, fs)  # generate sines in the spectrum
         lastytfreq = tfreq[l, :]  # save frequency for phase propagation
         ytphase %= 2 * np.pi  # make phase inside 2*pi
         yw = np.real(fftshift(ifft(Y)))  # compute inverse FFT
@@ -127,12 +127,12 @@ def reconstruct(x, fs, w, N, t):
     while pin < pend:  # while input sound pointer is within sound
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # detect locations of peaks
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values by interpolation
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # detect locations of peaks
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values by interpolation
         ipfreq = fs * iploc / float(N)  # convert peak locations to Hertz
         # -----synthesis-----
-        Y = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)  # generate sines in the spectrum
+        Y = synth.spectrum_for_sinusoids(ipfreq, ipmag, ipphase, Ns, fs)  # generate sines in the spectrum
         fftbuffer = np.real(ifft(Y))  # compute inverse FFT
         yw[:hNs - 1] = fftbuffer[hNs + 1:]  # undo zero-phase window
         yw[hNs - 1:] = fftbuffer[:hNs + 1]
@@ -143,7 +143,7 @@ def reconstruct(x, fs, w, N, t):
 
 # functions that implement transformations using the sineModel
 
-def scaleTime(sfreq, smag, timeScaling):
+def scale_time(sfreq, smag, timeScaling):
     """
     Time scaling of sinusoidal tracks
     sfreq, smag: frequencies and magnitudes of input sinusoidal tracks
@@ -169,7 +169,7 @@ def scaleTime(sfreq, smag, timeScaling):
     return ysfreq, ysmag
 
 
-def scaleFrequencies(sfreq, freqScaling):
+def scale_frequencies(sfreq, freqScaling):
     """
     Frequency scaling of sinusoidal tracks
     sfreq: frequencies of input sinusoidal tracks
@@ -193,7 +193,7 @@ def scaleFrequencies(sfreq, freqScaling):
 
 # -- support functions --
 
-def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
+def track_sinusoids(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
     """
     Tracking sinusoids from one frame to the next
     pfreq, pmag, pphase: frequencies and magnitude of current frame
@@ -251,7 +251,7 @@ def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01
     return tfreqn, tmagn, tphasen
 
 
-def cleaningSineTracks(tfreq, minTrackLength=3):
+def clean_sinusoid_tracks(tfreq, minTrackLength=3):
     """
     Delete short fragments of a collection of sinusoidal tracks
     tfreq: frequency of tracks

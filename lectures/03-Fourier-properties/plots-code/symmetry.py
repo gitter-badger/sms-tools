@@ -9,7 +9,7 @@ from scipy.fftpack import fft, fftshift
 
 from smst.utils import audio
 
-(fs, x) = audio.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = audio.read_wav('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)
 N = 512
 pin = 5000

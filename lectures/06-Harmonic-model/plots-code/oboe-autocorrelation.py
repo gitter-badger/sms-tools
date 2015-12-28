@@ -8,7 +8,7 @@ import numpy as np
 
 from smst.utils import audio
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 
 M = 500
 start = .8 * fs

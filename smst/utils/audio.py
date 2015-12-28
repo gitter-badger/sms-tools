@@ -6,7 +6,7 @@ import sys
 import numpy as np
 from scipy.io.wavfile import write, read
 
-from .files import ensureDirectory
+from .files import ensure_directory
 
 winsound_imported = False
 if sys.platform == "win32":
@@ -23,7 +23,7 @@ INT64_FAC = (2 ** 63) - 1
 norm_fact = {'int16': INT16_FAC, 'int32': INT32_FAC, 'int64': INT64_FAC, 'float32': 1.0, 'float64': 1.0}
 
 
-def wavread(filename):
+def read_wav(filename):
     """
     Read a sound file and convert it to a normalized floating point array
     filename: name of file to read
@@ -46,7 +46,7 @@ def wavread(filename):
     return fs, x
 
 
-def wavplay(filename):
+def play_wav(filename):
     """
     Play a wav audio file from system using OS calls
     filename: name of file to read
@@ -70,7 +70,7 @@ def wavplay(filename):
             print("Platform not recognized")
 
 
-def wavwrite(y, fs, filename):
+def write_wav(y, fs, filename):
     """
     Write a sound file from an array with the sound and the sampling rate.
     Creates the directory for the file if it does not exist.
@@ -79,7 +79,7 @@ def wavwrite(y, fs, filename):
     """
 
     dir = os.path.dirname(filename)
-    ensureDirectory(dir)
+    ensure_directory(dir)
 
     x = copy.deepcopy(y)  # copy array
     x *= INT16_FAC  # scaling floating point -1 to 1 range signal to int16 range

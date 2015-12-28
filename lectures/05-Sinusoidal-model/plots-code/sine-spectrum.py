@@ -8,13 +8,13 @@ import numpy as np
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/sine-440.wav')
+(fs, x) = audio.read_wav('../../../sounds/sine-440.wav')
 M = 400
 x1 = x[2000:2000 + M]
 N = 2048
 hM = int(M / 2.0)
 w = np.hamming(M)
-mX, pX = dft.fromAudio(x1, w, N)
+mX, pX = dft.from_audio(x1, w, N)
 freqaxis = fs * np.arange(0, mX.size) / float(N)
 taxis = np.arange(N) / float(fs)
 

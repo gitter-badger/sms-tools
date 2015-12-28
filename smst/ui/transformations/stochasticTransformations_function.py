@@ -23,20 +23,20 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling=np.array(
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # perform stochastic analysis
-    mYst = stochastic.fromAudio(x, H, H * 2, stocf)
+    mYst = stochastic.from_audio(x, H, H * 2, stocf)
 
     # perform time scaling of stochastic representation
-    ystocEnv = stochastic.scaleTime(mYst, timeScaling)
+    ystocEnv = stochastic.scale_time(mYst, timeScaling)
 
     # synthesize output sound
-    y = stochastic.toAudio(ystocEnv, H, H * 2)
+    y = stochastic.to_audio(ystocEnv, H, H * 2)
 
     # write output sound
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModelTransformation.wav'
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to plot
     plt.figure(figsize=(12, 9))
@@ -83,7 +83,7 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling=np.array(
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_stochastic_transformation.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_stochastic_transformation.png' % files.strip_file(inputFile))
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio, peaks
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/oboe-A4.wav')
 N = 512 * 2
 M = 511
 t = -60
@@ -18,9 +18,9 @@ hN = N / 2
 hM = (M + 1) / 2
 
 x1 = x[start:start + M]
-mX, pX = dft.fromAudio(x1, w, N)
-ploc = peaks.peakDetection(mX, t)
-iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
+mX, pX = dft.from_audio(x1, w, N)
+ploc = peaks.find_peaks(mX, t)
+iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)
 pmag = mX[ploc]
 freqaxis = fs * np.arange(mX.size) / float(N)
 

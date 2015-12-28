@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import harmonic, sine
 
-(fs, x) = audio.wavread('../../../sounds/vignesh.wav')
+(fs, x) = audio.read_wav('../../../sounds/vignesh.wav')
 w = np.blackman(1201)
 N = 2048
 t = -90
@@ -20,8 +20,8 @@ Ns = 512
 H = Ns / 4
 minSineDur = .1
 harmDevSlope = 0.01
-hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-y = sine.toAudio(hfreq, hmag, hphase, Ns, H, fs)
+hfreq, hmag, hphase = harmonic.from_audio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+y = sine.to_audio(hfreq, hmag, hphase, Ns, H, fs)
 
 numFrames = int(hfreq[:, 0].size)
 frmTime = H * np.arange(numFrames) / float(fs)
@@ -46,5 +46,5 @@ plt.axis([0, y.size / float(fs), min(y), max(y)])
 plt.title('yh')
 
 plt.tight_layout()
-audio.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
+audio.write_wav(y, fs, 'vignesh-harmonic-synthesis.wav')
 plt.savefig('harmonicModel-analysis-synthesis.png')

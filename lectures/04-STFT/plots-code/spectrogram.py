@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = audio.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.read_wav('../../../sounds/piano.wav')
 w = np.hamming(1001)
 N = 1024
 H = 256
-mX, pX = stft.fromAudio(x, w, N, H)
+mX, pX = stft.from_audio(x, w, N, H)
 
 plt.figure(1, figsize=(9.5, 6))
 

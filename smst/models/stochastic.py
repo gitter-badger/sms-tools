@@ -6,10 +6,10 @@ from scipy.interpolate import interp1d
 from scipy.signal import hanning, resample
 from scipy.fftpack import fft, ifft
 
-from ..utils.math import isPower2
+from ..utils.math import is_power_of_two
 
 
-def fromAudio(x, H, N, stocf):
+def from_audio(x, H, N, stocf):
     """
     Stochastic analysis of a sound
     x: input array sound, H: hop size, N: fftsize
@@ -28,7 +28,7 @@ def fromAudio(x, H, N, stocf):
     if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
-    if not (isPower2(N)):  # raise error if N not a power of two
+    if not (is_power_of_two(N)):  # raise error if N not a power of two
         raise ValueError("FFT size (N) is not a power of 2")
 
     w = hanning(N)  # analysis window
@@ -49,14 +49,14 @@ def fromAudio(x, H, N, stocf):
     return stocEnv
 
 
-def toAudio(stocEnv, H, N):
+def to_audio(stocEnv, H, N):
     """
     Stochastic synthesis of a sound
     stocEnv: stochastic envelope; H: hop size; N: fft size
     returns y: output sound
     """
 
-    if not (isPower2(N)):  # raise error if N not a power of two
+    if not (is_power_of_two(N)):  # raise error if N not a power of two
         raise ValueError("N is not a power of two")
 
     hN = N / 2 + 1  # positive size of fft
@@ -98,7 +98,7 @@ def reconstruct(x, H, N, stocf):
     if H <= 0:  # raise error if hop size 0 or negative
         raise ValueError("Hop size (H) smaller or equal to 0")
 
-    if not (isPower2(N)):  # raise error if N not a power of twou
+    if not (is_power_of_two(N)):  # raise error if N not a power of twou
         raise ValueError("FFT size (N) is not a power of 2")
 
     w = hanning(N)  # analysis/synthesis window
@@ -129,7 +129,7 @@ def reconstruct(x, H, N, stocf):
 
 # functions that implement transformations using the hpsModel
 
-def scaleTime(stocEnv, timeScaling):
+def scale_time(stocEnv, timeScaling):
     """
     Time scaling of the stochastic representation of a sound
     stocEnv: stochastic envelope

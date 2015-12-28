@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = audio.wavread('../../../sounds/orchestra.wav')
+(fs, x) = audio.read_wav('../../../sounds/orchestra.wav')
 w = np.hamming(2048)
 N = 2048
 H = 512
@@ -19,8 +19,8 @@ bandpass = (np.hanning(nBins) * 65.0) - 60
 filt = np.zeros(N / 2 + 1) - 60
 filt[startBin:startBin + nBins] = bandpass
 y = stft.filter(x, fs, w, N, H, filt)
-mX, pX = stft.fromAudio(x, w, N, H)
-mY, pY = stft.fromAudio(y, w, N, H)
+mX, pX = stft.from_audio(x, w, N, H)
+mY, pY = stft.from_audio(y, w, N, H)
 
 plt.figure(1, figsize=(12, 9))
 plt.subplot(311)
@@ -45,5 +45,5 @@ plt.title('mY')
 plt.autoscale(tight=True)
 
 plt.tight_layout()
-audio.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
+audio.write_wav(y, fs, 'orchestra-stft-filtering.wav')
 plt.savefig('stftFiltering-orchestra.png')

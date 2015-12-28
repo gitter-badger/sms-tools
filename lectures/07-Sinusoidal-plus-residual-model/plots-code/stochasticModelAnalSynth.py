@@ -8,14 +8,14 @@ import numpy as np
 from smst.utils import audio
 from smst.models import stft, stochastic
 
-(fs, x) = audio.wavread('../../../sounds/ocean.wav')
+(fs, x) = audio.read_wav('../../../sounds/ocean.wav')
 w = np.hamming(512)
 N = 512
 H = 256
 stocf = .1
-mYst = stochastic.fromAudio(x, H, N, stocf)
-y = stochastic.toAudio(mYst, H, N)
-mX, pX = stft.fromAudio(x, w, N, H)
+mYst = stochastic.from_audio(x, H, N, stocf)
+y = stochastic.to_audio(mYst, H, N)
+mX, pX = stft.from_audio(x, w, N, H)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(411)
@@ -46,4 +46,4 @@ plt.axis([0, y.size / float(fs), min(y), max(y)])
 
 plt.tight_layout()
 plt.savefig('stochasticModelAnalSynth.png')
-audio.wavwrite(y, fs, 'ocean-synthesis.wav')
+audio.write_wav(y, fs, 'ocean-synthesis.wav')

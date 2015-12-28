@@ -10,7 +10,7 @@ from smst.models import sine, stft
 
 plt.figure(1, figsize=(9, 6))
 plt.subplot(211)
-(fs, x) = audio.wavread('../../../sounds/carnatic.wav')
+(fs, x) = audio.read_wav('../../../sounds/carnatic.wav')
 x1 = x[4.35 * fs:]
 w = np.blackman(1301)
 N = 2048
@@ -20,8 +20,8 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = stft.fromAudio(x, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.from_audio(x, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
 maxplotbin = int(N * maxplotfreq / fs)
@@ -38,7 +38,7 @@ plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (carnatic.wav)')
 
 plt.subplot(212)
-(fs, x) = audio.wavread('../../../sounds/vignesh.wav')
+(fs, x) = audio.read_wav('../../../sounds/vignesh.wav')
 w = np.blackman(1101)
 N = 2048
 H = 250
@@ -47,8 +47,8 @@ minSineDur = .1
 maxnSines = 200
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = stft.fromAudio(x, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.from_audio(x, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
 maxplotbin = int(N * maxplotfreq / fs)

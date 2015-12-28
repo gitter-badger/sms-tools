@@ -32,22 +32,22 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     H = 128
 
     # read input sound
-    fs, x = audio.wavread(inputFile)
+    fs, x = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # analyze the sound with the sinusoidal model
-    tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+    tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
     # synthesize the output sound from the sinusoidal representation
-    y = sine.toAudio(tfreq, tmag, tphase, Ns, H, fs)
+    y = sine.to_audio(tfreq, tmag, tphase, Ns, H, fs)
 
     # output sound file name
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
 
     # write the synthesized sound obtained from the sinusoidal synthesis
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to show plots
     plt.figure(figsize=(12, 9))
@@ -86,7 +86,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_sine_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_sine_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

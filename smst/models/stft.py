@@ -9,7 +9,7 @@ from scipy.signal import resample
 from . import dft
 
 
-def fromAudio(x, w, N, H):
+def from_audio(x, w, N, H):
     """
     Analysis of a sound using the short-time Fourier transform
     x: input array sound, w: analysis window, N: FFT size, H: hop size
@@ -28,7 +28,7 @@ def fromAudio(x, w, N, H):
     w = w / sum(w)  # normalize analysis window
     while pin <= pend:  # while sound pointer is smaller than last sample
         x1 = x[pin - hM1:pin + hM2]  # select one frame of input sound
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
         if pin == hM1:  # if first frame create output arrays
             xmX = np.array([mX])
             xpX = np.array([pX])
@@ -39,7 +39,7 @@ def fromAudio(x, w, N, H):
     return xmX, xpX
 
 
-def toAudio(mY, pY, M, H):
+def to_audio(mY, pY, M, H):
     """
     Synthesis of a sound using the short-time Fourier transform
     mY: magnitude spectra, pY: phase spectra, M: window size, H: hop-size
@@ -51,7 +51,7 @@ def toAudio(mY, pY, M, H):
     y = np.zeros(nFrames * H + hM1 + hM2)  # initialize output array
     pin = hM1
     for i in range(nFrames):  # iterate over all frames
-        y1 = dft.toAudio(mY[i, :], pY[i, :], M)  # compute idft
+        y1 = dft.to_audio(mY[i, :], pY[i, :], M)  # compute idft
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
@@ -81,9 +81,9 @@ def reconstruct(x, w, N, H):
     while pin <= pend:  # while sound pointer is smaller than last sample
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select one frame of input sound
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
         # -----synthesis-----
-        y1 = dft.toAudio(mX, pX, M)  # compute idft
+        y1 = dft.to_audio(mX, pX, M)  # compute idft
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
@@ -115,11 +115,11 @@ def filter(x, fs, w, N, H, filter):
     while pin <= pend:  # while sound pointer is smaller than last sample
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select one frame of input sound
-        mX, pX = dft.fromAudio(x1, w, N)  # compute DFT
+        mX, pX = dft.from_audio(x1, w, N)  # compute DFT
         # ------transformation-----
         mY = mX + filter  # filter input magnitude spectrum
         # -----synthesis-----
-        y1 = dft.toAudio(mY, pX, M)  # compute IDFT
+        y1 = dft.to_audio(mY, pX, M)  # compute IDFT
         y[pin - hM1:pin + hM2] += H * y1  # overlap-add to generate output sound
         pin += H  # advance sound pointer
     y = np.delete(y, range(hM2))  # delete half of first window
@@ -167,14 +167,14 @@ def morph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef):
     y = np.zeros(x1.size)  # initialize output array
     for l in range(L):
         # -----analysis-----
-        mX1, pX1 = dft.fromAudio(x1[pin1 - hM1_1:pin1 + hM1_2], w1, N1)  # compute dft
-        mX2, pX2 = dft.fromAudio(x2[pin2 - hM2_1:pin2 + hM2_2], w2, N2)  # compute dft
+        mX1, pX1 = dft.from_audio(x1[pin1 - hM1_1:pin1 + hM1_2], w1, N1)  # compute dft
+        mX2, pX2 = dft.from_audio(x2[pin2 - hM2_1:pin2 + hM2_2], w2, N2)  # compute dft
         # -----transformation-----
         mX2smooth = resample(np.maximum(-200, mX2), mX2.size * smoothf)  # smooth spectrum of second sound
         mX2 = resample(mX2smooth, mX1.size)  # generate back the same size spectrum
         mY = balancef * mX2 + (1 - balancef) * mX1  # generate output spectrum
         # -----synthesis-----
-        y[pin1 - hM1_1:pin1 + hM1_2] += H1 * dft.toAudio(mY, pX1, M1)  # overlap-add to generate output sound
+        y[pin1 - hM1_1:pin1 + hM1_2] += H1 * dft.to_audio(mY, pX1, M1)  # overlap-add to generate output sound
         pin1 += H1  # advance sound pointer
         pin2 += H2  # advance sound pointer
     y = np.delete(y, range(hM1_2))  # delete half of first window

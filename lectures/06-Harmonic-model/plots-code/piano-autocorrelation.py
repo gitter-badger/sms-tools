@@ -8,7 +8,7 @@ import numpy as np
 
 from smst.utils import audio
 
-(fs, x) = audio.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.read_wav('../../../sounds/piano.wav')
 start = 13860
 M = 800
 xp = x[start:start + M] / float(max(x[start:start + M]))

@@ -8,7 +8,7 @@ import numpy as np
 from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = audio.wavread('../../../sounds/bendir.wav')
+(fs, x) = audio.read_wav('../../../sounds/bendir.wav')
 w = np.hamming(2001)
 N = 2048
 H = 200
@@ -17,8 +17,8 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 10
 freqDevSlope = 0.001
-mX, pX = stft.fromAudio(x, w, N, H)
-tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.from_audio(x, w, N, H)
+tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 plt.figure(1, figsize=(9.5, 7))
 maxplotfreq = 800.0

@@ -33,19 +33,19 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     H = 128
 
     # read input sound
-    (fs, x) = audio.wavread(inputFile)
+    (fs, x) = audio.read_wav(inputFile)
 
     # compute analysis window
     w = get_window(window, M)
 
     # perform sinusoidal plus residual analysis
-    tfreq, tmag, tphase, xr = spr.fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
+    tfreq, tmag, tphase, xr = spr.from_audio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
     # compute spectrogram of residual
-    mXr, pXr = stft.fromAudio(xr, w, N, H)
+    mXr, pXr = stft.from_audio(xr, w, N, H)
 
     # sum sinusoids and residual
-    y, ys = spr.toAudio(tfreq, tmag, tphase, xr, Ns, H, fs)
+    y, ys = spr.to_audio(tfreq, tmag, tphase, xr, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
     outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sprModel_sines.wav'
@@ -53,9 +53,9 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sprModel.wav'
 
     # write sounds files for sinusoidal, residual, and the sum
-    audio.wavwrite(ys, fs, outputFileSines)
-    audio.wavwrite(xr, fs, outputFileResidual)
-    audio.wavwrite(y, fs, outputFile)
+    audio.write_wav(ys, fs, outputFileSines)
+    audio.write_wav(xr, fs, outputFileResidual)
+    audio.write_wav(y, fs, outputFile)
 
     # create figure to show plots
     plt.figure(figsize=(12, 9))
@@ -101,7 +101,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
     if interactive:
         plt.show()
     if plotFile:
-        plt.savefig('output_plots/%s_spr_model.png' % files.stripFile(inputFile))
+        plt.savefig('output_plots/%s_spr_model.png' % files.strip_file(inputFile))
 
 
 if __name__ == "__main__":

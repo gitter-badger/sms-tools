@@ -20,7 +20,7 @@ yploc = Ns * freqs / fs
 ypmag = 20 * np.log10(amps / 2.0)
 ypphase = phases
 
-Y = synth.genSpecSines(freqs, ypmag, ypphase, Ns, fs)
+Y = synth.spectrum_for_sinusoids(freqs, ypmag, ypphase, Ns, fs)
 mY = 20 * np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y = fftshift(ifft(Y)) * sum(blackmanharris(Ns))

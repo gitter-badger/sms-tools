@@ -9,8 +9,8 @@ from scipy.fftpack import fft
 from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = audio.wavread('../../../sounds/ocean.wav')
-(fs, x2) = audio.wavread('../../../sounds/impulse-response.wav')
+(fs, x) = audio.read_wav('../../../sounds/ocean.wav')
+(fs, x2) = audio.read_wav('../../../sounds/impulse-response.wav')
 x1 = x[40000:44096]
 N = 4096
 
@@ -25,14 +25,14 @@ plt.title('x2 (impulse-response.wav)')
 plt.plot(x2, 'b')
 plt.axis([0, N, min(x2), max(x2)])
 
-mX1, pX1 = dft.fromAudio(x1, np.ones(N), N)
+mX1, pX1 = dft.from_audio(x1, np.ones(N), N)
 mX1 = mX1 - max(mX1)
 plt.subplot(3, 2, 3)
 plt.title('X1')
 plt.plot(mX1, 'r')
 plt.axis([0, N / 2, -70, 0])
 
-mX2, pX2 = dft.fromAudio(x2, np.ones(N), N)
+mX2, pX2 = dft.from_audio(x2, np.ones(N), N)
 mX2 = mX2 - max(mX2)
 plt.subplot(3, 2, 4)
 plt.title('X2')
@@ -40,7 +40,7 @@ plt.plot(mX2, 'r')
 plt.axis([0, N / 2, -70, 0])
 
 y = np.convolve(x1, x2)
-mY, pY = dft.fromAudio(y[0:N], np.ones(N), N)
+mY, pY = dft.from_audio(y[0:N], np.ones(N), N)
 mY = mY - max(mY)
 plt.subplot(3, 2, 5)
 plt.title('DFT(x1 * x2)')

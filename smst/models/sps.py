@@ -11,7 +11,7 @@ from . import dft, sine, stochastic
 from ..utils import peaks, residual, synth
 
 
-def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
+def from_audio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
     """
     Analysis of a sound using the sinusoidal plus stochastic model
     x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
@@ -24,14 +24,14 @@ def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSl
     """
 
     # perform sinusoidal analysis
-    tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+    tfreq, tmag, tphase = sine.from_audio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
     Ns = 512
-    xr = residual.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)  # subtract sinusoids from original sound
-    stocEnv = stochastic.fromAudio(xr, H, H * 2, stocf)  # compute stochastic model of residual
+    xr = residual.subtract_sinusoids(x, Ns, H, tfreq, tmag, tphase, fs)  # subtract sinusoids from original sound
+    stocEnv = stochastic.from_audio(xr, H, H * 2, stocf)  # compute stochastic model of residual
     return tfreq, tmag, tphase, stocEnv
 
 
-def toAudio(tfreq, tmag, tphase, stocEnv, N, H, fs):
+def to_audio(tfreq, tmag, tphase, stocEnv, N, H, fs):
     """
     Synthesis of a sound using the sinusoidal plus stochastic model
     tfreq, tmag, tphase: sinusoidal frequencies, amplitudes and phases; stocEnv: stochastic envelope
@@ -39,8 +39,8 @@ def toAudio(tfreq, tmag, tphase, stocEnv, N, H, fs):
     returns y: output sound, ys: sinusoidal component, yst: stochastic component
     """
 
-    ys = sine.toAudio(tfreq, tmag, tphase, N, H, fs)  # synthesize sinusoids
-    yst = stochastic.toAudio(stocEnv, H, H * 2)  # synthesize stochastic residual
+    ys = sine.to_audio(tfreq, tmag, tphase, N, H, fs)  # synthesize sinusoids
+    yst = stochastic.to_audio(stocEnv, H, H * 2)  # synthesize stochastic residual
     y = ys[:min(ys.size, yst.size)] + yst[:min(ys.size, yst.size)]  # sum sinusoids and stochastic components
     return y, ys, yst
 
@@ -78,9 +78,9 @@ def reconstruct(x, fs, w, N, t, stocf):
     while pin < pend:
         # -----analysis-----
         x1 = x[pin - hM1:pin + hM2]  # select frame
-        mX, pX = dft.fromAudio(x1, w, N)  # compute dft
-        ploc = peaks.peakDetection(mX, t)  # find peaks
-        iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)  # refine peak values
+        mX, pX = dft.from_audio(x1, w, N)  # compute dft
+        ploc = peaks.find_peaks(mX, t)  # find peaks
+        iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)  # refine peak values
         ipfreq = fs * iploc / float(N)  # convert peak locations to Hertz
         ri = pin - hNs - 1  # input sound pointer for residual analysis
         xw2 = x[ri:ri + Ns] * wr  # window the input sound
@@ -90,7 +90,7 @@ def reconstruct(x, fs, w, N, t, stocf):
         X2 = fft(fftbuffer)  # compute FFT for residual analysis
 
         # -----synthesis-----
-        Ys = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)  # generate spec of sinusoidal component
+        Ys = synth.spectrum_for_sinusoids(ipfreq, ipmag, ipphase, Ns, fs)  # generate spec of sinusoidal component
         Xr = X2 - Ys  # get the residual complex spectrum
         mXr = 20 * np.log10(abs(Xr[:hNs]))  # magnitude spectrum of residual
         mXrenv = resample(np.maximum(-200, mXr), mXr.size * stocf)  # decimate the magnitude spectrum and avoid -Inf

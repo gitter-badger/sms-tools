@@ -11,7 +11,7 @@ from scipy.signal import blackmanharris
 from smst.models import dft, harmonic
 from smst.utils import audio, peaks, synth
 
-(fs, x) = audio.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = audio.read_wav('../../../sounds/flute-A4.wav')
 pos = .8 * fs
 M = 601
 hM1 = int(math.floor((M + 1) / 2))
@@ -31,14 +31,14 @@ H = Ns / 4
 x1 = x[pos - hM1:pos + hM2]
 x2 = x[pos - Ns / 2 - 1:pos + Ns / 2 - 1]
 
-mX, pX = dft.fromAudio(x1, w, N)
-ploc = peaks.peakDetection(mX, t)
-iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
+mX, pX = dft.from_audio(x1, w, N)
+ploc = peaks.find_peaks(mX, t)
+iploc, ipmag, ipphase = peaks.interpolate_peaks(mX, pX, ploc)
 ipfreq = fs * iploc / N
-f0 = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0)
+f0 = peaks.find_fundamental_twm(ipfreq, ipmag, f0et, minf0, maxf0)
 hfreqp = []
-hfreq, hmag, hphase = harmonic.findHarmonics(ipfreq, ipmag, ipphase, f0, nH, hfreqp, fs, harmDevSlope)
-Yh = synth.genSpecSines(hfreq, hmag, hphase, Ns, fs)
+hfreq, hmag, hphase = harmonic.find_harmonics(ipfreq, ipmag, ipphase, f0, nH, hfreqp, fs, harmDevSlope)
+Yh = synth.spectrum_for_sinusoids(hfreq, hmag, hphase, Ns, fs)
 mYh = 20 * np.log10(abs(Yh[:Ns / 2]))
 pYh = np.unwrap(np.angle(Yh[:Ns / 2]))
 bh = blackmanharris(Ns)
