@@ -6,7 +6,6 @@ from scipy.signal import get_window
 import os
 import smst.models.stftModel as STFT
 import smst.utils as utils
-import smst.transformations.stftTransformations as STFTT
 from .. import demo_sound_path
 
 def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('speech-male.wav'), window1='hamming',  window2='hamming',
@@ -33,7 +32,7 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
 	w2 = get_window(window2, M2)
 
 	# perform morphing
-	y = STFTT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
+	y = STFT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
 
 	# compute the magnitude and phase spectrogram of input sound (for plotting)
 	mX1, pX1 = STFT.stftModelAnal(x1, w1, N1, H1)

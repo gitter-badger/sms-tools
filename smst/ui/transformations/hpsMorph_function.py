@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -130,7 +128,7 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	H = 128
 
 	# morph the two sounds
-	yhfreq, yhmag, ystocEnv = HPST.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
+	yhfreq, yhmag, ystocEnv = HPS.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
 	# synthesis
 	y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)

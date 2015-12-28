@@ -9,8 +9,6 @@ from scipy.signal import get_window
 import os
 
 import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 
 inputFile='../../../sounds/sax-phrase-short.wav'
@@ -33,7 +31,7 @@ H = 128
 w = get_window(window, M)
 hfreq, hmag, hphase, mYst = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 timeScaling = np.array([0, 0, 2.138, 2.138-1.5, 3.146, 3.146])
-yhfreq, yhmag, ystocEnv = HPST.hpsTimeScale(hfreq, hmag, mYst, timeScaling)
+yhfreq, yhmag, ystocEnv = HPS.hpsTimeScale(hfreq, hmag, mYst, timeScaling)
 
 y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 

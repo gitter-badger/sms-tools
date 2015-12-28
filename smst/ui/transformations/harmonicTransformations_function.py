@@ -6,8 +6,6 @@ from scipy.signal import get_window
 import os
 import smst.models.sineModel as SM
 import smst.models.harmonicModel as HM
-import smst.transformations.sineTransformations as ST
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -119,10 +117,10 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the harmonics
-	yhfreq, yhmag = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+	yhfreq, yhmag = HM.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scale the sound
-	yhfreq, yhmag = ST.sineTimeScaling(yhfreq, yhmag, timeScaling)
+	yhfreq, yhmag = SM.sineTimeScaling(yhfreq, yhmag, timeScaling)
 
 	# synthesis
 	y = SM.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)

@@ -7,8 +7,6 @@ from scipy.signal import get_window
 import os
 
 import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 
 inputFile1='../../../sounds/violin-B3.wav'
@@ -48,7 +46,7 @@ hfreq2, hmag2, hphase2, stocEnv2 = HPS.hpsModelAnal(x2, fs2, w2, N2, H, t2, nH, 
 hfreqIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 hmagIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 stocIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
-yhfreq, yhmag, ystocEnv = HPST.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
+yhfreq, yhmag, ystocEnv = HPS.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
 y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
 

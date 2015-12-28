@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 import smst.models.sineModel as SM
-import smst.transformations.sineTransformations as ST
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -111,10 +110,10 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the sinusoidal tracks
-	ytfreq = ST.sineFreqScaling(tfreq, freqScaling)
+	ytfreq = SM.sineFreqScaling(tfreq, freqScaling)
 
 	# time scale the sinusoidal tracks
-	ytfreq, ytmag = ST.sineTimeScaling(ytfreq, tmag, timeScaling)
+	ytfreq, ytmag = SM.sineTimeScaling(ytfreq, tmag, timeScaling)
 
 	# synthesis
 	y = SM.sineModelSynth(ytfreq, ytmag, np.array([]), Ns, H, fs)

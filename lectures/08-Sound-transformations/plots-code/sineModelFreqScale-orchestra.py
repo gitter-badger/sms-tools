@@ -7,12 +7,9 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 import math
 import os, functools, time
 
-
-
 import smst.models.sineModel as SM
 import smst.models.stft as STFT
 import smst.utils as utils
-import smst.transformations.sineTransformations as SMT
 
 (fs, x) = utils.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(801)
@@ -27,7 +24,7 @@ H = Ns/4
 mX, pX = STFT.stftAnal(x, w, N, H)
 tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 freqScaling = np.array([0, .8, 1, 1.2])
-ytfreq = SMT.sineFreqScaling(tfreq, freqScaling)
+ytfreq = SM.sineFreqScaling(tfreq, freqScaling)
 y = SM.sineModelSynth(ytfreq, tmag, np.array([]), Ns, H, fs)
 mY, pY = STFT.stftAnal(y, w, N, H)
 utils.wavwrite(y,fs, 'sineModelFreqScale-orchestra.wav')

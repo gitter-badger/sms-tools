@@ -6,7 +6,6 @@ from scipy.signal import get_window
 import os
 import smst.models.stochasticModel as STC
 import smst.utils as utils
-import smst.transformations.stochasticTransformations as STCT
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.array([0, 0, 1, 2]),
@@ -28,7 +27,7 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.arra
 	mYst = STC.stochasticModelAnal(x, H, H*2, stocf)
 
 	# perform time scaling of stochastic representation
-	ystocEnv = STCT.stochasticTimeScale(mYst, timeScaling)
+	ystocEnv = STC.stochasticTimeScale(mYst, timeScaling)
 
 	# synthesize output sound
 	y = STC.stochasticModelSynth(ystocEnv, H, H*2)

@@ -10,7 +10,6 @@ import os
 
 import smst.models.hprModel as HPR
 import smst.models.stft as STFT
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 
 inputFile='../../../sounds/flute-A4.wav'
@@ -37,7 +36,7 @@ freqScaling = np.array([0, 1.5, 1, 1.5])
 freqStretching = np.array([0, 1.1, 1, 1.1])
 timbrePreservation = 1
 
-hfreqt, hmagt = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+hfreqt, hmagt = HM.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 y, yh = HPR.hprModelSynth(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
 

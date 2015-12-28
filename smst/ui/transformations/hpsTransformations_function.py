@@ -4,9 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
+import smst.models.harmonicModel as HM
 import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -129,10 +128,10 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 	H = 128
 
 	# frequency scaling of the harmonics
-	hfreqt, hmagt = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+	hfreqt, hmagt = HM.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scaling the sound
-	yhfreq, yhmag, ystocEnv = HPST.hpsTimeScale(hfreqt, hmagt, mYst, timeScaling)
+	yhfreq, yhmag, ystocEnv = HPS.hpsTimeScale(hfreqt, hmagt, mYst, timeScaling)
 
 	# synthesis from the trasformed hps representation
 	y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)

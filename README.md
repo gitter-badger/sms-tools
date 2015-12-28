@@ -9,8 +9,6 @@ This repository contains a library written in Python (with a bit of C) and compl
 ## Project structure
 
 - `smst` - the SMS tools Python package
-  - `models` - code for models that can represent sounds
-  - `transformations` - code for transforming sounds
   - `ui` - command-line and graphical interface for demo purposes
 - `tests` - automated tests
 - `lectures` - lecture slides + code to generate the plots and other resources
@@ -118,7 +116,7 @@ the project directory. The sound paths are relative to it.
 
 ### Models GUI
 
-The basic sound analysis/synthesis functions, or models, are in the directory `smst/models` and there is a graphical interface and individual example functions in `smst/ui/models`. To execute the models GUI type the following command. Note that is has been installed via pip.
+The basic sound analysis/synthesis functions, or models, are in the directory `smst` and there is a graphical interface and individual example functions in `smst/ui/models`. To execute the models GUI type the following command. Note that is has been installed via pip.
 
 ```
 sms-tools$ smst-ui-models
@@ -146,7 +144,7 @@ The code can be imported as python modules.
 
 ```audio -> [analysis] -> model -> [synthesis] -> reconstructed audio```
 
-A model provides a different representation of audio than the time-domain samples. The models live in the `smst.models` package.
+A model provides a different representation of audio than the time-domain samples. The models live as modules in the `smst` package.
 
 - `dftModel` - [Discrete Fourier Transform](smst/models/dftModel.py) - spectrum of a single frame
 - `stftModel` - [Short-time Fourier Transform](smst/models/stftModel.py) - spectrogram
@@ -162,13 +160,22 @@ A model provides a different representation of audio than the time-domain sample
 
 ```model -> [transformation] -> transformed model```
 
-Audio can be transformed by modifying its model. The transformations live in the `smst.transformations` package.
+Audio can be transformed by modifying its model. Each transformation belongs to a model. Thus also transformations can be found in the `smst` package.
 
-- `stftTransformations` - [STFT transformations](smst/transformations/stftTransformations.py)
-- `sineTransformations` - [Sinusoidal transformations](smst/transformations/sineTransformations.py)
-- `harmonicTransformations` - [Harmonic transformations](smst/transformations/harmonicTransformations.py)
-- `hprTransformations` - [Stochastic transformations](smst/transformations/stochasticTransformations.py)
-- `hpsTransformations` - [Harmonic + stochastic transformations](smst/transformations/hpsTransformations.py)
+- `stftModel` - [STFT transformations](smst/models/stftModel.py)
+  - `stftFiltering()`
+  - `stftMorph()`
+- `sineModel` - [Sinusoidal transformations](smst/models/sineModel.py)
+  - `sineTimeScaling()`
+  - `sineFreqScaling()`
+- `harmonicModel` - [Harmonic transformations](smst/models/harmonicModel.py)
+  - `harmonicFreqScaling()`
+- `stochasticModel` - [Stochastic transformations](smst/models/stochasticModel.py)
+  - `stochasticTimeScale()`
+  -
+- `hpsModel` - [Harmonic + stochastic transformations](smst/models/hpsModel.py)
+  - `hpsTimeScale()`
+  - `hpsMorph()`
 
 ## Authors
 

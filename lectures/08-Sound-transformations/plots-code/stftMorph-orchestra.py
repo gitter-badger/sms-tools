@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 
 import smst.models.dftModel as DFT
 import smst.utils as utils
-import smst.models.stftTransformations as STFTT
 import smst.models.stochasticModel as STOC
 import math
 import smst.models.stft as STFT
@@ -24,7 +23,7 @@ w2 = np.hamming(1024)
 N2 = 1024
 smoothf = .2
 balancef = 0.5
-y = STFTT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
+y = STFT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
 mX2 = STOC.stochasticModelAnal(x2,H1,H1*2, smoothf)
 mX,pX = STFT.stftAnal(x1, w1, N1, H1)
 mY,pY = STFT.stftAnal(y, w1, N1, H1)
