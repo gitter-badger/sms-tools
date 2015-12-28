@@ -1,6 +1,7 @@
 import essentia.standard as ess
 # matplotlib without any blocking GUI
 import matplotlib as mpl
+
 mpl.use('Agg')
 from pylab import *
 from numpy import *
@@ -10,26 +11,24 @@ fs = 44100
 H = 128
 M = 2048
 
-
 predominantMelody = ess.PredominantPitchMelodia(frameSize=M, hopSize=H)
-x = ess.MonoLoader(filename = filename, sampleRate = fs)()
+x = ess.MonoLoader(filename=filename, sampleRate=fs)()
 
 pitch, pitchConfidence = predominantMelody(x)
 
-
 plt.figure(1, figsize=(9.5, 4))
-plt.subplot(2,1,1)
+plt.subplot(2, 1, 1)
 
-plt.plot(np.arange(x.size)/float(fs), x)
-plt.axis([0, x.size/float(fs), min(x), max(x)])
+plt.plot(np.arange(x.size) / float(fs), x)
+plt.axis([0, x.size / float(fs), min(x), max(x)])
 plt.ylabel('amplitude')
 plt.title('x (carnatic.wav)')
 
-plt.subplot(2,1,2)
-frmTime = H*np.arange(pitch.size)/float(fs)
-pitch[pitch==0]=nan
-plot(frmTime, pitch, color='g', linewidth = 1.5)
-plt.axis([0, x.size/float(fs), 100, 300])
+plt.subplot(2, 1, 2)
+frmTime = H * np.arange(pitch.size) / float(fs)
+pitch[pitch == 0] = nan
+plot(frmTime, pitch, color='g', linewidth=1.5)
+plt.axis([0, x.size / float(fs), 100, 300])
 plt.title('prominent melody')
 
 tight_layout()

@@ -1,5 +1,6 @@
 # matplotlib without any blocking GUI
 import matplotlib as mpl
+
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +11,7 @@ from smst.models import sine, stft
 plt.figure(1, figsize=(9, 6))
 plt.subplot(211)
 (fs, x) = audio.wavread('../../../sounds/carnatic.wav')
-x1 = x[4.35*fs:]
+x1 = x[4.35 * fs:]
 w = np.blackman(1301)
 N = 2048
 H = 250
@@ -23,15 +24,15 @@ mX, pX = stft.fromAudio(x, w, N, H)
 tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
-maxplotbin = int(N*maxplotfreq/fs)
-numFrames = int(mX[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)
-binFreq = np.arange(maxplotbin+1)*float(fs)/N
-plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:,:maxplotbin+1]))
+maxplotbin = int(N * maxplotfreq / fs)
+numFrames = int(mX[:, 0].size)
+frmTime = H * np.arange(numFrames) / float(fs)
+binFreq = np.arange(maxplotbin + 1) * float(fs) / N
+plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:, :maxplotbin + 1]))
 plt.autoscale(tight=True)
 
-tracks = tfreq*np.less(tfreq, maxplotfreq)
-tracks[tracks<=0] = np.nan
+tracks = tfreq * np.less(tfreq, maxplotfreq)
+tracks[tracks <= 0] = np.nan
 plt.plot(frmTime, tracks, color='k', lw=1.5)
 plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (carnatic.wav)')
@@ -50,15 +51,15 @@ mX, pX = stft.fromAudio(x, w, N, H)
 tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
-maxplotbin = int(N*maxplotfreq/fs)
-numFrames = int(mX[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)
-binFreq = np.arange(maxplotbin+1)*float(fs)/N
-plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:,:maxplotbin+1]))
+maxplotbin = int(N * maxplotfreq / fs)
+numFrames = int(mX[:, 0].size)
+frmTime = H * np.arange(numFrames) / float(fs)
+binFreq = np.arange(maxplotbin + 1) * float(fs) / N
+plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:, :maxplotbin + 1]))
 plt.autoscale(tight=True)
 
-tracks = tfreq*np.less(tfreq, maxplotfreq)
-tracks[tracks<=0] = np.nan
+tracks = tfreq * np.less(tfreq, maxplotfreq)
+tracks[tracks <= 0] = np.nan
 plt.plot(frmTime, tracks, color='k', lw=1.5)
 plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (vignesh.wav)')

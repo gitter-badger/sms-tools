@@ -1,5 +1,6 @@
 # matplotlib without any blocking GUI
 import matplotlib as mpl
+
 mpl.use('Agg')
 import essentia
 import essentia.standard as ess
@@ -15,23 +16,23 @@ frameSize = 2048
 sampleRate = 44100
 guessUnvoiced = True
 
-run_windowing = ess.Windowing(type='hann', zeroPadding=3*frameSize) # Hann window with x4 zero padding
+run_windowing = ess.Windowing(type='hann', zeroPadding=3 * frameSize)  # Hann window with x4 zero padding
 run_spectrum = ess.Spectrum(size=frameSize * 4)
 run_spectral_peaks = ess.SpectralPeaks(minFrequency=50,
-                                   maxFrequency=10000,
-                                   maxPeaks=100,
-                                   sampleRate=sampleRate,
-                                   magnitudeThreshold=0,
-                                   orderBy="magnitude")
+                                       maxFrequency=10000,
+                                       maxPeaks=100,
+                                       sampleRate=sampleRate,
+                                       magnitudeThreshold=0,
+                                       orderBy="magnitude")
 run_pitch_salience_function = ess.PitchSalienceFunction(magnitudeThreshold=30)
 run_pitch_salience_function_peaks = ess.PitchSalienceFunctionPeaks(minFrequency=100, maxFrequency=300)
 run_pitch_contours = ess.PitchContours(hopSize=hopSize, peakFrameThreshold=0.8)
 run_pitch_contours_melody = ess.PitchContoursMelody(guessUnvoiced=guessUnvoiced,
-                                                hopSize=hopSize)
+                                                    hopSize=hopSize)
 
 pool = essentia.Pool();
 
-audio = ess.MonoLoader(filename = filename)()
+audio = ess.MonoLoader(filename=filename)()
 audio = ess.EqualLoudness()(audio)
 
 for frame in ess.FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize):
@@ -46,8 +47,8 @@ for frame in ess.FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize):
     pool.add('allframes_salience_peaks_saliences', salience_peaks_saliences)
 
 contours_bins, contours_saliences, contours_start_times, duration = run_pitch_contours(
-        pool['allframes_salience_peaks_bins'],
-        pool['allframes_salience_peaks_saliences'])
+    pool['allframes_salience_peaks_bins'],
+    pool['allframes_salience_peaks_saliences'])
 pitch, confidence = run_pitch_contours_melody(contours_bins,
                                               contours_saliences,
                                               contours_start_times,
@@ -59,16 +60,16 @@ figure(1, figsize=(9, 6))
 
 mX, pX = stft.fromAudio(audio, hamming(frameSize), frameSize, hopSize)
 maxplotfreq = 3000.0
-numFrames = int(mX[:,0].size)
-frmTime = hopSize*arange(numFrames)/float(sampleRate)
-binFreq = sampleRate*arange(frameSize*maxplotfreq/sampleRate)/frameSize
-plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:,:frameSize*maxplotfreq/sampleRate+1]))
+numFrames = int(mX[:, 0].size)
+frmTime = hopSize * arange(numFrames) / float(sampleRate)
+binFreq = sampleRate * arange(frameSize * maxplotfreq / sampleRate) / frameSize
+plt.pcolormesh(frmTime, binFreq, np.transpose(mX[:, :frameSize * maxplotfreq / sampleRate + 1]))
 plt.autoscale(tight=True)
 
-offset = .5 * frameSize/sampleRate
-time = hopSize*arange(size(pitch))/float(sampleRate)
-pitch[pitch==0]=nan
-plot(time, pitch, color='k', linewidth = 2)
+offset = .5 * frameSize / sampleRate
+time = hopSize * arange(size(pitch)) / float(sampleRate)
+pitch[pitch == 0] = nan
+plot(time, pitch, color='k', linewidth=2)
 
 plt.title('mX + prominent melody (carnatic.wav)')
 tight_layout()

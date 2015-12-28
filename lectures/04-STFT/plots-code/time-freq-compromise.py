@@ -1,5 +1,6 @@
 # matplotlib without any blocking GUI
 import matplotlib as mpl
+
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,9 +17,9 @@ N = 256
 H = 128
 mX1, pX1 = stft.fromAudio(x, w, N, H)
 plt.subplot(211)
-numFrames = int(mX1[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)
-binFreq = np.arange(mX1[0,:].size)*float(fs)/N
+numFrames = int(mX1[:, 0].size)
+frmTime = H * np.arange(numFrames) / float(fs)
+binFreq = np.arange(mX1[0, :].size) * float(fs) / N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mX1))
 plt.title('mX (piano.wav), M=256, N=256, H=128')
 plt.autoscale(tight=True)
@@ -29,9 +30,9 @@ H = 128
 mX2, pX2 = stft.fromAudio(x, w, N, H)
 
 plt.subplot(212)
-numFrames = int(mX2[:,0].size)
-frmTime = H*np.arange(numFrames)/float(fs)
-binFreq = np.arange(mX2[0,:].size)*float(fs)/N
+numFrames = int(mX2[:, 0].size)
+frmTime = H * np.arange(numFrames) / float(fs)
+binFreq = np.arange(mX2[0, :].size) * float(fs) / N
 plt.pcolormesh(frmTime, binFreq, np.transpose(mX2))
 plt.title('mX (piano.wav), M=1024, N=1024, H=128')
 plt.autoscale(tight=True)

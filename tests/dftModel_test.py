@@ -12,7 +12,6 @@ def test_simple_sinusoid():
     mag_spectrum, phase_spectrum = dft.fromAudio(x, window, window_size)
     x_reconstructed = dft.toAudio(mag_spectrum, phase_spectrum, window_size) * sum(window)
 
-
     assert mag_spectrum.argmax() == 4
     assert round(mag_spectrum.max()) == -6
     assert round(mag_spectrum.mean()) == -147
