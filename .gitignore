@@ -65,13 +65,13 @@ target/
 
 *.DS_Store
 *~
+.idea/
+*.iml
+
 workspace_dev/*
 workspace/*
 !workspace/README.txt
 
-.coverage
-*,cover
 cover/
-htmlcov/
 
 output_sounds/
