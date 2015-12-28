@@ -10,7 +10,7 @@ from smst.models import sine, stft
 
 plt.figure(1, figsize=(9, 6))
 plt.subplot(211)
-(fs, x) = utils.wavread('../../../sounds/carnatic.wav'))
+(fs, x) = utils.wavread('../../../sounds/carnatic.wav')
 x1 = x[4.35*fs:]
 w = np.blackman(1301)
 N = 2048
@@ -38,7 +38,7 @@ plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (carnatic.wav)')
 
 plt.subplot(212)
-(fs, x) = utils.wavread('../../../sounds/vignesh.wav'))
+(fs, x) = utils.wavread('../../../sounds/vignesh.wav')
 w = np.blackman(1101)
 N = 2048
 H = 250

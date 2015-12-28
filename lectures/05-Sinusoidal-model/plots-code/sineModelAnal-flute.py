@@ -7,7 +7,7 @@ import numpy as np
 from smst import utils
 from smst.models import sine, stft
 
-(fs, x) = utils.wavread('../../../sounds/flute-A4.wav'))
+(fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
 w = np.blackman(601)
 N = 1024
 H = 150

@@ -8,7 +8,7 @@ import numpy as np
 from scipy.signal import get_window
 
 from smst import utils
-from smst.models import hpr, stft
+from smst.models import harmonic, hpr, stft
 
 inputFile='../../../sounds/flute-A4.wav'
 window='blackman'

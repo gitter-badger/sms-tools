@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming
 
-
 from smst import utils
 from smst.models import stft
 
@@ -14,7 +13,7 @@ w = np.hamming(1024)
 N = 1024
 H = 512
 mX, pX = stft.fromAudio(x, w, N, H)
-y = stft.stftSynth(mX, pX, w.size, H)
+y = stft.toAudio(mX, pX, w.size, H)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(411)

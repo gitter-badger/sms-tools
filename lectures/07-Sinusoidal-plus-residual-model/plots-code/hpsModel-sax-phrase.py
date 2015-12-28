@@ -8,7 +8,7 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 from smst import utils
 from smst.models import hps
 
-(fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav'))
+(fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav')
 w = np.blackman(601)
 N = 1024
 t = -100

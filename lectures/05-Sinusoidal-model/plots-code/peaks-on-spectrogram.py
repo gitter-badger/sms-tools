@@ -8,7 +8,7 @@ import numpy as np
 from smst import utils
 from smst.models import sine, stft
 
-(fs, x) = utils.wavread('../../../sounds/speech-male.wav'))
+(fs, x) = utils.wavread('../../../sounds/speech-male.wav')
 start = 1.25
 end = 1.79
 x1 = x[start*fs:end*fs]

@@ -10,7 +10,7 @@ from scipy.signal import hamming, triang, blackmanharris
 from smst import utils
 from smst.models import sine
 
-(fs, x) = utils.wavread('../../../sounds/bendir.wav'))
+(fs, x) = utils.wavread('../../../sounds/bendir.wav')
 x1 = x[0:50000]
 w = np.blackman(2001)
 N = 2048

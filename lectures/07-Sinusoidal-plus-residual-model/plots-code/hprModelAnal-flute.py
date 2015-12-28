@@ -8,7 +8,7 @@ from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 from smst import utils
 from smst.models import harmonic, stft
 
-(fs, x) = utils.wavread('../../../sounds/flute-A4.wav'))
+(fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
 w = np.blackman(551)
 N = 1024
 t = -100

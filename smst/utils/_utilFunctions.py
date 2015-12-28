@@ -103,7 +103,7 @@ def wavwrite(y, fs, filename):
 	write(filename, fs, x)
 
 def ensureDirectory(dir):
-	if not os.path.isdir(dir):
+	if len(dir) > 0 and not os.path.isdir(dir) and not os.path.isfile(dir):
 		os.makedirs(dir)
 
 def peakDetection(mX, t):
