@@ -7,7 +7,7 @@ from scipy.fftpack import fft, ifft, fftshift
 import math
 
 import smst.utils as utils
-import smst.models.dftModel as DF
+from smst.models import dft
 
 (fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)

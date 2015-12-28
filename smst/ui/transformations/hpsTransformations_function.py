@@ -4,9 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
+from smst.models import harmonic
+from smst.models import hps
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -44,10 +43,10 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 	w = get_window(window, M)
 
 	# compute the harmonic plus stochastic model of the whole sound
-	hfreq, hmag, hphase, mYst = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
+	hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 
 	# synthesize the harmonic plus stochastic model without original phases
-	y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
+	y, yh, yst = hps.toAudio(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel.wav'
@@ -129,13 +128,13 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 	H = 128
 
 	# frequency scaling of the harmonics
-	hfreqt, hmagt = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+	hfreqt, hmagt = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scaling the sound
-	yhfreq, yhmag, ystocEnv = HPST.hpsTimeScale(hfreqt, hmagt, mYst, timeScaling)
+	yhfreq, yhmag, ystocEnv = hps.scaleTime(hfreqt, hmagt, mYst, timeScaling)
 
 	# synthesis from the trasformed hps representation
-	y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
+	y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModelTransformation.wav'

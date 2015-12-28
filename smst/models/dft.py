@@ -7,7 +7,7 @@ from scipy.fftpack import fft, ifft
 from .. import utils
 tol = 1e-14                                                      # threshold used to compute phase
 
-def dftModel(x, w, N):
+def reconstruct(x, w, N):
 	"""
 	Analysis/synthesis of a signal using the discrete Fourier transform
 	x: input signal, w: analysis window, N: FFT size
@@ -45,7 +45,7 @@ def dftModel(x, w, N):
 	y[hM2:] = fftbuffer[:hM1]
 	return y
 
-def dftAnal(x, w, N):
+def fromAudio(x, w, N):
 	"""
 	Analysis of a signal using the discrete Fourier transform
 	x: input signal, w: analysis window, N: FFT size
@@ -75,7 +75,7 @@ def dftAnal(x, w, N):
 	pX = np.unwrap(np.angle(X[:hN]))                        # unwrapped phase spectrum of positive frequencies
 	return mX, pX
 
-def dftSynth(mX, pX, M):
+def toAudio(mX, pX, M):
 	"""
 	Synthesis of a signal using the discrete Fourier transform
 	mX: magnitude spectrum, pX: phase spectrum, M: window size

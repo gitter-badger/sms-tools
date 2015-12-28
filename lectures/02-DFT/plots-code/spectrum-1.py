@@ -7,7 +7,7 @@ import sys
 import math
 
 import smst.utils as utils
-import smst.models.dftModel as DFT
+from smst.models import dft
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
 w = np.hamming(511)
@@ -16,7 +16,7 @@ pin = 5000
 hM1 = int(math.floor((w.size+1)/2))
 hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 
 plt.figure(1, figsize=(9.5, 7))
 

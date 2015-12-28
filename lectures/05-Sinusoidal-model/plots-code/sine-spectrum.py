@@ -7,7 +7,7 @@ import time
 import math
 
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/sine-440.wav')
@@ -16,7 +16,7 @@ x1 = x[2000:2000+M]
 N = 2048
 hM = int(M/2.0)
 w = np.hamming(M)
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 freqaxis = fs*np.arange(0,mX.size)/float(N)
 taxis = np.arange(N)/float(fs)
 

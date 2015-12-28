@@ -7,7 +7,7 @@ from scipy.signal import hamming, triang, blackmanharris
 import math
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
@@ -17,7 +17,7 @@ pin = 5000
 hM1 = int(math.floor((w.size+1)/2))
 hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.fromAudio(x1, w, N)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(311)

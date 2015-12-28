@@ -8,9 +8,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 
-import smst.models.hprModel as HPR
-import smst.models.stft as STFT
-import smst.transformations.harmonicTransformations as HT
+from smst.models import hpr
+from smst.models import stft
 import smst.utils as utils
 
 inputFile='../../../sounds/flute-A4.wav'
@@ -29,17 +28,17 @@ H = 128
 
 (fs, x) = utils.wavread(inputFile)
 w = get_window(window, M)
-hfreq, hmag, hphase, xr = HPR.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
-mXr, pXr = STFT.stftAnal(xr, w, N, H)
+mXr, pXr = stft.stftAnal(xr, w, N, H)
 
 freqScaling = np.array([0, 1.5, 1, 1.5])
 freqStretching = np.array([0, 1.1, 1, 1.1])
 timbrePreservation = 1
 
-hfreqt, hmagt = HT.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+hfreqt, hmagt = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
-y, yh = HPR.hprModelSynth(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
+y, yh = hpr.toAudio(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
 
 utils.wavwrite(y,fs, 'hpr-freq-transformation.wav')
 

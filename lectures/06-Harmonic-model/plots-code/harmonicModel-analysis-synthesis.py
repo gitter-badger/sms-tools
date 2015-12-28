@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import os, functools, time
 
-import smst.models.harmonicModel as HM
-import smst.models.sineModel as SM
+from smst.models import harmonic
+from smst.models import sine
 import smst.utils as utils
 
 
@@ -23,8 +23,8 @@ Ns = 512
 H = Ns/4
 minSineDur = .1
 harmDevSlope = 0.01
-hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-y = SM.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
+hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+y = sine.toAudio(hfreq, hmag, hphase, Ns, H, fs)
 
 numFrames = int(hfreq[:,0].size)
 frmTime = H*np.arange(numFrames)/float(fs)

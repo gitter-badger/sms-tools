@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import os, functools, time
 
-import smst.models.sineModel as SM
-import smst.models.stft as STFT
+from smst.models import sine
+from smst.models import stft
 import smst.utils as utils
 
 plt.figure(1, figsize=(9, 6))
@@ -22,8 +22,8 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = STFT.stftAnal(x, w, N, H)
-tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.stftAnal(x, w, N, H)
+tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
 maxplotbin = int(N*maxplotfreq/fs)
@@ -49,8 +49,8 @@ minSineDur = .1
 maxnSines = 200
 freqDevOffset = 20
 freqDevSlope = 0.02
-mX, pX = STFT.stftAnal(x, w, N, H)
-tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.stftAnal(x, w, N, H)
+tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 maxplotfreq = 3000.0
 maxplotbin = int(N*maxplotfreq/fs)

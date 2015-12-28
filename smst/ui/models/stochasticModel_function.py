@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
 import smst.utils as utils
-import smst.models.stochasticModel as STM
+from smst.models import stochastic
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
@@ -20,10 +20,10 @@ def main(inputFile=demo_sound_path('ocean.wav'), H=256, N=512, stocf=.1,
 	(fs, x) = utils.wavread(inputFile)
 
 	# compute stochastic model
-	stocEnv = STM.stochasticModelAnal(x, H, N, stocf)
+	stocEnv = stochastic.fromAudio(x, H, N, stocf)
 
 	# synthesize sound from stochastic model
-	y = STM.stochasticModelSynth(stocEnv, H, N)
+	y = stochastic.toAudio(stocEnv, H, N)
 
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModel.wav'
 

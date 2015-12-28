@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import os
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 f0 = 1.0

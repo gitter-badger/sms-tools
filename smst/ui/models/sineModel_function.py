@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 import smst.utils as utils
-import smst.models.sineModel as SM
+from smst.models import sine
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=2048, t=-80, minSineDur=0.02,
@@ -35,10 +35,10 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# analyze the sound with the sinusoidal model
-	tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 	# synthesize the output sound from the sinusoidal representation
-	y = SM.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
+	y = sine.toAudio(tfreq, tmag, tphase, Ns, H, fs)
 
 	# output sound file name
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'

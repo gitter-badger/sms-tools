@@ -8,7 +8,7 @@ import time
 
 
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 
@@ -23,7 +23,7 @@ plt.plot(np.arange(N)/float(fs), x1*np.hamming(N), 'b', lw=1.5)
 plt.axis([0, N/float(fs), min(x1*np.hamming(N)), max(x1*np.hamming(N))])
 plt.title('x (orchestra.wav)')
 
-mX, pX = DFT.dftAnal(x1, np.hamming(N), N)
+mX, pX = dft.fromAudio(x1, np.hamming(N), N)
 startBin = int(N*500.0/fs)
 nBins = int(N*4000.0/fs)
 bandpass = (np.hanning(nBins) * 60.0) - 60
@@ -43,8 +43,8 @@ plt.plot(fs*np.arange(pX.size)/float(pX.size), pX, 'c', lw=1.5)
 plt.axis([0,fs/4.0,min(pX),8])
 plt.title('pX')
 
-y = DFT.dftSynth(mY, pX, N)*sum(np.hamming(N))
-mY1, pY = DFT.dftAnal(y, np.hamming(N), N)
+y = dft.toAudio(mY, pX, N)*sum(np.hamming(N))
+mY1, pY = dft.fromAudio(y, np.hamming(N), N)
 plt.subplot(322)
 plt.plot(np.arange(N)/float(fs), y, 'b')
 plt.axis([0, float(N)/fs, min(y), max(y)])

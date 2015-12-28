@@ -5,8 +5,8 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import time
 
-import smst.models.stft as STFT
-import smst.models.sineModel as SM
+from smst.models import stft
+from smst.models import sine
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/bendir.wav'))
@@ -18,8 +18,8 @@ minSineDur = .02
 maxnSines = 150
 freqDevOffset = 10
 freqDevSlope = 0.001
-mX, pX = STFT.stftAnal(x, w, N, H)
-tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+mX, pX = stft.stftAnal(x, w, N, H)
+tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 plt.figure(1, figsize=(9.5, 7))
 maxplotfreq = 800.0

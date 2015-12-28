@@ -1,7 +1,7 @@
 import numpy as np
 import time
 
-import smst.models.stft as STFT
+from smst.models import stft
 import smst.utils as utils
 # matplotlib without any blocking GUI
 import matplotlib as mpl
@@ -13,8 +13,8 @@ from scipy.signal import hamming
 w = np.hamming(1024)
 N = 1024
 H = 512
-mX, pX = STFT.stftAnal(x, w, N, H)
-y = STFT.stftSynth(mX, pX, w.size, H)
+mX, pX = stft.stftAnal(x, w, N, H)
+y = stft.stftSynth(mX, pX, w.size, H)
 
 plt.figure(1, figsize=(9.5, 7))
 plt.subplot(411)

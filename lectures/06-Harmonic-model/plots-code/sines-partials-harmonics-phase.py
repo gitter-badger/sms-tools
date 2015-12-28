@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/sine-440-490.wav')
@@ -16,7 +16,7 @@ hN = N/2
 t = -20
 pin = 4850
 x1 = x[pin:pin+w.size]
-mX1, pX1 = DFT.dftAnal(x1, w, N)
+mX1, pX1 = dft.fromAudio(x1, w, N)
 ploc = utils.peakDetection(mX1, t)
 pmag = mX1[ploc]
 iploc, ipmag, ipphase = utils.peakInterp(mX1, pX1, ploc)
@@ -36,7 +36,7 @@ hN = N/2
 t = -80
 pin = 200
 x2 = x[pin:pin+w.size]
-mX2, pX2 = DFT.dftAnal(x2, w, N)
+mX2, pX2 = dft.fromAudio(x2, w, N)
 ploc = utils.peakDetection(mX2, t)
 pmag = mX2[ploc]
 iploc, ipmag, ipphase = utils.peakInterp(mX2, pX2, ploc)
@@ -54,7 +54,7 @@ hN = N/2
 t = -80
 pin = 10000
 x3 = x[pin:pin+w.size]
-mX3, pX3 = DFT.dftAnal(x3, w, N)
+mX3, pX3 = dft.fromAudio(x3, w, N)
 ploc = utils.peakDetection(mX3, t)
 pmag = mX3[ploc]
 iploc, ipmag, ipphase = utils.peakInterp(mX3, pX3, ploc)

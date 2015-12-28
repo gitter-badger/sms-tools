@@ -5,12 +5,12 @@ import numpy as np
 import math
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft, fftshift
-import harmonicModel as HM
-import dftModel as DFT
+import harmonic
+import dft
 from .. import utils
-import sineModel as SM
+import sine
 
-def hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope):
+def fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope):
 	"""Analysis of a sound using the harmonic plus residual model
 	x: input sound, fs: sampling rate, w: analysis window; N: FFT size, t: threshold in negative dB,
 	minSineDur: minimum duration of sinusoidal tracks
@@ -21,12 +21,12 @@ def hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevS
 	"""
 
 	# perform harmonic analysis
-	hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 	Ns = 512
 	xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)    	# subtract sinusoids from original sound
 	return hfreq, hmag, hphase, xr
 
-def hprModelSynth(hfreq, hmag, hphase, xr, N, H, fs):
+def toAudio(hfreq, hmag, hphase, xr, N, H, fs):
 	"""
 	Synthesis of a sound using the sinusoidal plus residual model
 	tfreq, tmag, tphase: sinusoidal frequencies, amplitudes and phases; stocEnv: stochastic envelope
@@ -34,11 +34,11 @@ def hprModelSynth(hfreq, hmag, hphase, xr, N, H, fs):
 	returns y: output sound, yh: harmonic component
 	"""
 
-	yh = SM.sineModelSynth(hfreq, hmag, hphase, N, H, fs)          # synthesize sinusoids
+	yh = sine.toAudio(hfreq, hmag, hphase, N, H, fs)          # synthesize sinusoids
 	y = yh[:min(yh.size, xr.size)]+xr[:min(yh.size, xr.size)]      # sum sinusoids and residual components
 	return y, yh
 
-def hprModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
+def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	"""
 	Analysis/synthesis of a sound using the harmonic plus residual model
 	x: input sound, fs: sampling rate, w: analysis window,
@@ -77,7 +77,7 @@ def hprModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                              # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                              # compute dft
 		ploc = utils.peakDetection(mX, t)                              # find peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values
 		ipfreq = fs * iploc/N                                       # convert locations to Hz
@@ -87,7 +87,7 @@ def hprModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 			f0stable = f0t                                            # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = HM.harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
+		hfreq, hmag, hphase = harmonic.findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 		ri = pin-hNs-1                                             # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                       # window the input sound

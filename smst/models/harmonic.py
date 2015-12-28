@@ -2,14 +2,15 @@
 # (for example usage check the models_interface directory)
 
 import numpy as np
-from scipy.signal import blackmanharris, triang
+from scipy.interpolate import interp1d
+from scipy.signal import blackmanharris, triang, resample
 from scipy.fftpack import ifft
 import math
-import dftModel as DFT
+import dft
 from .. import utils
-import sineModel as SM
+import sine
 
-def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
+def findFundamentalFreq(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""
 	Fundamental frequency detection of a sound using twm algorithm
 	x: input sound; fs: sampling rate; w: analysis window;
@@ -41,7 +42,7 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	f0stable = 0                                               # initialize f0 stable
 	while pin<pend:
 		x1 = x[pin-hM1:pin+hM2]                                  # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                           # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                           # compute dft
 		ploc = utils.peakDetection(mX, t)                           # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)      # refine peak values
 		ipfreq = fs * iploc/N                                    # convert locations to Hez
@@ -56,7 +57,7 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	return f0
 
 
-def harmonicDetection(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
+def findHarmonics(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01):
 	"""
 	Detection of the harmonics of a frame from a set of spectral peaks using f0
 	to the ideal harmonic series built on top of a fundamental frequency
@@ -89,7 +90,7 @@ def harmonicDetection(pfreq, pmag, pphase, f0, nH, hfreqp, fs, harmDevSlope=0.01
 	return hfreq, hmag, hphase
 
 
-def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
+def reconstruct(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal harmonic model
 	x: input sound, fs: sampling rate, w: analysis window,
@@ -126,7 +127,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N
@@ -136,7 +137,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 			f0stable = f0t                                     # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
+		hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 	#-----synthesis-----
 		Yh = utils.genSpecSines(hfreq, hmag, hphase, Ns, fs)     # generate spec sines
@@ -149,7 +150,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	y = np.delete(y, range(y.size-hM1, y.size))             # add zeros at the end to analyze last sample
 	return y
 
-def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
+def fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=.02):
 	"""
 	Analysis of a sound using the sinusoidal harmonic model
 	x: input sound; fs: sampling rate, w: analysis window; N: FFT size (minimum 512); t: threshold in negative dB,
@@ -176,7 +177,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 	f0stable = 0                                            # initialize f0 stable
 	while pin<=pend:
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N                                 # convert locations to Hz
@@ -186,7 +187,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 			f0stable = f0t                                      # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope) # find harmonics
+		hfreq, hmag, hphase = findHarmonics(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs, harmDevSlope) # find harmonics
 		hfreqp = hfreq
 		if pin == hM1:                                        # first frame
 			xhfreq = np.array([hfreq])
@@ -197,5 +198,49 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 			xhmag = np.vstack((xhmag, np.array([hmag])))
 			xhphase = np.vstack((xhphase, np.array([hphase])))
 		pin += H                                              # advance sound pointer
-	xhfreq = SM.cleaningSineTracks(xhfreq, round(fs*minSineDur/H))     # delete tracks shorter than minSineDur
+	xhfreq = sine.cleaningSineTracks(xhfreq, round(fs*minSineDur/H))     # delete tracks shorter than minSineDur
 	return xhfreq, xhmag, xhphase
+
+# transformations applied to the harmonics of a sound
+
+def scaleFrequencies(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs):
+	"""
+	Frequency scaling of the harmonics of a sound
+	hfreq, hmag: frequencies and magnitudes of input harmonics
+	freqScaling: scaling factors, in time-value pairs (value of 1 no scaling)
+	freqStretching: stretching factors, in time-value pairs (value of 1 no stretching)
+	timbrePreservation: 0  no timbre preservation, 1 timbre preservation
+	fs: sampling rate of input sound
+	returns yhfreq, yhmag: frequencies and magnitudes of output harmonics
+	"""
+	if (freqScaling.size % 2 != 0):                        # raise exception if array not even length
+		raise ValueError("Frequency scaling array does not have an even size")
+
+	if (freqStretching.size % 2 != 0):                     # raise exception if array not even length
+		raise ValueError("Frequency stretching array does not have an even size")
+
+	L = hfreq.shape[0]                                                   # number of frames
+	nHarms = hfreq.shape[1]                                              # number of harmonics
+	# create interpolation object with the scaling values
+	freqScalingEnv = np.interp(np.arange(L), L*freqScaling[::2]/freqScaling[-2], freqScaling[1::2])
+	# create interpolation object with the stretching values
+	freqStretchingEnv = np.interp(np.arange(L), L*freqStretching[::2]/freqStretching[-2], freqStretching[1::2])
+	yhfreq = np.zeros_like(hfreq)                                        # create empty output matrix
+	yhmag = np.zeros_like(hmag)                                          # create empty output matrix
+	for l in range(L):                                                   # go through all frames
+		ind_valid = np.where(hfreq[l,:]!=0)[0]                             # check if there are frequency values
+		if ind_valid.size == 0:                                            # if no values go to next frame
+			continue
+		if (timbrePreservation == 1) & (ind_valid.size > 1):               # create spectral envelope
+			# values of harmonic locations to be considered for interpolation
+			x_vals = np.append(np.append(0, hfreq[l,ind_valid]),fs/2)
+			# values of harmonic magnitudes to be considered for interpolation
+			y_vals = np.append(np.append(hmag[l,0], hmag[l,ind_valid]),hmag[l,-1])
+			specEnvelope = interp1d(x_vals, y_vals, kind = 'linear',bounds_error=False, fill_value=-100)
+		yhfreq[l,ind_valid] = hfreq[l,ind_valid] * freqScalingEnv[l]       # scale frequencies
+		yhfreq[l,ind_valid] = yhfreq[l,ind_valid] * (freqStretchingEnv[l]**ind_valid) # stretch frequencies
+		if (timbrePreservation == 1) & (ind_valid.size > 1):               # if timbre preservation
+			yhmag[l,ind_valid] = specEnvelope(yhfreq[l,ind_valid])           # change amplitudes to maintain timbre
+		else:
+			yhmag[l,ind_valid] = hmag[l,ind_valid]                           # use same amplitudes as input
+	return yhfreq, yhmag

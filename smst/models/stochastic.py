@@ -2,11 +2,12 @@
 # (for example usage check stochasticModel_function.py in the models_interface directory)
 
 import numpy as np
+from scipy.interpolate import interp1d
 from scipy.signal import hanning, resample
 from scipy.fftpack import fft, ifft
 from .. import utils
 
-def stochasticModelAnal(x, H, N, stocf):
+def fromAudio(x, H, N, stocf):
 	"""
 	Stochastic analysis of a sound
 	x: input array sound, H: hop size, N: fftsize
@@ -45,7 +46,7 @@ def stochasticModelAnal(x, H, N, stocf):
 		pin += H                                              # advance sound pointer
 	return stocEnv
 
-def stochasticModelSynth(stocEnv, H, N):
+def toAudio(stocEnv, H, N):
 	"""
 	Stochastic synthesis of a sound
 	stocEnv: stochastic envelope; H: hop size; N: fft size
@@ -76,7 +77,7 @@ def stochasticModelSynth(stocEnv, H, N):
 	return y
 
 
-def stochasticModel(x, H, N, stocf):
+def reconstruct(x, H, N, stocf):
 	"""
 	Stochastic analysis/synthesis of a sound, one frame at a time
 	x: input array sound, H: hop size, N: fft size
@@ -121,3 +122,25 @@ def stochasticModel(x, H, N, stocf):
 	y = np.delete(y, range(No2))                              # delete half of first window which was added
 	y = np.delete(y, range(y.size-No2, y.size))               # delete half of last window which was added
 	return y
+
+# functions that implement transformations using the hpsModel
+
+def scaleTime(stocEnv, timeScaling):
+	"""
+	Time scaling of the stochastic representation of a sound
+	stocEnv: stochastic envelope
+	timeScaling: scaling factors, in time-value pairs
+	returns ystocEnv: stochastic envelope
+	"""
+	if (timeScaling.size % 2 != 0):                             # raise exception if array not even length
+		raise ValueError("Time scaling array does not have an even size")
+
+	L = stocEnv[:,0].size                                       # number of input frames
+	outL = int(L*timeScaling[-1]/timeScaling[-2])               # number of synthesis frames
+	# create interpolation object with the time scaling values
+	timeScalingEnv = interp1d(timeScaling[::2]/timeScaling[-2], timeScaling[1::2]/timeScaling[-1])
+	indexes = (L-1)*timeScalingEnv(np.arange(outL)/float(outL)) # generate output time indexes
+	ystocEnv = stocEnv[0,:]                                     # first output frame is same than input
+	for l in indexes[1:]:                                       # step through the output frames
+		ystocEnv = np.vstack((ystocEnv, stocEnv[round(l),:]))     # get the closest input frame
+	return ystocEnv

@@ -4,9 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.hpsModel as HPS
-import smst.transformations.hpsTransformations as HPST
-import smst.transformations.harmonicTransformations as HT
+from smst.models import hps
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -44,8 +42,8 @@ def analysis(inputFile1=demo_sound_path('violin-B3.wav'), window1='blackman', M1
 	w1 = get_window(window1, M1)
 	w2 = get_window(window2, M2)
 	# compute the harmonic plus stochastic models
-	hfreq1, hmag1, hphase1, stocEnv1 = HPS.hpsModelAnal(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
-	hfreq2, hmag2, hphase2, stocEnv2 = HPS.hpsModelAnal(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2, minSineDur2, Ns, stocf)
+	hfreq1, hmag1, hphase1, stocEnv1 = hps.fromAudio(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
+	hfreq2, hmag2, hphase2, stocEnv2 = hps.fromAudio(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2, minSineDur2, Ns, stocf)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -130,10 +128,10 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 	H = 128
 
 	# morph the two sounds
-	yhfreq, yhmag, ystocEnv = HPST.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
+	yhfreq, yhmag, ystocEnv = hps.morph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
 	# synthesis
-	y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
+	y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_hpsMorph.wav'

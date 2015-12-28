@@ -10,7 +10,7 @@ import essentia.standard as ess
 
 
 import smst.utils as utils
-import smst.models.stft as STFT
+from smst.models import stft
 
 
 def f0Yin(x, N, H, minf0, maxf0):
@@ -40,7 +40,7 @@ if __name__ == '__main__':
   N = 2048
   H = 256
   w = hamming(2048)
-  mX, pX = STFT.stftAnal(x, w, N, H)
+  mX, pX = stft.stftAnal(x, w, N, H)
   maxplotfreq = 2000.0
   frmTime = H*np.arange(mX[:,0].size)/float(fs)
   binFreq = fs*np.arange(N*maxplotfreq/fs)/N

@@ -2,10 +2,11 @@
 # (for example usage check the examples models_interface)
 
 import numpy as np
+from scipy.interpolate import interp1d
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import ifft, fftshift
 import math
-import dftModel as DFT
+import dft
 from .. import utils
 
 def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
@@ -94,7 +95,7 @@ def cleaningSineTracks(tfreq, minTrackLength=3):
 	return tfreq
 
 
-def sineModel(x, fs, w, N, t):
+def reconstruct(x, fs, w, N, t):
 	"""
 	Analysis/synthesis of a sound using the sinusoidal model, without sine tracking
 	x: input array sound, w: analysis window, N: size of complex spectrum, t: threshold in negative dB
@@ -121,7 +122,7 @@ def sineModel(x, fs, w, N, t):
 	while pin<pend:                                         # while input sound pointer is within sound
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
@@ -134,7 +135,7 @@ def sineModel(x, fs, w, N, t):
 		pin += H                                              # advance sound pointer
 	return y
 
-def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
+def fromAudio(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOffset=20, freqDevSlope=0.01):
 	"""
 	Analysis of a sound using the sinusoidal model with sine tracking
 	x: input array sound, w: analysis window, N: size of complex spectrum, H: hop-size, t: threshold in negative dB
@@ -156,7 +157,7 @@ def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOff
 	tfreq = np.array([])
 	while pin<pend:                                         # while input sound pointer is within sound
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
@@ -184,7 +185,7 @@ def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOff
 	xtfreq = cleaningSineTracks(xtfreq, round(fs*minSineDur/H))
 	return xtfreq, xtmag, xtphase
 
-def sineModelSynth(tfreq, tmag, tphase, N, H, fs):
+def toAudio(tfreq, tmag, tphase, N, H, fs):
 	"""
 	Synthesis of a sound using the sinusoidal model
 	tfreq,tmag,tphase: frequencies, magnitudes and phases of sinusoids
@@ -219,3 +220,51 @@ def sineModelSynth(tfreq, tmag, tphase, N, H, fs):
 	y = np.delete(y, range(hN))                             # delete half of first window
 	y = np.delete(y, range(y.size-hN, y.size))              # delete half of the last window
 	return y
+
+# functions that implement transformations using the sineModel
+
+def sineTimeScaling(sfreq, smag, timeScaling):
+	"""
+	Time scaling of sinusoidal tracks
+	sfreq, smag: frequencies and magnitudes of input sinusoidal tracks
+	timeScaling: scaling factors, in time-value pairs
+	returns ysfreq, ysmag: frequencies and magnitudes of output sinusoidal tracks
+	"""
+	if (timeScaling.size % 2 != 0):                        # raise exception if array not even length
+		raise ValueError("Time scaling array does not have an even size")
+
+	L = sfreq.shape[0]                                     # number of input frames
+	maxInTime = max(timeScaling[::2])                      # maximum value used as input times
+	maxOutTime = max(timeScaling[1::2])                    # maximum value used in output times
+	outL = int(L*maxOutTime/maxInTime)                     # number of output frames
+	inFrames = (L-1)*timeScaling[::2]/maxInTime            # input time values in frames
+	outFrames = outL*timeScaling[1::2]/maxOutTime          # output time values in frames
+	timeScalingEnv = interp1d(outFrames, inFrames, fill_value=0)    # interpolation function
+	indexes = timeScalingEnv(np.arange(outL))              # generate frame indexes for the output
+	ysfreq = sfreq[round(indexes[0]),:]                    # first output frame
+	ysmag = smag[round(indexes[0]),:]                      # first output frame
+	for l in indexes[1:]:                                  # generate frames for output sine tracks
+		ysfreq = np.vstack((ysfreq, sfreq[round(l),:]))    # get closest frame to scaling value
+		ysmag = np.vstack((ysmag, smag[round(l),:]))       # get closest frame to scaling value
+	return ysfreq, ysmag
+
+def scaleFrequencies(sfreq, freqScaling):
+	"""
+	Frequency scaling of sinusoidal tracks
+	sfreq: frequencies of input sinusoidal tracks
+	freqScaling: scaling factors, in time-value pairs (value of 1 is no scaling)
+	returns ysfreq: frequencies of output sinusoidal tracks
+	"""
+	if (freqScaling.size % 2 != 0):                        # raise exception if array not even length
+		raise ValueError("Frequency scaling array does not have an even size")
+
+	L = sfreq.shape[0]                                     # number of input frames
+	# create interpolation object from the scaling values
+	freqScalingEnv = np.interp(np.arange(L), L*freqScaling[::2]/freqScaling[-2], freqScaling[1::2])
+	ysfreq = np.zeros_like(sfreq)                          # create empty output matrix
+	for l in range(L):                                     # go through all frames
+		ind_valid = np.where(sfreq[l,:]!=0)[0]               # check if there are frequency values
+		if ind_valid.size == 0:                              # if no values go to next frame
+			continue
+		ysfreq[l,ind_valid] = sfreq[l,ind_valid] * freqScalingEnv[l] # scale of frequencies
+	return ysfreq
