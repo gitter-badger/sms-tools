@@ -1,5 +1,14 @@
 # Changelog
 
+0.2.0 (2015-12-28)
+
+- simplified API
+  - [#31](https://github.com/bzamecnik/sms-tools/issues/31) - packages/modules
+  - [#33](https://github.com/bzamecnik/sms-tools/issues/33) - function names
+- automatic build & test via Travis CI
+- optimized imports
+- fixed some issues after refactoring in lecture plot code
+
 0.1.1 (2015-12-26)
 
 - bugs fixed:
