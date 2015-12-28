@@ -8,7 +8,7 @@ from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft
 
 from . import dft, harmonic, sine
-from ..utils import residual
+from ..utils import peaks, residual, synth
 
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope):
