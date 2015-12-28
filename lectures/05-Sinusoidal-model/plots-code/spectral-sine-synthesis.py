@@ -9,8 +9,8 @@ import math
 import os, functools, time
 
 
-import smst.models.stft as STFT
-import smst.models.sineModel as SM
+from smst.models import stft
+from smst.models import sine
 import smst.utils as utils
 
 Ns = 256

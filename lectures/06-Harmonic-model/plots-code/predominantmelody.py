@@ -7,7 +7,7 @@ from essentia.standard import *
 from pylab import *
 from numpy import *
 
-import smst.models.stft as STFT
+from smst.models import stft
 
 filename = '../../../sounds/carnatic.wav'
 hopSize = 128
@@ -54,7 +54,7 @@ pitch, confidence = run_pitch_contours_melody(contours_bins,
 
 figure(1, figsize=(9, 6))
 
-mX, pX = STFT.stftAnal(audio, hamming(frameSize), frameSize, hopSize)
+mX, pX = stft.stftAnal(audio, hamming(frameSize), frameSize, hopSize)
 maxplotfreq = 3000.0
 numFrames = int(mX[:,0].size)
 frmTime = hopSize*arange(numFrames)/float(sampleRate)

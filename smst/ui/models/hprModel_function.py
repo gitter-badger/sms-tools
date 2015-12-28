@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
 import smst.utils as utils
-import smst.models.hprModel as HPR
-import smst.models.stftModel as STFT
+from smst.models import hpr
+from smst.models import stft
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M=601, N=1024, t=-100,
@@ -36,13 +36,13 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	w = get_window(window, M)
 
 	# find harmonics and residual
-	hfreq, hmag, hphase, xr = HPR.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+	hfreq, hmag, hphase, xr = hpr.hprModelAnal(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
 	# compute spectrogram of residual
-	mXr, pXr = STFT.stftModelAnal(xr, w, N, H)
+	mXr, pXr = stft.stftModelAnal(xr, w, N, H)
 
 	# synthesize hpr model
-	y, yh = HPR.hprModelSynth(hfreq, hmag, hphase, xr, Ns, H, fs)
+	y, yh = hpr.hprModelSynth(hfreq, hmag, hphase, xr, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hprModel_sines.wav'

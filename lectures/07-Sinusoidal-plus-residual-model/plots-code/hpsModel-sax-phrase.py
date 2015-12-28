@@ -8,7 +8,7 @@ import math
 import os, time
 
 import smst.utils as utils
-import smst.models.hpsModel as HPS
+from smst.models import hps
 
 
 (fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav'))
@@ -24,8 +24,8 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns/4
 stocf = .2
-hfreq, hmag, hphase, mYst = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
-y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, hphase, mYst, Ns, H, fs)
+hfreq, hmag, hphase, mYst = hps.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
+y, yh, yst = hps.hpsModelSynth(hfreq, hmag, hphase, mYst, Ns, H, fs)
 
 maxplotfreq = 10000.0
 plt.figure(1, figsize=(9, 7))

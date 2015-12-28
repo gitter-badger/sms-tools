@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 M = 255
@@ -19,8 +19,8 @@ ph = 1.5
 t = np.arange(-hM,hM+1)/float (fs)
 x = A0 * np.cos(2*np.pi*f0*t+ph)
 w = hamming(255)
-mX, pX = DFT.dftAnal(x, w, N)
-y = DFT.dftSynth(mX,pX,M)*sum(w)
+mX, pX = dft.dftAnal(x, w, N)
+y = dft.dftSynth(mX,pX,M)*sum(w)
 freqaxis = fs*np.arange(mX.size)/float(N)
 taxis = np.arange(N)/float(fs)
 
@@ -41,8 +41,8 @@ plt.axis([-hM,hM+1,-1,1])
 plt.title ('y1')
 
 w = blackmanharris(255)
-mX, pX = DFT.dftAnal(x, w, N)
-y = DFT.dftSynth(mX,pX,M)*sum(w)
+mX, pX = dft.dftAnal(x, w, N)
+y = dft.dftSynth(mX,pX,M)*sum(w)
 
 plt.subplot(3,2,2)
 plt.plot(freqaxis, mX, 'r', lw=1.5)

@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
 import smst.utils as utils
-import smst.models.sineModel as SM
-import smst.models.harmonicModel as HM
+from smst.models import sine
+from smst.models import harmonic
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=2048, t=-90,
@@ -36,10 +36,10 @@ def main(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201, N=
 	w = get_window(window, M)
 
 	# detect harmonics of input sound
-	hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
 	# synthesize the harmonics
-	y = SM.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
+	y = sine.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'

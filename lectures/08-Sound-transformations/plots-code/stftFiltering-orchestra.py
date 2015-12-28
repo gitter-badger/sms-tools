@@ -6,7 +6,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 import smst.utils as utils
-import smst.models.stft as STFT
+from smst.models import stft
 
 (fs, x) = utils.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(2048)
@@ -18,9 +18,9 @@ nBins = int(N*2000.0/fs)
 bandpass = (np.hanning(nBins) * 65.0) - 60
 filt = np.zeros(N/2+1)-60
 filt[startBin:startBin+nBins] = bandpass
-y = STFT.stftFiltering(x, fs, w, N, H, filt)
-mX,pX = STFT.stftAnal(x, w, N, H)
-mY,pY = STFT.stftAnal(y, w, N, H)
+y = stft.stftFiltering(x, fs, w, N, H, filt)
+mX,pX = stft.stftAnal(x, w, N, H)
+mY,pY = stft.stftAnal(y, w, N, H)
 
 plt.figure(1, figsize=(12, 9))
 plt.subplot(311)

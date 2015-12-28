@@ -6,10 +6,10 @@ from scipy.interpolate import interp1d
 from scipy.signal import resample, blackmanharris, triang, hanning
 from scipy.fftpack import fft, ifft, fftshift
 import math
-import harmonicModel as HM
-import sineModel as SM
-import dftModel as DFT
-import stochasticModel as STM
+import harmonic
+import sine
+import dft
+import stochastic
 from .. import utils
 
 def hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf):
@@ -23,11 +23,11 @@ def hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSin
 	"""
 
 	# perform harmonic analysis
-	hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 	# subtract sinusoids from original sound
 	xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
 	# perform stochastic analysis of residual
-	stocEnv = STM.stochasticModelAnal(xr, H, H*2, stocf)
+	stocEnv = stochastic.stochasticModelAnal(xr, H, H*2, stocf)
 	return hfreq, hmag, hphase, stocEnv
 
 def hpsModelSynth(hfreq, hmag, hphase, stocEnv, N, H, fs):
@@ -38,8 +38,8 @@ def hpsModelSynth(hfreq, hmag, hphase, stocEnv, N, H, fs):
 	returns y: output sound, yh: harmonic component, yst: stochastic component
 	"""
 
-	yh = SM.sineModelSynth(hfreq, hmag, hphase, N, H, fs)          # synthesize harmonics
-	yst = STM.stochasticModelSynth(stocEnv, H, H*2)                # synthesize stochastic residual
+	yh = sine.sineModelSynth(hfreq, hmag, hphase, N, H, fs)          # synthesize harmonics
+	yst = stochastic.stochasticModelSynth(stocEnv, H, H*2)                # synthesize stochastic residual
 	y = yh[:min(yh.size, yst.size)]+yst[:min(yh.size, yst.size)]   # sum harmonic and stochastic components
 	return y, yh, yst
 
@@ -81,7 +81,7 @@ def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                              # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                       # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                       # compute dft
 		ploc = utils.peakDetection(mX, t)                       # find peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)  # refine peak values
 		ipfreq = fs * iploc/N                                # convert peak locations to Hz
@@ -91,7 +91,7 @@ def hpsModel(x, fs, w, N, t, nH, minf0, maxf0, f0et, stocf):
 			f0stable = f0t                                     # consider a stable f0 if it is close to the previous one
 		else:
 			f0stable = 0
-		hfreq, hmag, hphase = HM.harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
+		hfreq, hmag, hphase = harmonic.harmonicDetection(ipfreq, ipmag, ipphase, f0t, nH, hfreqp, fs) # find harmonics
 		hfreqp = hfreq
 		ri = pin-hNs-1                                       # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                 # window the input sound

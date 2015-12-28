@@ -5,8 +5,8 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import os, time
 
-import smst.models.stft as STFT
-import smst.models.sineModel as SM
+from smst.models import stft
+from smst.models import sine
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/flute-A4.wav'))
@@ -16,8 +16,8 @@ H = 150
 t = -80
 minSineDur = .1
 maxnSines = 150
-mX, pX = STFT.stftAnal(x, w, N, H)
-tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur)
+mX, pX = stft.stftAnal(x, w, N, H)
+tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur)
 
 plt.figure(1, figsize=(9.5, 5))
 maxplotfreq = 5000.0

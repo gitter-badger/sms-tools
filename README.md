@@ -146,15 +146,15 @@ The code can be imported as python modules.
 
 A model provides a different representation of audio than the time-domain samples. The models live as modules in the `smst` package.
 
-- `dftModel` - [Discrete Fourier Transform](smst/models/dftModel.py) - spectrum of a single frame
-- `stftModel` - [Short-time Fourier Transform](smst/models/stftModel.py) - spectrogram
-- `sineModel` - [Sinusoidal model](smst/models/sineModel.py) - for plain tones
-- `harmonicModel` - [Harmonic model](smst/models/harmonicModel.py) - for harmonic tones
-- `stochasticModel` - [Stochastic model](smst/models/stochasticModel.py) - for noises
-- `sprModel` - [Sinusoidal + residual model](smst/models/sprModel.py)
-- `spsModel` - [Sinusoidal + stochastic model](smst/models/spsModel.py)
-- `hprModel` - [Harmonic + residual model](smst/models/hprModel.py)
-- `hpsModel` - [Harmonic + stochastic model](smst/models/hpsModel.py)
+- `dft` - [Discrete Fourier Transform](smst/models/dft.py) - spectrum of a single frame
+- `stft` - [Short-time Fourier Transform](smst/models/stft.py) - spectrogram
+- `sine` - [Sinusoidal model](smst/models/sine.py) - for plain tones
+- `harmonic` - [Harmonic model](smst/models/harmonic.py) - for harmonic tones
+- `stochastic` - [Stochastic model](smst/models/stochastic.py) - for noises
+- `spr` - [Sinusoidal + residual model](smst/models/spr.py)
+- `sps` - [Sinusoidal + stochastic model](smst/models/sps.py)
+- `hpr` - [Harmonic + residual model](smst/models/hpr.py)
+- `hps` - [Harmonic + stochastic model](smst/models/hps.py)
 
 ### Transformations
 
@@ -162,18 +162,18 @@ A model provides a different representation of audio than the time-domain sample
 
 Audio can be transformed by modifying its model. Each transformation belongs to a model. Thus also transformations can be found in the `smst` package.
 
-- `stftModel` - [STFT transformations](smst/models/stftModel.py)
+- `stft` - [STFT transformations](smst/models/stft.py)
   - `stftFiltering()`
   - `stftMorph()`
-- `sineModel` - [Sinusoidal transformations](smst/models/sineModel.py)
+- `sine` - [Sinusoidal transformations](smst/models/sine.py)
   - `sineTimeScaling()`
   - `sineFreqScaling()`
-- `harmonicModel` - [Harmonic transformations](smst/models/harmonicModel.py)
+- `harmonic` - [Harmonic transformations](smst/models/harmonic.py)
   - `harmonicFreqScaling()`
-- `stochasticModel` - [Stochastic transformations](smst/models/stochasticModel.py)
+- `stochastic` - [Stochastic transformations](smst/models/stochastic.py)
   - `stochasticTimeScale()`
   -
-- `hpsModel` - [Harmonic + stochastic transformations](smst/models/hpsModel.py)
+- `hps` - [Harmonic + stochastic transformations](smst/models/hps.py)
   - `hpsTimeScale()`
   - `hpsMorph()`
 

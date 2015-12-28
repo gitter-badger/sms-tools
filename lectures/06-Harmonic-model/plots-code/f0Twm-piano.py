@@ -7,11 +7,11 @@ from scipy.signal import hamming, triang, blackman
 import math
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
-import smst.models.stft as STFT
-import smst.models.sineModel as SM
-import smst.models.harmonicModel as HM
+from smst.models import stft
+from smst.models import sine
+from smst.models import harmonic
 
 (fs, x) = utils.wavread('../../../sounds/piano.wav')
 w = np.blackman(1501)
@@ -25,8 +25,8 @@ H = 128
 x1 = x[1.5*fs:1.8*fs]
 
 plt.figure(1, figsize=(9, 7))
-mX, pX = STFT.stftAnal(x, w, N, H)
-f0 = HM.f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et)
+mX, pX = stft.stftAnal(x, w, N, H)
+f0 = harmonic.f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et)
 f0 = utils.cleaningTrack(f0, 5)
 yf0 = utils.sinewaveSynth(f0, .8, H, fs)
 f0[f0==0] = np.nan

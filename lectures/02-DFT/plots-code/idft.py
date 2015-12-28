@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import math
 
 k0 = 8.5
 N = 64
 w = np.ones(N)
 x = np.cos(2*np.pi*k0/N*np.arange(-N/2,N/2))
-mX, pX = DFT.dftAnal(x, w, N)
-y = DFT.dftSynth(mX, pX, N)
+mX, pX = dft.dftAnal(x, w, N)
+y = dft.dftSynth(mX, pX, N)
 
 plt.figure(1, figsize=(9.5, 5))
 plt.subplot(311)

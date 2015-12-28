@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import get_window
 import smst.utils as utils
-import smst.models.sprModel as SPR
-import smst.models.stftModel as STFT
+from smst.models import spr
+from smst.models import stft
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=2048, t=-80,
@@ -37,13 +37,13 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# perform sinusoidal plus residual analysis
-	tfreq, tmag, tphase, xr = SPR.sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase, xr = spr.sprModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
 	# compute spectrogram of residual
-	mXr, pXr = STFT.stftModelAnal(xr, w, N, H)
+	mXr, pXr = stft.stftModelAnal(xr, w, N, H)
 
 	# sum sinusoids and residual
-	y, ys = SPR.sprModelSynth(tfreq, tmag, tphase, xr, Ns, H, fs)
+	y, ys = spr.sprModelSynth(tfreq, tmag, tphase, xr, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sprModel_sines.wav'

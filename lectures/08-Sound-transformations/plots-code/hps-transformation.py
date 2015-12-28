@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 
-import smst.models.hpsModel as HPS
+from smst.models import hps
 import smst.utils as utils
 
 inputFile='../../../sounds/sax-phrase-short.wav'
@@ -29,11 +29,11 @@ H = 128
 
 (fs, x) = utils.wavread(inputFile)
 w = get_window(window, M)
-hfreq, hmag, hphase, mYst = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
+hfreq, hmag, hphase, mYst = hps.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 timeScaling = np.array([0, 0, 2.138, 2.138-1.5, 3.146, 3.146])
-yhfreq, yhmag, ystocEnv = HPS.hpsTimeScale(hfreq, hmag, mYst, timeScaling)
+yhfreq, yhmag, ystocEnv = hps.hpsTimeScale(hfreq, hmag, mYst, timeScaling)
 
-y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
+y, yh, yst = hps.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
 utils.wavwrite(y,fs, 'hps-transformation.wav')
 

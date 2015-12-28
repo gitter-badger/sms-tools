@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 
-import smst.models.hpsModel as HPS
+from smst.models import hps
 import smst.utils as utils
 
 inputFile1='../../../sounds/violin-B3.wav'
@@ -40,15 +40,15 @@ H = 128
 (fs2, x2) = utils.wavread(inputFile2)
 w1 = get_window(window1, M1)
 w2 = get_window(window2, M2)
-hfreq1, hmag1, hphase1, stocEnv1 = HPS.hpsModelAnal(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
-hfreq2, hmag2, hphase2, stocEnv2 = HPS.hpsModelAnal(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2, minSineDur2, Ns, stocf)
+hfreq1, hmag1, hphase1, stocEnv1 = hps.hpsModelAnal(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
+hfreq2, hmag2, hphase2, stocEnv2 = hps.hpsModelAnal(x2, fs2, w2, N2, H, t2, nH, minf02, maxf02, f0et2, harmDevSlope2, minSineDur2, Ns, stocf)
 
 hfreqIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 hmagIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
 stocIntp = np.array([0, 0, .1, 0, .9, 1, 1, 1])
-yhfreq, yhmag, ystocEnv = HPS.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
+yhfreq, yhmag, ystocEnv = hps.hpsMorph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stocEnv2, hfreqIntp, hmagIntp, stocIntp)
 
-y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
+y, yh, yst = hps.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
 
 utils.wavwrite(y,fs1, 'hps-morph-total.wav')
 

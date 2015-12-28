@@ -6,9 +6,9 @@ from scipy.interpolate import interp1d
 from scipy.signal import blackmanharris, triang, resample
 from scipy.fftpack import ifft
 import math
-import dftModel as DFT
+import dft
 from .. import utils
-import sineModel as SM
+import sine
 
 def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	"""
@@ -42,7 +42,7 @@ def f0Detection(x, fs, w, N, H, t, minf0, maxf0, f0et):
 	f0stable = 0                                               # initialize f0 stable
 	while pin<pend:
 		x1 = x[pin-hM1:pin+hM2]                                  # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                           # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                           # compute dft
 		ploc = utils.peakDetection(mX, t)                           # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)      # refine peak values
 		ipfreq = fs * iploc/N                                    # convert locations to Hez
@@ -127,7 +127,7 @@ def harmonicModel(x, fs, w, N, t, nH, minf0, maxf0, f0et):
 	while pin<pend:
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N
@@ -177,7 +177,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 	f0stable = 0                                            # initialize f0 stable
 	while pin<=pend:
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect peak locations
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values
 		ipfreq = fs * iploc/N                                 # convert locations to Hz
@@ -198,7 +198,7 @@ def harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.
 			xhmag = np.vstack((xhmag, np.array([hmag])))
 			xhphase = np.vstack((xhphase, np.array([hphase])))
 		pin += H                                              # advance sound pointer
-	xhfreq = SM.cleaningSineTracks(xhfreq, round(fs*minSineDur/H))     # delete tracks shorter than minSineDur
+	xhfreq = sine.cleaningSineTracks(xhfreq, round(fs*minSineDur/H))     # delete tracks shorter than minSineDur
 	return xhfreq, xhmag, xhphase
 
 # transformations applied to the harmonics of a sound

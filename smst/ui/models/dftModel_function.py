@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import smst.utils as utils
-import smst.models.dftModel as DFT
+from smst.models import dft
 from .. import demo_sound_path
 
 def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511, N = 1024, time = .2,
@@ -30,10 +30,10 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511,
 	x1 = x[sample:sample+M]
 
 	# compute the dft of the sound fragment
-	mX, pX = DFT.dftAnal(x1, w, N)
+	mX, pX = dft.dftAnal(x1, w, N)
 
 	# compute the inverse dft of the spectrum
-	y = DFT.dftSynth(mX, pX, w.size)*sum(w)
+	y = dft.dftSynth(mX, pX, w.size)*sum(w)
 
 	# create figure
 	plt.figure(figsize=(12, 9))

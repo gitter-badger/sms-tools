@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
 import smst.utils as utils
-import smst.models.hpsModel as HPS
+from smst.models import hps
 from .. import demo_sound_path
 
 def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M=601, N=1024, t=-100,
@@ -35,10 +35,10 @@ def main(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman', M
 	w = get_window(window, M)
 
 	# compute the harmonic plus stochastic model of the whole sound
-	hfreq, hmag, hphase, stocEnv = HPS.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
+	hfreq, hmag, hphase, stocEnv = hps.hpsModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 
 	# synthesize a sound from the harmonic plus stochastic representation
-	y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, hphase, stocEnv, Ns, H, fs)
+	y, yh, yst = hps.hpsModelSynth(hfreq, hmag, hphase, stocEnv, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel_sines.wav'

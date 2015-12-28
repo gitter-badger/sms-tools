@@ -11,17 +11,17 @@ import os
 
 
 import smst.utils as utils
-import smst.models.stochasticModel as STM
-import smst.models.stft as STFT
+from smst.models import stochastic
+from smst.models import stft
 
 (fs, x) = utils.wavread('../../../sounds/ocean.wav')
 w = np.hamming(512)
 N = 512
 H = 256
 stocf = .1
-mYst = STM.stochasticModelAnal(x, H, N, stocf)
-y = STM.stochasticModelSynth(mYst, H, N)
-mX, pX = STFT.stftAnal(x, w, N, H)
+mYst = stochastic.stochasticModelAnal(x, H, N, stocf)
+y = stochastic.stochasticModelSynth(mYst, H, N)
+mX, pX = stft.stftAnal(x, w, N, H)
 
 plt.figure(1, figsize=(9, 7))
 plt.subplot(411)

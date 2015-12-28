@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-import smst.models.dftModel as DF
+from smst.models import dft
 import smst.utils as utils
 from scipy.fftpack import fft, ifft
 import math
@@ -25,7 +25,7 @@ plt.plot(np.arange(-hM1, hM2), x1, lw=1.5)
 plt.axis([-hM1, hM2, min(x1), max(x1)])
 plt.title('x (oboe-A4.wav)')
 
-mX, pX = DF.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4,1,2)
@@ -34,7 +34,7 @@ plt.axis([0,N/4,-70,0])
 plt.title ('mX (rectangular window)')
 
 w = np.hamming(501)
-mX, pX = DF.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4,1,3)
@@ -43,7 +43,7 @@ plt.axis([0,N/4,-70,0])
 plt.title ('mX (hamming window)')
 
 w = np.blackman(501)
-mX, pX = DF.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 mX = mX - max(mX)
 
 plt.subplot(4,1,4)

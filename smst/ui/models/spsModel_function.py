@@ -4,7 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
-import smst.models.spsModel as SPS
+from smst.models import sps
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -35,10 +35,10 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	w = get_window(window, M)
 
 	# perform sinusoidal+sotchastic analysis
-	tfreq, tmag, tphase, stocEnv = SPS.spsModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
+	tfreq, tmag, tphase, stocEnv = sps.spsModelAnal(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
 
 	# synthesize sinusoidal+stochastic model
-	y, ys, yst = SPS.spsModelSynth(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
+	y, ys, yst = sps.spsModelSynth(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFileSines = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_spsModel_sines.wav'

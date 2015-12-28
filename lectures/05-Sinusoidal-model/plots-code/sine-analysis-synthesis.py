@@ -7,7 +7,7 @@ from scipy.signal import hamming, triang, blackmanharris
 import os, functools, time
 from scipy.fftpack import fft, ifft, fftshift
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
@@ -20,7 +20,7 @@ hNs = Ns/2
 pin = 5000
 t = -70
 x1 = x[pin:pin+w.size]
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 ploc = utils.peakDetection(mX, t)
 iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
 freqs = iploc*fs/N

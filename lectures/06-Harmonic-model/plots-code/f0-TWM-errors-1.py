@@ -7,7 +7,7 @@ from scipy.signal import hamming, triang, blackman
 import math
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 
@@ -64,7 +64,7 @@ minf0 = 100
 maxf0 = 1500
 w = blackman (M)
 x1 = x[start:start+M]
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 ploc = utils.peakDetection(mX, t)
 iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
 ipfreq = fs * iploc/N

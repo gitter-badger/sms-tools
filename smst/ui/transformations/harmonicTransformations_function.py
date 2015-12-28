@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.sineModel as SM
-import smst.models.harmonicModel as HM
+from smst.models import sine
+from smst.models import harmonic
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -42,10 +42,10 @@ def analysis(inputFile=demo_sound_path('vignesh.wav'), window='blackman', M=1201
 	w = get_window(window, M)
 
 	# compute the harmonic model of the whole sound
-	hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+	hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 
 	# synthesize the sines without original phases
-	y = SM.sineModelSynth(hfreq, hmag, np.array([]), Ns, H, fs)
+	y = sine.sineModelSynth(hfreq, hmag, np.array([]), Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModel.wav'
@@ -117,13 +117,13 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the harmonics
-	yhfreq, yhmag = HM.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
+	yhfreq, yhmag = harmonic.harmonicFreqScaling(hfreq, hmag, freqScaling, freqStretching, timbrePreservation, fs)
 
 	# time scale the sound
-	yhfreq, yhmag = SM.sineTimeScaling(yhfreq, yhmag, timeScaling)
+	yhfreq, yhmag = sine.sineTimeScaling(yhfreq, yhmag, timeScaling)
 
 	# synthesis
-	y = SM.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)
+	y = sine.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_harmonicModelTransformation.wav'

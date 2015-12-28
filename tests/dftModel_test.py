@@ -1,14 +1,14 @@
 import numpy as np
 from scipy.signal import get_window
-import smst.models.dftModel as DFT
+from smst.models import dft
 
 def test_simple_sinusoid():
     window_size = 1024
     t = np.linspace(0, 1, window_size)
     x = np.cos(4 * 2 * np.pi * t)
     window = get_window('hamming', window_size)
-    mag_spectrum, phase_spectrum = DFT.dftAnal(x, window, window_size)
-    x_reconstructed = DFT.dftSynth(mag_spectrum, phase_spectrum, window_size) * sum(window)
+    mag_spectrum, phase_spectrum = dft.dftAnal(x, window, window_size)
+    x_reconstructed = dft.dftSynth(mag_spectrum, phase_spectrum, window_size) * sum(window)
 
 
     assert mag_spectrum.argmax() == 4

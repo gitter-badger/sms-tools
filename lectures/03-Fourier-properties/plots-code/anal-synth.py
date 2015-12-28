@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time, os
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 from scipy.io.wavfile import read
 from scipy.fftpack import fft, ifft
@@ -18,8 +18,8 @@ pin = 5000
 hM1 = int(math.floor((w.size+1)/2))
 hM2 = int(math.floor(w.size/2))
 x1 = x[pin-hM1:pin+hM2]
-mX, pX = DFT.dftAnal(x1, w, N)
-y = DFT.dftSynth(mX, pX, w.size)*sum(w)
+mX, pX = dft.dftAnal(x1, w, N)
+y = dft.dftSynth(mX, pX, w.size)*sum(w)
 
 plt.figure(1, figsize=(9.5, 5.5))
 plt.subplot(4,1,1)

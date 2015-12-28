@@ -8,9 +8,9 @@ import math
 import os, time
 
 
-import smst.models.stft as STFT
+from smst.models import stft
 import smst.utils as utils
-import smst.models.harmonicModel as HM
+from smst.models import harmonic
 
 
 (fs, x) = utils.wavread('../../../sounds/flute-A4.wav'))
@@ -27,10 +27,10 @@ harmDevSlope = 0.01
 Ns = 512
 H = Ns/4
 
-mX, pX = STFT.stftAnal(x, w, N, H)
-hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
+mX, pX = stft.stftAnal(x, w, N, H)
+hfreq, hmag, hphase = harmonic.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
-mXr, pXr = STFT.stftAnal(xr, hamming(Ns), Ns, H)
+mXr, pXr = stft.stftAnal(xr, hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
 plt.figure(1, figsize=(9, 7))

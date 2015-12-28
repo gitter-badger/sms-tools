@@ -10,7 +10,7 @@ from scipy.fftpack import fft, ifft
 
 
 import smst.utils as utils
-import smst.models.dftModel as DFT
+from smst.models import dft
 
 
 def stochasticModelFrame(x, w, N, stocf) :
@@ -49,7 +49,7 @@ if __name__ == '__main__':
   lastbin = N*maxFreq/fs
   first = 4000
   last = first+w.size
-  mX, pX = DFT.dftAnal(x[first:last], w, N)
+  mX, pX = dft.dftAnal(x[first:last], w, N)
   mXenv = resample(np.maximum(-200, mX), envSize)
   mY = resample(mXenv, N/2)
 

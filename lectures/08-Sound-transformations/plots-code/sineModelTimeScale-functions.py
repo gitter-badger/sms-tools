@@ -8,9 +8,9 @@ from scipy.fftpack import fft, ifft, fftshift
 import os, functools, time, math
 from scipy.interpolate import interp1d
 
-import smst.models.sineModel as SM
-import smst.models.stft as STFT
-import smst.models.sineModel as SM
+from smst.models import sine
+from smst.models import stft
+from smst.models import sine
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/mridangam.wav')
@@ -24,7 +24,7 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns/4
-sfreq, smag, sphase = SM.sineModelAnal(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+sfreq, smag, sphase = sine.sineModelAnal(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 timeScale = np.array([.01, .0, .03, .03, .335, .8, .355, .82, .671, 1.0, .691, 1.02, .858, 1.1, .878, 1.12, 1.185, 1.8, 1.205, 1.82, 1.49, 2.0])
 L = sfreq[:,0].size                                    # number of input frames
 maxInTime = max(timeScale[::2])                      # maximum value used as input times

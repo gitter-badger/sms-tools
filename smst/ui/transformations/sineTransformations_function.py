@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 import os
-import smst.models.sineModel as SM
+from smst.models import sine
 import smst.utils as utils
 from .. import demo_sound_path
 
@@ -37,10 +37,10 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
 	w = get_window(window, M)
 
 	# compute the sine model of the whole sound
-	tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+	tfreq, tmag, tphase = sine.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 
 	# synthesize the sines without original phases
-	y = SM.sineModelSynth(tfreq, tmag, np.array([]), Ns, H, fs)
+	y = sine.sineModelSynth(tfreq, tmag, np.array([]), Ns, H, fs)
 
 	# output sound file (monophonic with sampling rate of 44100)
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
@@ -110,13 +110,13 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	H = 128
 
 	# frequency scaling of the sinusoidal tracks
-	ytfreq = SM.sineFreqScaling(tfreq, freqScaling)
+	ytfreq = sine.sineFreqScaling(tfreq, freqScaling)
 
 	# time scale the sinusoidal tracks
-	ytfreq, ytmag = SM.sineTimeScaling(ytfreq, tmag, timeScaling)
+	ytfreq, ytmag = sine.sineTimeScaling(ytfreq, tmag, timeScaling)
 
 	# synthesis
-	y = SM.sineModelSynth(ytfreq, ytmag, np.array([]), Ns, H, fs)
+	y = sine.sineModelSynth(ytfreq, ytmag, np.array([]), Ns, H, fs)
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModelTransformation.wav'

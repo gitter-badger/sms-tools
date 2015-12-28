@@ -6,7 +6,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import blackmanharris, triang
 from scipy.fftpack import ifft, fftshift
 import math
-import dftModel as DFT
+import dft
 from .. import utils
 
 def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
@@ -122,7 +122,7 @@ def sineModel(x, fs, w, N, t):
 	while pin<pend:                                         # while input sound pointer is within sound
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
@@ -157,7 +157,7 @@ def sineModelAnal(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOff
 	tfreq = np.array([])
 	while pin<pend:                                         # while input sound pointer is within sound
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
-		mX, pX = DFT.dftAnal(x1, w, N)                        # compute dft
+		mX, pX = dft.dftAnal(x1, w, N)                        # compute dft
 		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
 		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz

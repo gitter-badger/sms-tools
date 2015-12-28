@@ -7,7 +7,7 @@ from essentia.standard import *
 from pylab import *
 from numpy import *
 
-import smst.models.stft as STFT
+from smst.models import stft
 import smst.utils as utils
 
 filename = '../../../sounds/carnatic.wav'
@@ -58,7 +58,7 @@ yf0 = utils.sinewaveSynth(pitch, .6, hopSize, sampleRate)
 
 figure(1, figsize=(9, 6))
 
-mX, pX = STFT.stftAnal(audio, hamming(frameSize), frameSize, hopSize)
+mX, pX = stft.stftAnal(audio, hamming(frameSize), frameSize, hopSize)
 maxplotfreq = 3000.0
 numFrames = int(mX[:,0].size)
 frmTime = hopSize*arange(numFrames)/float(sampleRate)

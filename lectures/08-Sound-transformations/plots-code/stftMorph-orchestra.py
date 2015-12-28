@@ -5,14 +5,11 @@ from scipy.signal import hamming, resample
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-
-
-
-import smst.models.dftModel as DFT
-import smst.utils as utils
-import smst.models.stochasticModel as STOC
 import math
-import smst.models.stft as STFT
+
+import smst.utils as utils
+from smst.models import stochastic
+from smst.models import stft
 
 (fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
 (fs, x2) = utils.wavread('../../../sounds/speech-male.wav')
@@ -23,10 +20,10 @@ w2 = np.hamming(1024)
 N2 = 1024
 smoothf = .2
 balancef = 0.5
-y = STFT.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
-mX2 = STOC.stochasticModelAnal(x2,H1,H1*2, smoothf)
-mX,pX = STFT.stftAnal(x1, w1, N1, H1)
-mY,pY = STFT.stftAnal(y, w1, N1, H1)
+y = stft.stftMorph(x1, x2, fs, w1, N1, w2, N2, H1, smoothf, balancef)
+mX2 = stochastic.stochasticModelAnal(x2,H1,H1*2, smoothf)
+mX,pX = stft.stftAnal(x1, w1, N1, H1)
+mY,pY = stft.stftAnal(y, w1, N1, H1)
 maxplotfreq = 10000.0
 
 plt.figure(1, figsize=(12, 9))

@@ -8,7 +8,7 @@ from scipy.fftpack import fft, ifft
 import math
 import os, functools, time
 
-import smst.models.dftModel as DFT
+from smst.models import dft
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
@@ -21,7 +21,7 @@ hN = N/2
 hM = (M+1)/2
 
 x1 = x[start:start+M]
-mX, pX = DFT.dftAnal(x1, w, N)
+mX, pX = dft.dftAnal(x1, w, N)
 ploc = utils.peakDetection(mX, t)
 pmag = mX[ploc]
 freqaxis = fs*np.arange(mX.size)/float(N)

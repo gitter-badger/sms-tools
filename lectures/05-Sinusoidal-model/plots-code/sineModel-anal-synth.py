@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 import functools, time
 
-import smst.models.sineModel as SM
+from smst.models import sine
 import smst.utils as utils
 
 (fs, x) = utils.wavread('../../../sounds/bendir.wav'))
@@ -21,8 +21,8 @@ freqDevOffset = 20
 freqDevSlope = 0.02
 Ns = 512
 H = Ns/4
-tfreq, tmag, tphase = SM.sineModelAnal(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
-y = SM.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
+tfreq, tmag, tphase = sine.sineModelAnal(x1, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
+y = sine.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
 
 numFrames = int(tfreq[:,0].size)
 frmTime = H*np.arange(numFrames)/float(fs)
