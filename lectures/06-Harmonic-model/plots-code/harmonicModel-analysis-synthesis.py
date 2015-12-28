@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import harmonic, sine
 
-(fs, x) = utils.wavread('../../../sounds/vignesh.wav')
+(fs, x) = audio.wavread('../../../sounds/vignesh.wav')
 w = np.blackman(1201)
 N = 2048
 t = -90
@@ -46,5 +46,5 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.title('yh')
 
 plt.tight_layout()
-utils.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
+audio.wavwrite(y, fs, 'vignesh-harmonic-synthesis.wav')
 plt.savefig('harmonicModel-analysis-synthesis.png')

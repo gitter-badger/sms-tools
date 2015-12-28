@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst import utils
+from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = utils.wavread('../../../sounds/orchestra.wav')
+(fs, x) = audio.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(801)
 N = 2048
 t = -90
@@ -24,7 +24,7 @@ freqScaling = np.array([0, .8, 1, 1.2])
 ytfreq = sine.scaleFrequencies(tfreq, freqScaling)
 y = sine.toAudio(ytfreq, tmag, np.array([]), Ns, H, fs)
 mY, pY = stft.fromAudio(y, w, N, H)
-utils.wavwrite(y,fs, 'sineModelFreqScale-orchestra.wav')
+audio.wavwrite(y,fs, 'sineModelFreqScale-orchestra.wav')
 
 maxplotfreq = 4000.0
 

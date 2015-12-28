@@ -4,10 +4,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-from smst import utils
+from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = utils.wavread('../../../sounds/orchestra.wav')
+(fs, x) = audio.wavread('../../../sounds/orchestra.wav')
 w = np.hamming(2048)
 N = 2048
 H = 512
@@ -44,5 +44,5 @@ plt.title('mY')
 plt.autoscale(tight=True)
 
 plt.tight_layout()
-utils.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
+audio.wavwrite(y, fs, 'orchestra-stft-filtering.wav')
 plt.savefig('stftFiltering-orchestra.png')

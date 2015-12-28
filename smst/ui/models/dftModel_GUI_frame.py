@@ -5,7 +5,7 @@ from Tkinter import *
 import tkFileDialog, tkMessageBox
 
 from . import dftModel_function
-from smst import utils
+from smst.utils import audio
 
 class DftModel_frame:
 
@@ -32,7 +32,7 @@ class DftModel_frame:
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE
-		self.preview = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation.get()), bg="gray30", fg="white")
+		self.preview = Button(self.parent, text=">", command=lambda:audio.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
 
 		## DFT MODEL

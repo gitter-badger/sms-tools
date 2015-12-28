@@ -6,8 +6,8 @@ import numpy as np
 from scipy.fftpack import fft, ifft
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst import utils
 from smst.models import dft
+from smst.utils import audio
 
 def stochasticModelFrame(x, w, N, stocf) :
 	# x: input array sound, w: analysis window, N: FFT size,
@@ -36,7 +36,7 @@ def stochasticModelFrame(x, w, N, stocf) :
 
 # example call of stochasticModel function
 if __name__ == '__main__':
-  (fs, x) = utils.wavread('../../../sounds/ocean.wav')
+  (fs, x) = audio.wavread('../../../sounds/ocean.wav')
   w = np.hanning(1024)
   N = 1024
   stocf = .1

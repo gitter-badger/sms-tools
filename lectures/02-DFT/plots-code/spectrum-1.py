@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 w = np.hamming(511)
 N = 512
 pin = 5000

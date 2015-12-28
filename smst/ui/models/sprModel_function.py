@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import spr, stft
 from .. import demo_sound_path
 
@@ -31,7 +31,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	H = 128
 
 	# read input sound
-	(fs, x) = utils.wavread(inputFile)
+	(fs, x) = audio.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -51,9 +51,9 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sprModel.wav'
 
 	# write sounds files for sinusoidal, residual, and the sum
-	utils.wavwrite(ys, fs, outputFileSines)
-	utils.wavwrite(xr, fs, outputFileResidual)
-	utils.wavwrite(y, fs, outputFile)
+	audio.wavwrite(ys, fs, outputFileSines)
+	audio.wavwrite(xr, fs, outputFileResidual)
+	audio.wavwrite(y, fs, outputFile)
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -100,7 +100,7 @@ def main(inputFile=demo_sound_path('bendir.wav'), window='hamming', M=2001, N=20
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_spr_model.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_spr_model.png' % files.stripFile(inputFile))
 
 
 if __name__ == "__main__":

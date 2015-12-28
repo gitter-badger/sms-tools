@@ -5,11 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/violin-B3.wav')
+(fs, x) = audio.wavread('../../../sounds/violin-B3.wav')
 N = 1024
 pin = 5000
 w = np.ones(801)

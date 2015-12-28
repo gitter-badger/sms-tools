@@ -6,7 +6,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import hanning, resample
 from scipy.fftpack import fft, ifft
 
-from .. import utils
+from ..utils.math import isPower2
 
 def fromAudio(x, H, N, stocf):
 	"""
@@ -27,7 +27,7 @@ def fromAudio(x, H, N, stocf):
 	if (H <= 0):                                           # raise error if hop size 0 or negative
 		raise ValueError("Hop size (H) smaller or equal to 0")
 
-	if not(utils.isPower2(N)):                                # raise error if N not a power of two
+	if not(isPower2(N)):                                # raise error if N not a power of two
 		raise ValueError("FFT size (N) is not a power of 2")
 
 	w = hanning(N)                                          # analysis window
@@ -54,7 +54,7 @@ def toAudio(stocEnv, H, N):
 	returns y: output sound
 	"""
 
-	if not(utils.isPower2(N)):                                 	# raise error if N not a power of two
+	if not(isPower2(N)):                                 	# raise error if N not a power of two
 		raise ValueError("N is not a power of two")
 
 	hN = N/2+1                                                  # positive size of fft
@@ -96,7 +96,7 @@ def reconstruct(x, H, N, stocf):
 	if (H <= 0):                                             # raise error if hop size 0 or negative
 		raise ValueError("Hop size (H) smaller or equal to 0")
 
-	if not(utils.isPower2(N)):                                  # raise error if N not a power of twou
+	if not(isPower2(N)):                                  # raise error if N not a power of twou
 		raise ValueError("FFT size (N) is not a power of 2")
 
 	w = hanning(N)                                           # analysis/synthesis window

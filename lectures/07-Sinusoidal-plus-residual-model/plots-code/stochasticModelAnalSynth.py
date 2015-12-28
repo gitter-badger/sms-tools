@@ -6,10 +6,10 @@ import numpy as np
 from scipy.fftpack import fft, ifft
 from scipy.signal import hamming, hanning, resample
 
-from smst import utils
+from smst.utils import audio
 from smst.models import stft, stochastic
 
-(fs, x) = utils.wavread('../../../sounds/ocean.wav')
+(fs, x) = audio.wavread('../../../sounds/ocean.wav')
 w = np.hamming(512)
 N = 512
 H = 256
@@ -47,4 +47,4 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 
 plt.tight_layout()
 plt.savefig('stochasticModelAnalSynth.png')
-utils.wavwrite(y, fs, 'ocean-synthesis.wav')
+audio.wavwrite(y, fs, 'ocean-synthesis.wav')

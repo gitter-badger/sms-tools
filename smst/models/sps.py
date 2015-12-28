@@ -7,7 +7,7 @@ from scipy.signal import resample, blackmanharris, triang, hanning
 from scipy.fftpack import fft, ifft, fftshift
 
 from . import dft, sine, stochastic
-from .. import utils
+from ..utils import peaks, residual, synth
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf):
 	"""
@@ -24,7 +24,7 @@ def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSl
 	# perform sinusoidal analysis
 	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 	Ns = 512
-	xr = utils.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
+	xr = residual.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
 	stocEnv = stochastic.fromAudio(xr, H, H*2, stocf)            # compute stochastic model of residual
 	return tfreq, tmag, tphase, stocEnv
 
@@ -78,8 +78,8 @@ def reconstruct(x, fs, w, N, t, stocf):
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
 		mX, pX = dft.fromAudio(x1, w, N)                              # compute dft
-		ploc = utils.peakDetection(mX, t)                              # find peaks
-		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)          # refine peak values
+		ploc = peaks.peakDetection(mX, t)                              # find peaks
+		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)          # refine peak values
 		ipfreq = fs*iploc/float(N)                                  # convert peak locations to Hertz
 		ri = pin-hNs-1                                              # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                        # window the input sound
@@ -89,7 +89,7 @@ def reconstruct(x, fs, w, N, t, stocf):
 		X2 = fft(fftbuffer)                                         # compute FFT for residual analysis
 
 	#-----synthesis-----
-		Ys = utils.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
+		Ys = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
 		Xr = X2-Ys;                                                 # get the residual complex spectrum
 		mXr = 20 * np.log10(abs(Xr[:hNs]))                          # magnitude spectrum of residual
 		mXrenv = resample(np.maximum(-200, mXr), mXr.size*stocf)    # decimate the magnitude spectrum and avoid -Inf

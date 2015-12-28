@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst import utils
 from smst.models import harmonic, stft
+from smst.utils import audio, residual
 
-(fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/flute-A4.wav')
 w = np.blackman(551)
 N = 1024
 t = -100
@@ -24,7 +24,7 @@ H = Ns/4
 
 mX, pX = stft.fromAudio(x, w, N, H)
 hfreq, hmag, hphase = harmonic.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
-xr = utils.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
+xr = residual.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
 mXr, pXr = stft.fromAudio(xr, hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
@@ -78,4 +78,4 @@ plt.title('pXr')
 
 plt.tight_layout()
 plt.savefig('hprModelAnal-flute.png')
-utils.wavwrite(5*xr, fs, 'flute-residual.wav')
+audio.wavwrite(5*xr, fs, 'flute-residual.wav')

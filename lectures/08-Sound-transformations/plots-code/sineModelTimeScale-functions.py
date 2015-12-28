@@ -7,10 +7,10 @@ from scipy.fftpack import fft, ifft, fftshift
 from scipy.interpolate import interp1d
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst import utils
+from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = utils.wavread('../../../sounds/mridangam.wav')
+(fs, x) = audio.wavread('../../../sounds/mridangam.wav')
 x1 = x[:int(1.49*fs)]
 w = np.hamming(801)
 N = 2048

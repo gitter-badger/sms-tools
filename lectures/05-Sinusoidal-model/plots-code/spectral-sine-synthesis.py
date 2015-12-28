@@ -6,7 +6,7 @@ import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio, synth
 from smst.models import sine, stft
 
 Ns = 256
@@ -20,7 +20,7 @@ yploc = Ns*freqs/fs
 ypmag = 20*np.log10(amps/2.0)
 ypphase = phases
 
-Y = utils.genSpecSines(freqs, ypmag, ypphase, Ns, fs)
+Y = synth.genSpecSines(freqs, ypmag, ypphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))

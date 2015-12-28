@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming
 
-from smst import utils
+from smst.utils import audio, synth
 from smst.models import stft
 
 def f0Yin(x, N, H, minf0, maxf0):
@@ -30,7 +30,7 @@ def f0Yin(x, N, H, minf0, maxf0):
   return f0
 
 if __name__ == '__main__':
-  (fs, x) = utils.wavread('../../../sounds/bendir.wav')
+  (fs, x) = audio.wavread('../../../sounds/bendir.wav')
 
   plt.figure(1, figsize=(9, 7))
   N = 2048
@@ -47,7 +47,7 @@ if __name__ == '__main__':
   maxf0 = 300
   H = 256
   f0 = f0Yin(x, N, H, minf0, maxf0)
-  yf0 = utils.sinewaveSynth(f0, .8, H, fs)
+  yf0 = synth.sinewaveSynth(f0, .8, H, fs)
   frmTime = H*np.arange(f0.size)/float(fs)
   plt.plot(frmTime, f0, linewidth=2, color='k')
   plt.autoscale(tight=True)
@@ -55,4 +55,4 @@ if __name__ == '__main__':
 
   plt.tight_layout()
   plt.savefig('f0Yin.png')
-  utils.wavwrite(yf0, fs, 'f0Yin.wav')
+  audio.wavwrite(yf0, fs, 'f0Yin.wav')

@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import stft
 from .. import demo_sound_path
 
@@ -25,8 +25,8 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
 	"""
 
 	# read input sounds
-	(fs, x1) = utils.wavread(inputFile1)
-	(fs, x2) = utils.wavread(inputFile2)
+	(fs, x1) = audio.wavread(inputFile1)
+	(fs, x2) = audio.wavread(inputFile2)
 
 	# compute analysis windows
 	w1 = get_window(window1, M1)
@@ -43,7 +43,7 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_stftMorph.wav'
-	utils.wavwrite(y, fs, outputFile)
+	audio.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -95,8 +95,8 @@ def main(inputFile1=demo_sound_path('ocean.wav'), inputFile2=demo_sound_path('sp
 		plt.show()
 	if plotFile:
 		plt.savefig('output_plots/%s_%s_stft_morph.png' % (
-			utils.stripFile(inputFile1),
-			utils.stripFile(inputFile2)
+			files.stripFile(inputFile1),
+			files.stripFile(inputFile2)
 		))
 
 if __name__ == '__main__':

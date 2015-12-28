@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import sine, stft
 
 plt.figure(1, figsize=(9, 7))
 
 plt.subplot(211)
-(fs, x) = utils.wavread('../../../sounds/vibraphone-C6.wav')
+(fs, x) = audio.wavread('../../../sounds/vibraphone-C6.wav')
 w = np.blackman(401)
 N = 512
 H = 100
@@ -38,7 +38,7 @@ plt.autoscale(tight=True)
 plt.title('mX + sine frequencies (vibraphone-C6.wav)')
 
 plt.subplot(212)
-(fs, x) = utils.wavread('../../../sounds/vignesh.wav')
+(fs, x) = audio.wavread('../../../sounds/vignesh.wav')
 w = np.blackman(1101)
 N = 2048
 H = 250

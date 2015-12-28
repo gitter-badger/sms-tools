@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import dft
 from .. import demo_sound_path
 
@@ -19,7 +19,7 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511,
 	"""
 
 	# read input sound (monophonic with sampling rate of 44100)
-	fs, x = utils.wavread(inputFile)
+	fs, x = audio.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -76,7 +76,7 @@ def main(inputFile = demo_sound_path('piano.wav'), window = 'blackman', M = 511,
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_dft_model.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_dft_model.png' % files.stripFile(inputFile))
 
 if __name__ == "__main__":
 	main()

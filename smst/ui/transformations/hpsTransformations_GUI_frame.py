@@ -6,7 +6,7 @@ from scipy.io.wavfile import read
 from Tkinter import *
 import tkFileDialog, tkMessageBox
 
-from smst import utils
+from smst.utils import audio
 from . import hpsTransformations_function as hT
 
 class HpsTransformations_frame:
@@ -34,7 +34,7 @@ class HpsTransformations_frame:
 		open_file.grid(row=0, column=0, sticky=W, padx=(340, 6), pady=(10,2)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE
-		preview = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation.get()), bg="gray30", fg="white")
+		preview = Button(self.parent, text=">", command=lambda:audio.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		preview.grid(row=0, column=0, sticky=W, padx=(385,6), pady=(10,2))
 
 		## HPS TRANSFORMATIONS ANALYSIS
@@ -142,7 +142,7 @@ class HpsTransformations_frame:
 		self.compute.grid(row=4, column=0, padx=5, pady=(10,5), sticky=W)
 
 		#BUTTON TO PLAY ANALYSIS/SYNTHESIS OUTPUT
-		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hpsModel.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:audio.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hpsModel.wav'), bg="gray30", fg="white")
 		self.output.grid(row=4, column=0, padx=(145,5), pady=(10,5), sticky=W)
 
 		###
@@ -191,7 +191,7 @@ class HpsTransformations_frame:
 		self.compute.grid(row=13, column=0, padx=5, pady=(10,15), sticky=W)
 
 		#BUTTON TO PLAY TRANSFORMATION SYNTHESIS OUTPUT
-		self.transf_output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hpsModelTransformation.wav'), bg="gray30", fg="white")
+		self.transf_output = Button(self.parent, text=">", command=lambda:audio.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_hpsModelTransformation.wav'), bg="gray30", fg="white")
 		self.transf_output.grid(row=13, column=0, padx=(165,5), pady=(10,15), sticky=W)
 
 		# define options for opening file

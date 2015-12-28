@@ -5,11 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/sine-440.wav')
+(fs, x) = audio.wavread('../../../sounds/sine-440.wav')
 M = 400
 x1 = x[2000:2000+M]
 N = 2048

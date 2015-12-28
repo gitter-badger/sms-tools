@@ -6,7 +6,7 @@ import numpy as np
 from scipy.fftpack import fft, ifft
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import sine, stft
 
 M = 256

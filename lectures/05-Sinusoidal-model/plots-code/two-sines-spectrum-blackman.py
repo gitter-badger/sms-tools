@@ -5,11 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/sine-440-490.wav')
+(fs, x) = audio.wavread('../../../sounds/sine-440-490.wav')
 w = np.blackman(5291)
 N = 16384
 pin = .11*fs

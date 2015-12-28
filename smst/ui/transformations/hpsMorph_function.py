@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import hps
 from .. import demo_sound_path
 
@@ -37,8 +37,8 @@ def analysis(inputFile1=demo_sound_path('violin-B3.wav'), window1='blackman', M1
 	# hop size (has to be 1/4 of Ns)
 	H = 128
 	# read input sounds
-	(fs1, x1) = utils.wavread(inputFile1)
-	(fs2, x2) = utils.wavread(inputFile2)
+	(fs1, x1) = audio.wavread(inputFile1)
+	(fs2, x2) = audio.wavread(inputFile2)
 	# compute analysis windows
 	w1 = get_window(window1, M1)
 	w2 = get_window(window2, M2)
@@ -102,8 +102,8 @@ def analysis(inputFile1=demo_sound_path('violin-B3.wav'), window1='blackman', M1
 		plt.show(block=False)
 	if plotFile:
 		plt.savefig('output_plots/%s_%s_hps_morph_analysis.png' % (
-			utils.stripFile(inputFile1),
-			utils.stripFile(inputFile2)
+			files.stripFile(inputFile1),
+			files.stripFile(inputFile2)
 		))
 
 	return inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2
@@ -136,7 +136,7 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile1)[:-4] + '_hpsMorph.wav'
-	utils.wavwrite(y, fs, outputFile)
+	audio.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -180,8 +180,8 @@ def transformation_synthesis(inputFile1, fs, hfreq1, hmag1, stocEnv1, inputFile2
 		plt.show()
 	if plotFile:
 		plt.savefig('output_plots/%s_%s_hps_morph_synthesis.png' % (
-			utils.stripFile(inputFile1),
-			utils.stripFile(inputFile2)
+			files.stripFile(inputFile1),
+			files.stripFile(inputFile2)
 		))
 
 def main(interactive=True, plotFile=False):

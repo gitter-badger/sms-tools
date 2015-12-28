@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio, peaks
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 N = 512*2
 M = 511
 t = -60
@@ -20,8 +20,8 @@ hM = (M+1)/2
 
 x1 = x[start:start+M]
 mX, pX = dft.fromAudio(x1, w, N)
-ploc = utils.peakDetection(mX, t)
-iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
+ploc = peaks.peakDetection(mX, t)
+iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
 pmag = mX[ploc]
 freqaxis = fs*np.arange(mX.size)/float(N)
 

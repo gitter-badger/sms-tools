@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackman
 
-from smst import utils
+from smst.utils import audio, peaks
 from smst.models import dft
 
 def TWM (pfreq, pmag, maxnpeaks, f0c):
@@ -52,7 +52,7 @@ def TWM (pfreq, pmag, maxnpeaks, f0c):
 
   return f0, ErrorPM, ErrorMP, Error
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 N = 1024
 hN = N/2
 M = 801
@@ -63,8 +63,8 @@ maxf0 = 1500
 w = blackman (M)
 x1 = x[start:start+M]
 mX, pX = dft.fromAudio(x1, w, N)
-ploc = utils.peakDetection(mX, t)
-iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
+ploc = peaks.peakDetection(mX, t)
+iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
 ipfreq = fs * iploc/N
 f0cand = np.arange(minf0, maxf0, 1.0)
 maxnpeaks = 10

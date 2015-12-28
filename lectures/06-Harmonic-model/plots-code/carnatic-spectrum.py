@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/carnatic.wav')
+(fs, x) = audio.wavread('../../../sounds/carnatic.wav')
 pin = 1.4*fs
 w = np.blackman(1601)
 N = 4096

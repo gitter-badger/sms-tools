@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming
 
-from smst import utils
+from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = utils.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.wavread('../../../sounds/piano.wav')
 w = np.hamming(1024)
 N = 1024
 H = 512
@@ -44,4 +44,4 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('stft-system.png')
-utils.wavwrite(y, fs, 'piano-stft.wav')
+audio.wavwrite(y, fs, 'piano-stft.wav')

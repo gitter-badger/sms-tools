@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, fftshift
 
-from smst import utils
+from smst.utils import audio
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 N = 512
 M = 401
 hN = N/2

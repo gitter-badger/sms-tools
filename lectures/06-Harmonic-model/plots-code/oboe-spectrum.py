@@ -6,10 +6,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 w = np.blackman(651)
 N = 1024
 pin = 5000

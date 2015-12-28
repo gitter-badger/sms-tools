@@ -6,10 +6,9 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
+from smst.utils import audio
 
-from smst import utils
-
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 
 M = 500
 start = .8*fs

@@ -7,10 +7,10 @@ import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
 from scipy.signal import hamming, triang, blackmanharris, resample
 
-from smst import utils
+from smst.utils import audio, peaks, synth
 from smst.models import dft, harmonic
 
-(fs, x) = utils.wavread('../../../sounds/flute-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/flute-A4.wav')
 pos = .8*fs
 M = 601
 hM1 = int(math.floor((M+1)/2))
@@ -31,13 +31,13 @@ x1 = x[pos-hM1:pos+hM2]
 x2 = x[pos-Ns/2-1:pos+Ns/2-1]
 
 mX, pX = dft.fromAudio(x1, w, N)
-ploc = utils.peakDetection(mX, t)
-iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
+ploc = peaks.peakDetection(mX, t)
+iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
 ipfreq = fs*iploc/N
-f0 = utils.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0)
+f0 = peaks.f0Twm(ipfreq, ipmag, f0et, minf0, maxf0)
 hfreqp = []
 hfreq, hmag, hphase = harmonic.findHarmonics(ipfreq, ipmag, ipphase, f0, nH, hfreqp, fs, harmDevSlope)
-Yh = utils.genSpecSines(hfreq, hmag, hphase, Ns, fs)
+Yh = synth.genSpecSines(hfreq, hmag, hphase, Ns, fs)
 mYh = 20 * np.log10(abs(Yh[:Ns/2]))
 bh=blackmanharris(Ns)
 X2 = fft(fftshift(x2*bh/sum(bh)))

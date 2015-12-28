@@ -6,10 +6,10 @@ import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio, peaks, synth
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/oboe-A4.wav')
+(fs, x) = audio.wavread('../../../sounds/oboe-A4.wav')
 M = 601
 w = np.blackman(M)
 N = 1024
@@ -21,10 +21,10 @@ pin = 5000
 t = -70
 x1 = x[pin:pin+w.size]
 mX, pX = dft.fromAudio(x1, w, N)
-ploc = utils.peakDetection(mX, t)
-iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)
+ploc = peaks.peakDetection(mX, t)
+iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)
 freqs = iploc*fs/N
-Y = utils.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
+Y = synth.genSpecSines(freqs, ipmag, ipphase, Ns, fs)
 mY = 20*np.log10(abs(Y[:hNs]))
 pY = np.unwrap(np.angle(Y[:hNs]))
 y= fftshift(ifft(Y))*sum(blackmanharris(Ns))

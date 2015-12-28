@@ -1,16 +1,14 @@
+import essentia.standard as ess
+import math
 # matplotlib without any blocking GUI
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
-import essentia.standard as ess
+from smst.utils import audio
 
-
-
-from smst import utils
-(fs, x) = utils.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.wavread('../../../sounds/piano.wav')
 start = 13860
 M = 800
 xp = x[start:start+M]/float(max(x[start:start+M]))
@@ -36,4 +34,3 @@ plt.ylabel('correlation')
 
 plt.tight_layout()
 plt.savefig('piano-autocorrelation.png')
-

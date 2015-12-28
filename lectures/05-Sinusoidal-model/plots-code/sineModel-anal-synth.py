@@ -6,11 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import sine
 
-(fs, x) = utils.wavread('../../../sounds/bendir.wav')
+(fs, x) = audio.wavread('../../../sounds/bendir.wav')
 x1 = x[0:50000]
 w = np.blackman(2001)
 N = 2048
@@ -49,5 +48,5 @@ plt.axis([0,y.size/float(fs),min(y),max(y)])
 plt.title('y')
 
 plt.tight_layout()
-utils.wavwrite(y, fs, 'bendir-sine-synthesis.wav')
+audio.wavwrite(y, fs, 'bendir-sine-synthesis.wav')
 plt.savefig('sineModel-anal-synth.png')

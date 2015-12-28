@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio
 from smst.models import harmonic, hpr, stft
 
 inputFile='../../../sounds/flute-A4.wav'
@@ -24,7 +24,7 @@ harmDevSlope=0.1
 Ns = 512
 H = 128
 
-(fs, x) = utils.wavread(inputFile)
+(fs, x) = audio.wavread(inputFile)
 w = get_window(window, M)
 hfreq, hmag, hphase, xr = hpr.fromAudio(x, fs, w, N, H, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
@@ -38,7 +38,7 @@ hfreqt, hmagt = harmonic.scaleFrequencies(hfreq, hmag, freqScaling, freqStretchi
 
 y, yh = hpr.toAudio(hfreqt, hmagt, np.array([]), xr, Ns, H, fs)
 
-utils.wavwrite(y,fs, 'hpr-freq-transformation.wav')
+audio.wavwrite(y,fs, 'hpr-freq-transformation.wav')
 
 plt.figure(figsize=(12, 9))
 

@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import stochastic
 from .. import demo_sound_path
 
@@ -22,7 +22,7 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.arra
 	H = 128
 
 	# read input sound
-	(fs, x) = utils.wavread(inputFile)
+	(fs, x) = audio.wavread(inputFile)
 
 	# perform stochastic analysis
 	mYst = stochastic.fromAudio(x, H, H*2, stocf)
@@ -35,7 +35,7 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.arra
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModelTransformation.wav'
-	utils.wavwrite(y, fs, outputFile)
+	audio.wavwrite(y, fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -82,7 +82,7 @@ def main(inputFile=demo_sound_path('rain.wav'), stocf=0.1, timeScaling = np.arra
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_stochastic_transformation.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_stochastic_transformation.png' % files.stripFile(inputFile))
 
 
 if __name__ == '__main__':

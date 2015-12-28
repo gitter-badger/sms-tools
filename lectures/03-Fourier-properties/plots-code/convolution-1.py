@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/ocean.wav')
-(fs, x2) = utils.wavread('../../../sounds/impulse-response.wav')
+(fs, x) = audio.wavread('../../../sounds/ocean.wav')
+(fs, x2) = audio.wavread('../../../sounds/impulse-response.wav')
 x1 = x[40000:44096]
 N = 4096
 

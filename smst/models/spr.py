@@ -7,7 +7,7 @@ from scipy.signal import blackmanharris, triang
 from scipy.fftpack import fft, ifft
 
 from . import dft, sine
-from .. import utils
+from ..utils import peaks, residual, synth
 
 def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope):
 	"""
@@ -23,7 +23,7 @@ def fromAudio(x, fs, w, N, H, t, minSineDur, maxnSines, freqDevOffset, freqDevSl
 	# perform sinusoidal analysis
 	tfreq, tmag, tphase = sine.fromAudio(x, fs, w, N, H, t, maxnSines, minSineDur, freqDevOffset, freqDevSlope)
 	Ns = 512
-	xr = utils.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
+	xr = residual.sineSubtraction(x, Ns, H, tfreq, tmag, tphase, fs)    	# subtract sinusoids from original sound
 	return tfreq, tmag, tphase, xr
 
 def toAudio(tfreq, tmag, tphase, xr, N, H, fs):
@@ -71,8 +71,8 @@ def reconstruct(x, fs, w, N, t):
   #-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                                     # select frame
 		mX, pX = dft.fromAudio(x1, w, N)                              # compute dft
-		ploc = utils.peakDetection(mX, t)                              # find peaks
-		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)          # refine peak values
+		ploc = peaks.peakDetection(mX, t)                              # find peaks
+		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)         # refine peak values		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)          # refine peak values
 		ipfreq = fs*iploc/float(N)                                  # convert peak locations to Hertz
 		ri = pin-hNs-1                                              # input sound pointer for residual analysis
 		xw2 = x[ri:ri+Ns]*wr                                        # window the input sound
@@ -81,7 +81,7 @@ def reconstruct(x, fs, w, N, t):
 		fftbuffer[hNs:] = xw2[:hNs]
 		X2 = fft(fftbuffer)                                         # compute FFT for residual analysis
   #-----synthesis-----
-		Ys = utils.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
+		Ys = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)        # generate spec of sinusoidal component
 		Xr = X2-Ys;                                                 # get the residual complex spectrum
 		fftbuffer = np.zeros(Ns)
 		fftbuffer = np.real(ifft(Ys))                               # inverse FFT of sinusoidal spectrum

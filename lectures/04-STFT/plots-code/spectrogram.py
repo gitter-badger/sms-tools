@@ -7,11 +7,10 @@ import matplotlib.pyplot as plt
 from scipy.fftpack import fft
 from scipy.signal import hamming
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import stft
 
-(fs, x) = utils.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.wavread('../../../sounds/piano.wav')
 w = np.hamming(1001)
 N = 1024
 H = 256

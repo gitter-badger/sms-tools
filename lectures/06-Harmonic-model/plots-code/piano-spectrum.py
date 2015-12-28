@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, triang, blackmanharris
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/piano.wav')
+(fs, x) = audio.wavread('../../../sounds/piano.wav')
 M = 1100
 w = np.blackman(M)
 N = 2048

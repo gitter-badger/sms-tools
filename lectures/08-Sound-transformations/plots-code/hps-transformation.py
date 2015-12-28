@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio
 from smst.models import hps
 
 inputFile='../../../sounds/sax-phrase-short.wav'
@@ -26,7 +26,7 @@ stocf=0.1
 Ns = 512
 H = 128
 
-(fs, x) = utils.wavread(inputFile)
+(fs, x) = audio.wavread(inputFile)
 w = get_window(window, M)
 hfreq, hmag, hphase, mYst = hps.fromAudio(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur, Ns, stocf)
 timeScaling = np.array([0, 0, 2.138, 2.138-1.5, 3.146, 3.146])
@@ -34,7 +34,7 @@ yhfreq, yhmag, ystocEnv = hps.scaleTime(hfreq, hmag, mYst, timeScaling)
 
 y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
-utils.wavwrite(y,fs, 'hps-transformation.wav')
+audio.wavwrite(y,fs, 'hps-transformation.wav')
 
 
 plt.figure(figsize=(12, 9))

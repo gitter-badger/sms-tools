@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio
 from smst.models import hps
 
 inputFile1='../../../sounds/violin-B3.wav'
@@ -35,8 +35,8 @@ harmDevSlope2=0.01
 Ns = 512
 H = 128
 
-(fs1, x1) = utils.wavread(inputFile1)
-(fs2, x2) = utils.wavread(inputFile2)
+(fs1, x1) = audio.wavread(inputFile1)
+(fs2, x2) = audio.wavread(inputFile2)
 w1 = get_window(window1, M1)
 w2 = get_window(window2, M2)
 hfreq1, hmag1, hphase1, stocEnv1 = hps.fromAudio(x1, fs1, w1, N1, H, t1, nH, minf01, maxf01, f0et1, harmDevSlope1, minSineDur1, Ns, stocf)
@@ -49,7 +49,7 @@ yhfreq, yhmag, ystocEnv = hps.morph(hfreq1, hmag1, stocEnv1, hfreq2, hmag2, stoc
 
 y, yh, yst = hps.toAudio(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs1)
 
-utils.wavwrite(y,fs1, 'hps-morph-total.wav')
+audio.wavwrite(y,fs1, 'hps-morph-total.wav')
 
 plt.figure(figsize=(12, 9))
 

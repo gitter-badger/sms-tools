@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import harmonic, hps
 from .. import demo_sound_path
 
@@ -37,7 +37,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 	H = 128
 
 	# read input sound
-	(fs, x) = utils.wavread(inputFile)
+	(fs, x) = audio.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -50,7 +50,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModel.wav'
-	utils.wavwrite(y,fs, outputFile)
+	audio.wavwrite(y,fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
@@ -100,7 +100,7 @@ def analysis(inputFile=demo_sound_path('sax-phrase-short.wav'), window='blackman
 	if interactive:
 		plt.show(block=False)
 	if plotFile:
-		plt.savefig('output_plots/%s_hps_transformation_analysis.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_hps_transformation_analysis.png' % files.stripFile(inputFile))
 
 	return inputFile, fs, hfreq, hmag, mYst
 
@@ -138,7 +138,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_hpsModelTransformation.wav'
-	utils.wavwrite(y,fs, outputFile)
+	audio.wavwrite(y,fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 6))
@@ -180,7 +180,7 @@ def transformation_synthesis(inputFile, fs, hfreq, hmag, mYst, freqScaling = np.
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_hps_transformation_synthesis.png' % files.stripFile(inputFile))
 
 def main(interactive=True, plotFile=False):
 	# analysis

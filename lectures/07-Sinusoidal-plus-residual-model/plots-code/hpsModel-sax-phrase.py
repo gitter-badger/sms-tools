@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, hanning, triang, blackmanharris, resample
 
-from smst import utils
+from smst.utils import audio
 from smst.models import hps
 
-(fs, x) = utils.wavread('../../../sounds/sax-phrase-short.wav')
+(fs, x) = audio.wavread('../../../sounds/sax-phrase-short.wav')
 w = np.blackman(601)
 N = 1024
 t = -100
@@ -54,6 +54,6 @@ plt.title('y')
 
 plt.tight_layout()
 plt.savefig('hpsModel-sax-phrase.png')
-utils.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
-utils.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
-utils.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')
+audio.wavwrite(y, fs, 'sax-phrase-hps-synthesis.wav')
+audio.wavwrite(yh, fs, 'sax-phrase-harmonic.wav')
+audio.wavwrite(yst, fs, 'sax-phrase-stochastic.wav')

@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fftpack import fft, ifft, fftshift
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x) = utils.wavread('../../../sounds/soprano-E4.wav')
+(fs, x) = audio.wavread('../../../sounds/soprano-E4.wav')
 w = np.hamming(511)
 N = 512
 pin = 5000

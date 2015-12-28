@@ -8,7 +8,7 @@ from scipy.signal import blackmanharris, triang
 from scipy.fftpack import ifft, fftshift
 
 from . import dft
-from .. import utils
+from ..utils import peaks, synth
 
 def sineTracking(pfreq, pmag, pphase, tfreq, freqDevOffset=20, freqDevSlope=0.01):
 	"""
@@ -124,11 +124,11 @@ def reconstruct(x, fs, w, N, t):
 	#-----analysis-----
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
 		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
-		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
-		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
+		ploc = peaks.peakDetection(mX, t)                        # detect locations of peaks
+		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
 	#-----synthesis-----
-		Y = utils.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)   # generate sines in the spectrum
+		Y = synth.genSpecSines(ipfreq, ipmag, ipphase, Ns, fs)   # generate sines in the spectrum
 		fftbuffer = np.real(ifft(Y))                          # compute inverse FFT
 		yw[:hNs-1] = fftbuffer[hNs+1:]                        # undo zero-phase window
 		yw[hNs-1:] = fftbuffer[:hNs+1]
@@ -159,8 +159,8 @@ def fromAudio(x, fs, w, N, H, t, maxnSines = 100, minSineDur=.01, freqDevOffset=
 	while pin<pend:                                         # while input sound pointer is within sound
 		x1 = x[pin-hM1:pin+hM2]                               # select frame
 		mX, pX = dft.fromAudio(x1, w, N)                        # compute dft
-		ploc = utils.peakDetection(mX, t)                        # detect locations of peaks
-		iploc, ipmag, ipphase = utils.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
+		ploc = peaks.peakDetection(mX, t)                        # detect locations of peaks
+		iploc, ipmag, ipphase = peaks.peakInterp(mX, pX, ploc)   # refine peak values by interpolation
 		ipfreq = fs*iploc/float(N)                            # convert peak locations to Hertz
 		# perform sinusoidal tracking by adding peaks to trajectories
 		tfreq, tmag, tphase = sineTracking(ipfreq, ipmag, ipphase, tfreq, freqDevOffset, freqDevSlope)
@@ -212,7 +212,7 @@ def toAudio(tfreq, tmag, tphase, N, H, fs):
 			ytphase = tphase[l,:]
 		else:
 			ytphase += (np.pi*(lastytfreq+tfreq[l,:])/fs)*H     # propagate phases
-		Y = utils.genSpecSines(tfreq[l,:], tmag[l,:], ytphase, N, fs)  # generate sines in the spectrum
+		Y = synth.genSpecSines(tfreq[l,:], tmag[l,:], ytphase, N, fs)  # generate sines in the spectrum
 		lastytfreq = tfreq[l,:]                               # save frequency for phase propagation
 		ytphase = ytphase % (2*np.pi)                         # make phase inside 2*pi
 		yw = np.real(fftshift(ifft(Y)))                       # compute inverse FFT

@@ -6,7 +6,7 @@ from essentia.standard import *
 from pylab import *
 from numpy import *
 
-from smst import utils
+from smst.utils import audio, synth
 from smst.models import stft
 
 filename = '../../../sounds/carnatic.wav'
@@ -53,7 +53,7 @@ pitch, confidence = run_pitch_contours_melody(contours_bins,
                                               contours_start_times,
                                               duration)
 
-yf0 = utils.sinewaveSynth(pitch, .6, hopSize, sampleRate)
+yf0 = synth.sinewaveSynth(pitch, .6, hopSize, sampleRate)
 
 figure(1, figsize=(9, 6))
 
@@ -73,4 +73,4 @@ plot(time, pitch, color='k', linewidth = 2)
 plt.title('mX + prominent melody (carnatic.wav)')
 tight_layout()
 savefig('predominantmelody-2.png')
-utils.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')
+audio.wavwrite(yf0, sampleRate, 'predominantmelody-2.wav')

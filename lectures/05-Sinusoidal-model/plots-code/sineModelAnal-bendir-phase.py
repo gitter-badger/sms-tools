@@ -4,11 +4,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-from smst import utils
+from smst.utils import audio
 from smst.models import sine, stft
 
-(fs, x) = utils.wavread('../../../sounds/bendir.wav')
+(fs, x) = audio.wavread('../../../sounds/bendir.wav')
 w = np.hamming(2001)
 N = 2048
 H = 200

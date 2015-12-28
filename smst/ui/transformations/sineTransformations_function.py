@@ -5,7 +5,7 @@ import numpy as np
 import os
 from scipy.signal import get_window
 
-from smst import utils
+from smst.utils import audio, files
 from smst.models import sine
 from .. import demo_sound_path
 
@@ -32,7 +32,7 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
 	H = 128
 
 	# read input sound
-	(fs, x) = utils.wavread(inputFile)
+	(fs, x) = audio.wavread(inputFile)
 
 	# compute analysis window
 	w = get_window(window, M)
@@ -47,7 +47,7 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModel.wav'
 
 	# write the sound resulting from the inverse stft
-	utils.wavwrite(y, fs, outputFile)
+	audio.wavwrite(y, fs, outputFile)
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -88,7 +88,7 @@ def analysis(inputFile=demo_sound_path('mridangam.wav'), window='hamming', M=801
 	if interactive:
 		plt.show(block=False)
 	if plotFile:
-		plt.savefig('output_plots/%s_sine_transformation_analysis.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_sine_transformation_analysis.png' % files.stripFile(inputFile))
 
 	return inputFile, fs, tfreq, tmag
 
@@ -121,7 +121,7 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 
 	# write output sound
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_sineModelTransformation.wav'
-	utils.wavwrite(y,fs, outputFile)
+	audio.wavwrite(y,fs, outputFile)
 
 	# create figure to plot
 	plt.figure(figsize=(12, 6))
@@ -154,7 +154,7 @@ def transformation_synthesis(inputFile, fs, tfreq, tmag, freqScaling = np.array(
 	if interactive:
 		plt.show()
 	if plotFile:
-		plt.savefig('output_plots/%s_sine_transformation_synthesis.png' % utils.stripFile(inputFile))
+		plt.savefig('output_plots/%s_sine_transformation_synthesis.png' % files.stripFile(inputFile))
 
 def main(interactive=True, plotFile=False):
 	# analysis

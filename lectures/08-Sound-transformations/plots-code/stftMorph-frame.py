@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import hamming, resample
 
-from smst import utils
+from smst.utils import audio
 from smst.models import dft
 
-(fs, x1) = utils.wavread('../../../sounds/orchestra.wav')
-(fs, x2) = utils.wavread('../../../sounds/speech-male.wav')
+(fs, x1) = audio.wavread('../../../sounds/orchestra.wav')
+(fs, x2) = audio.wavread('../../../sounds/speech-male.wav')
 w1 = np.hamming(1024)
 N1 = 1024
 H1 = 256

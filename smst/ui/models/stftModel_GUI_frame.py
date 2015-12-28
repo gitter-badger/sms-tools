@@ -6,7 +6,7 @@ from Tkinter import *
 import tkFileDialog, tkMessageBox
 
 from . import stftModel_function
-from smst import utils
+from smst.utils import audio
 
 class StftModel_frame:
 	def __init__(self, parent):
@@ -31,7 +31,7 @@ class StftModel_frame:
 		self.open_file.grid(row=1, column=0, sticky=W, padx=(220, 6)) #put it beside the filelocation textbox
 
 		#BUTTON TO PREVIEW SOUND FILE
-		self.preview = Button(self.parent, text=">", command=lambda:utils.wavplay(self.filelocation.get()), bg="gray30", fg="white")
+		self.preview = Button(self.parent, text=">", command=lambda:audio.wavplay(self.filelocation.get()), bg="gray30", fg="white")
 		self.preview.grid(row=1, column=0, sticky=W, padx=(306,6))
 
 		## STFT
@@ -78,7 +78,7 @@ class StftModel_frame:
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
 		Label(self.parent, text=output_label).grid(row=7, column=0, sticky=W, padx=5, pady=(10,15))
-		self.output = Button(self.parent, text=">", command=lambda:utils.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_stft.wav'), bg="gray30", fg="white")
+		self.output = Button(self.parent, text=">", command=lambda:audio.wavplay('output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_stft.wav'), bg="gray30", fg="white")
 		self.output.grid(row=7, column=0, padx=(60,5), pady=(10,15), sticky=W)
 
 		# define options for opening file
