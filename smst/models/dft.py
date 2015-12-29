@@ -18,16 +18,13 @@ def from_audio(samples, window, fft_size):
     Discrete Fourier Transform (DFT) into magnitude and phase spectrum
     of positive frequencies.
 
-    Parameters
-    ----------
-    samples: samples of the input signal
-    window: samples of the analysis window
-    fft_size: size of the spectrum (power of two)
+    :param samples: samples of the input signal
+    :param window: samples of the analysis window
+    :param fft_size: size of the spectrum (power of two)
 
-    Returns
-    -------
-    magnitude_db_spectrum: magnitude spectrum (in decibels) of positive frequencies
-    phase_spectrum: unwrapped phase spectrum of positive frequencies
+    :returns:
+        - magnitude_db_spectrum: magnitude spectrum (in decibels) of positive frequencies
+        - phase_spectrum: unwrapped phase spectrum of positive frequencies
     """
 
     if not (is_power_of_two(fft_size)):
@@ -53,17 +50,11 @@ def to_audio(magnitude_db_spectrum, phase_spectrum, window_size):
     positive magnitude and phase spectrum using the Inverse
     Discrete Fourier Transform (IDFT).
 
-    Parameters
-    ----------
+    :param magnitude_db_spectrum: positive magnitude spectrum in decibels
+    :param phase_spectrum: positive phase spectrum
+    :param window_size: window size (also size of the output signal)
 
-    magnitude_db_spectrum: positive magnitude spectrum in decibels
-    phase_spectrum: positive phase spectrum
-    window_size: window size (also size of the output signal)
-
-    Returns
-    -------
-
-    samples: reconstructed samples of the windowed signal
+    :returns: samples: reconstructed samples of the windowed signal
     """
 
     fft_size = (magnitude_db_spectrum.size - 1) * 2  # FFT size
@@ -81,17 +72,11 @@ def reconstruct(samples, window, fft_size):
     Reconstructs a windowed signal by analyzing and synthesizing it
     using the DFT model.
 
-    Parameters
-    ----------
+    :param samples: input signal before applying a window
+    :param window: analysis/synthesis window
+    :param fft_size: size of the spectrum (power of two)
 
-    samples: input signal before applying a window
-    widow: analysis/synthesis window
-    fft_size: size of the spectrum (power of two)
-
-    Returns
-    -------
-
-    samples: reconstructed windowed signal
+    :returns: samples: reconstructed windowed signal
     """
 
     mag_spectrum, phase_spectrum = from_audio(samples, window, fft_size)
@@ -114,10 +99,8 @@ def select_phase_spectrum(spectrum, phase_eps=1e-14):
     """
     Computes unwrapped phase spectrum out of complex spectrum.
 
-    Parameters
-    ----------
-    spectrum: complex-valued spectrum
-    tol: threshold used to compute phase
+    :param spectrum: complex-valued spectrum
+    :param tol: threshold used to compute phase
     """
     # for phase calculation set to 0 the small values
     spectrum.real[np.abs(spectrum.real) < phase_eps] = 0.0
