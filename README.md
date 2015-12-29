@@ -1,5 +1,7 @@
 # Spectral Modeling Synthesis Tools
 
+[![Join the chat at https://gitter.im/bzamecnik/sms-tools](https://badges.gitter.im/bzamecnik/sms-tools.svg)](https://gitter.im/bzamecnik/sms-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/bzamecnik/sms-tools.svg?branch=master)](https://travis-ci.org/bzamecnik/sms-tools)
 [![Read The Docs](https://readthedocs.org/projects/smst/badge/?version=latest)](http://smst.readthedocs.org/en/latest/?badge=latest)
 
