@@ -184,13 +184,20 @@ Audio can be transformed by modifying its model. Each transformation belongs to 
 
 ## How to generate documentation?
 
-API documentation can be generated via Sphinx. It is not integrated yet, so this is a very crude way how to get documentation in HTML.
+API documentation can be generated via Sphinx.
+
+Regenerate the documentation file for API reference.
 
 ```
-sms-tools$ sphinx-apidoc -F -o docs smst
 sms-tools$ cd docs/
-docs$ make html
-docs$ open _build/html/index.html
+docs$ make apidoc
+```
+
+Build the documentation into HTML.
+
+```
+sms-tools$ python setup.py build_sphinx
+sms-tools$ open build/html/index.html
 ```
 
 ## Authors
